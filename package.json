@@ -1,0 +1,110 @@
+{
+  "name": "mern-ecommerce-client",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MERN Ecommerce client",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:spetushkov/mern-ecommerce-client.git"
+  },
+  "author": "Sergey Petushkou",
+  "homepage": "https://github.com/spetushkov/mern-ecommerce-client",
+  "bugs": {
+    "url": "https://github.com/spetushkov/mern-ecommerce-client/issues"
+  },
+  "main": "src/index.tsx",
+  "scripts": {
+    "build": "react-scripts build",
+    "clean": "rm -rf node_modules && rm -rf coverage && rm -rf build",
+    "compile:script": "tsc --noEmit",
+    "compile:styles": "tsm src/**/*.scss --aliasPrefixes.~ node_modules/ --implementation 'node-sass' --nameFormat none --exportType default",
+    "compile:styles:watch": "yarn compile:styles --watch",
+    "eject": "react-scripts eject",
+    "format": "prettier --write .",
+    "git": "git add . && git commit -m :rocket: && git push -f",
+    "git:setup": "sudo rm -rf .git && git init && git remote add origin git@github.com:spetushkov/mern-ecommerce-client.git",
+    "lint": "stylelint '**/*.{css,scss}' --fix && eslint '**/*.{js,jsx,ts,tsx}' --fix",
+    "setup": "yarn clean && yarn",
+    "start": "react-scripts start",
+    "test": "jest --watch",
+    "test:all": "jest --watchAll=false",
+    "test:coverage": "jest --coverage",
+    "test:staged": "jest --onlyChanged"
+  },
+  "keywords": [
+    "MERN, ecommerce"
+  ],
+  "dependencies": {
+    "bootstrap": "^4.5.3",
+    "class-transformer": "^0.3.1",
+    "class-validator": "^0.12.2",
+    "envalid": "^6.0.2",
+    "node-sass": "^4.14.1",
+    "react": "^16.14.0",
+    "react-bootstrap": "^1.3.0",
+    "react-dom": "^16.14.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.3",
+    "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "@types/enzyme": "^3.10.7",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "@types/jest": "^26.0.14",
+    "@types/node": "^14.11.10",
+    "@types/react": "^16.9.53",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.6",
+    "@types/react-test-renderer": "^16.9.3",
+    "@typescript-eslint/eslint-plugin": "^4.4.1",
+    "@typescript-eslint/parser": "^4.4.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.5",
+    "eslint-config-prettier": "^6.13.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.4",
+    "eslint-plugin-react-hooks": "^4.1.2",
+    "husky": "^4.3.0",
+    "identity-obj-proxy": "^3.0.0",
+    "lint-staged": "^10.4.2",
+    "prettier": "^2.1.2",
+    "prettier-plugin-organize-imports": "^1.1.1",
+    "prettier-plugin-package": "^1.2.0",
+    "react-test-renderer": "^16.14.0",
+    "stylelint": "^13.7.2",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-recommended": "^3.0.0",
+    "stylelint-config-sass-guidelines": "^7.1.0",
+    "stylelint-order": "^4.1.0",
+    "ts-jest": "^26.4.1",
+    "typed-scss-modules": "^3.2.2",
+    "typescript": "^4.0.3"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn compile:script && lint-staged && yarn test:staged"
+    }
+  },
+  "lint-staged": {
+    "*.{css,scss}": "stylelint --fix",
+    "*.{js,jsx,ts,tsx}": "eslint --fix",
+    "*": "prettier --write"
+  }
+}

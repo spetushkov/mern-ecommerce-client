@@ -1,0 +1,14 @@
+$primary-color: green;
+$secondary-color: yellow;
+
+.mySpecialStyle {
+  .mySpecialTitle {
+    color: $secondary-color;
+    font-weight: bold;
+    background-color: $primary-color;
+  }
+  .buttonBlue {
+    color: blue;
+    font-weight: bold;
+  }
+}
