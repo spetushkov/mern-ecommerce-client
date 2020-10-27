@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import * as ProductApi from '../../api/ProductApi';
-import { createAction } from './ProductListReducer';
+import { createAction } from './Reducer';
 
 export const getProducts = () => async (dispatch: Dispatch): Promise<void> => {
   try {

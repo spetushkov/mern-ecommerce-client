@@ -1,7 +1,7 @@
 import { Product } from '../shared/Product';
-import { BaseApi } from './BaseApi';
+import { AppApi } from './AppApi';
 
 export const getProducts = async (): Promise<Product[]> => {
-  const { data } = await BaseApi.get<Product[]>('/products');
+  const { data } = await AppApi.get<Product[]>('/products');
   return data;
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'reflect-metadata';
-import { App } from './App';
+import { App } from './app/App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
