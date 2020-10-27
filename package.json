@@ -111,7 +111,7 @@
     }
   },
   "lint-staged": {
-    "*.{css,scss}": "stylelint --fix",
+    "*.{css,scss}": "stylelint --fix --allow-empty-input",
     "*.{js,jsx,ts,tsx}": "eslint --fix",
     "*": "prettier --write"
   }

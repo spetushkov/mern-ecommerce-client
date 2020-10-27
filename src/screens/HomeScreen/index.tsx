@@ -1,9 +1,9 @@
 import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Loader } from '../components/Loader';
-import { Message } from '../components/Message';
-import { getProducts } from '../components/ProductList/ProductListActions';
-import { ReduxState } from '../store/Redux';
+import { Loader } from '../../components/Loader';
+import { Message } from '../../components/Message';
+import { getProducts } from '../../components/ProductList/ProductListActions';
+import { ReduxState } from '../../store/Redux';
 
 export const HomeScreen: FC = () => {
   const dispatch = useDispatch();
