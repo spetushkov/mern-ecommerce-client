@@ -28,5 +28,6 @@ module.exports = {
   ],
   rules: {
     '@typescript-eslint/ban-types': 'off',
+    'react/prop-types': 0,
   },
 };

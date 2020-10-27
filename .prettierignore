@@ -36,9 +36,11 @@ yarn.lock
 .gitignore
 .prettierignore
 .eslintignore
+.stylelintignore
 .npmignore
 LICENSE
 TODO
 *.http
 *.ico
 *.txt
+public/

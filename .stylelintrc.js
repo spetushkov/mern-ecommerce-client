@@ -8,6 +8,6 @@ module.exports = {
   ],
   rules: {
     'color-named': 'always-where-possible',
-    'selector-class-pattern': '^[a-z][a-zA-Z0-9]*$',
+    'selector-class-pattern': '^[a-z]*-?[a-zA-Z0-9]*$',
   },
 };
