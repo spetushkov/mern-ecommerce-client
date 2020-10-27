@@ -1,4 +1,4 @@
-import { Product } from '../domain/Product';
+import { Product } from '../shared/Product';
 import { BaseApi } from './BaseApi';
 
 export const getProducts = async (): Promise<Product[]> => {
