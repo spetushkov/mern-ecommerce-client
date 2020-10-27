@@ -1,6 +1,6 @@
 import { Product } from '../../domain/Product';
 import { ReducerAction } from '../../store/reducer/ReducerAction';
-import { ReducerAsyncActionType } from '../../store/reducer/ReducerActionType';
+import { ReducerAsyncActionType } from '../../store/reducer/ReducerAsyncActionType';
 import { ReducerState } from '../../store/reducer/ReducerState';
 
 const ActionType = {

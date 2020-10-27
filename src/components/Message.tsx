@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Alert } from 'react-bootstrap';
 
 type Props = {
@@ -6,7 +6,7 @@ type Props = {
   children: string;
 };
 
-export const Message: React.FC<Props> = (props) => {
+export const Message: FC<Props> = (props) => {
   const { variant = 'info', children } = props;
   return <Alert variant={variant}>{children}</Alert>;
 };

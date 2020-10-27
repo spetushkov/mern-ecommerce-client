@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from '../components/Loader';
 import { Message } from '../components/Message';
 import { getProducts } from '../components/ProductList/ProductListActions';
 import { ReduxState } from '../store/Redux';
 
-export const HomeScreen: React.FC = () => {
+export const HomeScreen: FC = () => {
   const dispatch = useDispatch();
 
   const { loading, data, error } = useSelector((state: ReduxState) => state.productList);

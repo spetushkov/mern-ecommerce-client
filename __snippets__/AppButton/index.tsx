@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { Button } from 'react-bootstrap';
 import styles from './index.module.scss';
 
-export const AppButton = (): JSX.Element => {
+export const AppButton: React.FC = () => {
   const onClickHandler = useCallback(() => {
     console.log('Button clicked!');
   }, []);
