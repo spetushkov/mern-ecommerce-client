@@ -1,4 +1,4 @@
 export interface Result<T, E> {
-  data?: T | T[];
+  data?: T;
   error?: E;
 }

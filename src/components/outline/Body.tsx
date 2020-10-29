@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import { Routes } from './Routes';
+import { Routes } from '../../router/Routes';
 
 export const Body = (): JSX.Element => {
   return (

@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { findAll } from '../components/ProductList/Actions';
-import { ProductList } from '../components/ProductList/index';
+import * as ProductsActions from '../components/product/Products/Actions';
+import { Products } from '../components/product/Products/index';
 import { State } from '../store/Redux';
 
 export const HomeScreen = (): JSX.Element => {
   const dispatch = useDispatch();
 
-  const productList = useSelector((state: State) => state.productList);
+  const productsState = useSelector((state: State) => state.products);
 
   useEffect(() => {
-    dispatch(findAll());
+    dispatch(ProductsActions.findAll());
   }, [dispatch]);
 
-  return <ProductList {...productList} />;
+  return <Products {...productsState} />;
 };
