@@ -17,16 +17,16 @@
   "scripts": {
     "build": "react-scripts build",
     "clean": "rm -rf node_modules && rm -rf coverage && rm -rf build",
-    "compile:script": "tsc --noEmit",
+    "compile": "tsc --noEmit",
     "compile:styles": "tsm src/**/*.scss --aliasPrefixes.~ node_modules/ --implementation 'node-sass' --nameFormat none --exportType default",
-    "compile:styles:watch": "yarn compile:styles --watch",
     "eject": "react-scripts eject",
     "format": "prettier --write .",
     "git": "git add . && git commit -m :rocket: && git push -f",
-    "git:setup": "sudo rm -rf .git && git init && git remote add origin git@github.com:spetushkov/mern-ecommerce-client.git",
     "lint": "stylelint '**/*.{css,scss}' --fix && eslint '**/*.{js,jsx,ts,tsx}' --fix",
     "setup": "yarn clean && yarn",
+    "setup:git": "sudo rm -rf .git && git init && git remote add origin git@github.com:spetushkov/mern-ecommerce-client.git",
     "start": "react-scripts start",
+    "start:styles": "yarn compile:styles --watch",
     "test": "jest --watch",
     "test:all": "jest --watchAll=false",
     "test:coverage": "jest --coverage",
@@ -107,7 +107,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn compile:script && lint-staged && yarn test:staged"
+      "pre-commit": "yarn compile && lint-staged && yarn test:staged"
     }
   },
   "lint-staged": {

@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
+import React from 'react';
 
-export const SignInScreen: FC = () => {
+export const SignInScreen = (): JSX.Element => {
   return <h1>Sign In</h1>;
 };

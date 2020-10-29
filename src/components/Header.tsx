@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
-export const Header: FC = () => {
+export const Header = (): JSX.Element => {
   const signOutHandler = () => {
     console.log('signOutHandler');
   };

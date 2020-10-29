@@ -1,51 +1,34 @@
-import { Product } from '../../shared/Product';
+import { ProductApiPageResponse } from '../../api/ProductApi';
 import { ReducerAction } from '../../store/reducer/ReducerAction';
+import { ReducerActionCreator } from '../../store/reducer/ReducerActionCreator';
 import { ReducerAsyncActionType } from '../../store/reducer/ReducerAsyncActionType';
 import { ReducerState } from '../../store/reducer/ReducerState';
 
-const ActionType = {
-  ...ReducerAsyncActionType,
-};
+type ActionType = keyof typeof actionTypes;
+type Action = ReducerAction<ActionType, DataPayload>;
+export const productList = ReducerActionCreator<ActionType, DataPayload | Error>();
 
-type Payload = Product[];
+type DataPayload = ProductApiPageResponse;
+export type ProductListState = ReducerState<DataPayload> & {};
+const actionTypes = { ...ReducerAsyncActionType };
 
-type State = ReducerState<Payload> & {};
-
-type Action = ReducerAction<keyof typeof ActionType, Payload>;
-
-export const createAction = (type: keyof typeof ActionType, payload?: Payload): Action => {
-  return { type, payload };
-};
-
-const initialState: State = {
+const initialState: ProductListState = {
   loading: false,
   data: null,
   error: null,
 };
 
-export const ProductListReducer = (state = initialState, action: Action): State => {
+export const ProductListReducer = (state = initialState, action: Action): ProductListState => {
   const { type, payload } = action;
 
   switch (type) {
     case 'LOAD':
-      return load(state);
+      return { ...state, loading: true, error: null };
     case 'SUCCESS':
-      return success(state, payload as Payload);
+      return { ...state, loading: false, error: null, data: payload as DataPayload };
     case 'FAIL':
-      return fail(state, payload as Error);
+      return { ...state, loading: false, error: payload as Error };
     default:
       return state;
   }
-};
-
-const load = (state: State) => {
-  return { ...state, loading: true, error: null };
-};
-
-const success = (state: State, payload: Payload) => {
-  return { ...state, loading: false, error: null, data: payload };
-};
-
-const fail = (state: State, payload: Error) => {
-  return { ...state, loading: false, error: payload };
 };

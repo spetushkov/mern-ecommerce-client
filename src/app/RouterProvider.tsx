@@ -1,6 +1,10 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-export const RouterProvider: FC = ({ children }) => {
+type Props = {
+  children: React.ReactNode;
+};
+
+export const RouterProvider = ({ children }: Props): JSX.Element => {
   return <Router>{children}</Router>;
 };

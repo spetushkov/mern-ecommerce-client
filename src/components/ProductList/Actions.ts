@@ -1,14 +1,29 @@
 import { Dispatch } from 'redux';
 import * as ProductApi from '../../api/ProductApi';
-import { createAction } from './Reducer';
+import { productList } from './Reducer';
 
-export const getProducts = () => async (dispatch: Dispatch): Promise<void> => {
+export const findAll = () => async (dispatch: Dispatch): Promise<void> => {
   try {
-    dispatch(createAction('LOAD'));
-
-    const data = await ProductApi.getProducts();
-    dispatch(createAction('SUCCESS', data));
+    await asyncAction(ProductApi.findAll)(dispatch);
   } catch (error) {
-    dispatch(createAction('FAIL', error));
+    Promise.reject(error);
+  }
+};
+
+const asyncAction = (callback: () => Promise<ProductApi.ProductApiPageResponse>) => async (
+  dispatch: Dispatch,
+): Promise<void> => {
+  try {
+    dispatch(productList('LOAD'));
+
+    const data = await callback();
+    if (data.error) {
+      dispatch(productList('FAIL', data.error));
+      return;
+    }
+
+    dispatch(productList('SUCCESS', data));
+  } catch (error) {
+    dispatch(productList('FAIL', error));
   }
 };

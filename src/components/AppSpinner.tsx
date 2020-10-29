@@ -1,7 +1,9 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Spinner } from 'react-bootstrap';
 
-export const Loader: FC = () => {
+type Style = Record<string, React.CSSProperties>;
+
+export const AppSpinner = (): JSX.Element => {
   return (
     <Spinner animation='border' role='status' style={styles.container}>
       <span className='sr-only'>Loading...</span>
@@ -9,6 +11,6 @@ export const Loader: FC = () => {
   );
 };
 
-const styles = {
+const styles: Style = {
   container: { width: '100px', height: '100px', margin: 'auto', display: 'block' },
 };

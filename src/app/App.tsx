@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Body } from '../components/Body';
 import { Footer } from '../components/Footer';
 import { Header } from '../components/Header';
@@ -8,7 +8,7 @@ import { StoreProvider } from './StoreProvider';
 
 AppContext();
 
-export const App: FC = () => {
+export const App = (): JSX.Element => {
   return (
     <StoreProvider>
       <RouterProvider>

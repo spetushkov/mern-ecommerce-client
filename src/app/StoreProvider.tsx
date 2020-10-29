@@ -1,7 +1,11 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from '../store/Redux';
 
-export const StoreProvider: FC = ({ children }) => {
+type Props = {
+  children: React.ReactNode;
+};
+
+export const StoreProvider = ({ children }: Props): JSX.Element => {
   return <Provider store={Store}>{children}</Provider>;
 };
