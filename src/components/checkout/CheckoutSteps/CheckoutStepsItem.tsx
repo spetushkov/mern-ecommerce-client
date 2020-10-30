@@ -8,7 +8,7 @@ type Props = {
   linkName: string;
 };
 
-export const CheckoutStep = (props: Props): JSX.Element => {
+export const CheckoutStepsItem = (props: Props): JSX.Element => {
   const { step, linkUrl, linkName } = props;
 
   if (!step) {

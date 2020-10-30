@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Product } from '../components/product/Product';
 import * as ProductActions from '../components/product/Product/Actions';
-import { Product2 } from '../components/product/Product/Product2';
 import { State } from '../store/Redux';
 
 type Props = {
@@ -20,5 +20,5 @@ export const ProductScreen = (props: Props): JSX.Element => {
     dispatch(ProductActions.findById(id));
   }, [dispatch, id]);
 
-  return <Product2 {...productState} history={history} />;
+  return <Product {...productState} history={history} />;
 };

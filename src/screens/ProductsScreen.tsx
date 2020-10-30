@@ -4,7 +4,7 @@ import * as ProductsActions from '../components/product/Products/Actions';
 import { Products } from '../components/product/Products/index';
 import { State } from '../store/Redux';
 
-export const HomeScreen = (): JSX.Element => {
+export const ProductsScreen = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const productsState = useSelector((state: State) => state.products);

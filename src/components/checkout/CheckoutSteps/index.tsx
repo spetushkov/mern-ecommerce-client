@@ -1,6 +1,6 @@
 import React from 'react';
 import { Nav } from 'react-bootstrap';
-import { CheckoutStep } from './CheckoutStep';
+import { CheckoutStepsItem } from './CheckoutStepsItem';
 
 type Props = {
   step1: boolean;
@@ -14,10 +14,10 @@ export const CheckoutSteps = (props: Props): JSX.Element => {
 
   return (
     <Nav className='justify-content-center mb-4'>
-      <CheckoutStep step={step1} linkUrl='/signin' linkName='Sign In' />
-      <CheckoutStep step={step2} linkUrl='/shipping' linkName='Shipping' />
-      <CheckoutStep step={step3} linkUrl='/payment' linkName='Payment' />
-      <CheckoutStep step={step4} linkUrl='/placeorder' linkName='Place Order' />
+      <CheckoutStepsItem step={step1} linkUrl='/signin' linkName='Sign In' />
+      <CheckoutStepsItem step={step2} linkUrl='/shipping' linkName='Shipping' />
+      <CheckoutStepsItem step={step3} linkUrl='/payment' linkName='Payment' />
+      <CheckoutStepsItem step={step4} linkUrl='/placeorder' linkName='Place Order' />
     </Nav>
   );
 };

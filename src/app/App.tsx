@@ -4,9 +4,11 @@ import { Footer } from '../components/outline/Footer';
 import { Header } from '../components/outline/Header';
 import { RouterProvider } from '../router/RouterProvider';
 import { StoreProvider } from '../store/StoreProvider';
-import { AppContext } from './AppContext';
+import { Envalid } from './Envalid';
+import { FontAwesome } from './FontAwesome';
 
-AppContext();
+FontAwesome();
+Envalid();
 
 export const App = (): JSX.Element => {
   return (
@@ -16,7 +18,6 @@ export const App = (): JSX.Element => {
         <Body />
         <Footer />
       </RouterProvider>
-      xs
     </StoreProvider>
   );
 };

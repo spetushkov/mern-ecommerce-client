@@ -1,9 +1,8 @@
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
-import { AppAlert } from '../../AppAlert';
-import { AppSpinner } from '../../AppSpinner';
-import { Product } from '../Product';
+import { Alert, Col, Row } from 'react-bootstrap';
+import { ProductsItem } from './ProductsItem';
 import { ProductsState } from './Reducer';
+import { ProductsSkeleton } from './skeletons/ProductsSkeleton';
 
 type Props = ProductsState;
 
@@ -12,11 +11,11 @@ export const Products = (props: Props): JSX.Element => {
   const products = data ? data.data : null;
 
   if (loading) {
-    return <AppSpinner />;
+    return <ProductsSkeleton />;
   }
 
   if (error) {
-    return <AppAlert variant='danger'>{error.message}</AppAlert>;
+    return <Alert variant='danger'>{error.message}</Alert>;
   }
 
   return (
@@ -27,7 +26,7 @@ export const Products = (props: Props): JSX.Element => {
           products.map((product) => {
             return (
               <Col key={product.id} sm={12} md={6} lg={4} xl={3}>
-                <Product product={product} />
+                <ProductsItem product={product} />
               </Col>
             );
           })}

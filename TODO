@@ -1,5 +1,4 @@
 index
-.Item
 test all productApi
 findAll => specific for a user
 link {to='/'} => enum

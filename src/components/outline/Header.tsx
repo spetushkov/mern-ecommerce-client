@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -21,7 +22,7 @@ export const Header = (): JSX.Element => {
             <Nav className='ml-auto'>
               <LinkContainer to='/cart'>
                 <Nav.Link>
-                  <i className='fas fa-shopping-cart' />
+                  <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
                   Cart
                 </Nav.Link>
               </LinkContainer>
@@ -35,7 +36,7 @@ export const Header = (): JSX.Element => {
               ) : (
                 <LinkContainer to='/signin'>
                   <Nav.Link>
-                    <i className='fas fa-user' />
+                    <FontAwesomeIcon icon={['fas', 'user']} />
                     Sign In
                   </Nav.Link>
                 </LinkContainer>
