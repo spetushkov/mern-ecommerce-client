@@ -3,7 +3,7 @@ import { Alert, Button, Card, Col, Form, Image, ListGroup, Row } from 'react-boo
 import { Link } from 'react-router-dom';
 import { AppSpinner } from '../../AppSpinner';
 import { ProductRating } from '../ProductRating';
-import { ProductState } from './Reducer';
+import { ProductState } from './ProductStore';
 
 type Props = ProductState & {
   history: any;

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Product } from '../components/product/Product';
-import * as ProductActions from '../components/product/Product/Actions';
-import { State } from '../store/Redux';
+import { Product } from '../components/product/Product/Product';
+import { ProductActions } from '../components/product/Product/ProductActions';
+import { State } from '../store/Store';
 
 type Props = {
   match: any;

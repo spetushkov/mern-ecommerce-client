@@ -1,5 +1,5 @@
 import { cleanEnv, str } from 'envalid';
-import { log } from '../log/Logger';
+import { Logger } from '../log/Logger';
 
 export const Envalid = (): void => {
   cleanEnv(process.env, {
@@ -8,5 +8,5 @@ export const Envalid = (): void => {
   });
 
   const { REACT_APP_ENV_NAME } = process.env;
-  log(`App started in mode ${REACT_APP_ENV_NAME}`);
+  Logger.log(`App started in mode ${REACT_APP_ENV_NAME}`);
 };

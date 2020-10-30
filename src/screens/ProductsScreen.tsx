@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as ProductsActions from '../components/product/Products/Actions';
-import { Products } from '../components/product/Products/index';
-import { State } from '../store/Redux';
+import { Products } from '../components/product/Products/Products';
+import { ProductsActions } from '../components/product/Products/ProductsActions';
+import { State } from '../store/Store';
 
 export const ProductsScreen = (): JSX.Element => {
   const dispatch = useDispatch();

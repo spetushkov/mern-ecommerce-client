@@ -4,10 +4,9 @@ import { ReducerActionCreator } from '../../../store/reducer/ReducerActionCreato
 import { ReducerState } from '../../../store/reducer/ReducerState';
 
 type Action = ReducerAction<ActionType, DataPayload>;
-export const productsAction = ReducerActionCreator<ActionType, DataPayload | Error>();
+const action = ReducerActionCreator<ActionType, DataPayload | Error>();
 
 type DataPayload = ProductApiPageResponse;
-export type ProductsState = ReducerState<DataPayload> & {};
 type ActionType = 'PRODUCTS_LOAD' | 'PRODUCTS_SUCCESS' | 'PRODUCTS_FAIL';
 
 const initialState: ProductsState = {
@@ -16,7 +15,7 @@ const initialState: ProductsState = {
   error: null,
 };
 
-export const ProductsReducer = (state = initialState, action: Action): ProductsState => {
+const reducer = (state = initialState, action: Action): ProductsState => {
   const { type, payload } = action;
 
   switch (type) {
@@ -29,4 +28,10 @@ export const ProductsReducer = (state = initialState, action: Action): ProductsS
     default:
       return state;
   }
+};
+
+export type ProductsState = ReducerState<DataPayload> & {};
+export const ProductsStore = {
+  action,
+  reducer,
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert, Col, Row } from 'react-bootstrap';
 import { ProductsItem } from './ProductsItem';
-import { ProductsState } from './Reducer';
+import { ProductsState } from './ProductsStore';
 import { ProductsSkeleton } from './skeletons/ProductsSkeleton';
 
 type Props = ProductsState;

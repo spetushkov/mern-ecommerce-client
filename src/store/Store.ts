@@ -1,22 +1,21 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-import { ProductReducer } from '../components/product/Product/Reducer';
-import { ProductsReducer } from '../components/product/Products/Reducer';
+import { ProductStore } from '../components/product/Product/ProductStore';
+import { ProductsStore } from '../components/product/Products/ProductsStore';
 
 const combinedReducer = combineReducers({
-  products: ProductsReducer,
-  product: ProductReducer,
+  products: ProductsStore.reducer,
+  product: ProductStore.reducer,
 });
 
 const middleware = [thunk];
 
 const inittialState = {};
 
+export type State = ReturnType<typeof combinedReducer>;
 export const Store = createStore(
   combinedReducer,
   inittialState,
   composeWithDevTools(applyMiddleware(...middleware)),
 );
-
-export type State = ReturnType<typeof combinedReducer>;
