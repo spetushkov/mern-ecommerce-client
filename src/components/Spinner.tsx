@@ -1,13 +1,13 @@
 import React from 'react';
-import { Spinner } from 'react-bootstrap';
+import { Spinner as RBSpinner } from 'react-bootstrap';
 
 type Style = Record<string, React.CSSProperties>;
 
-export const AppSpinner = (): JSX.Element => {
+export const Spinner = (): JSX.Element => {
   return (
-    <Spinner animation='border' role='status' style={styles.container}>
+    <RBSpinner animation='border' role='status' style={styles.container}>
       <span className='sr-only'>Loading...</span>
-    </Spinner>
+    </RBSpinner>
   );
 };
 

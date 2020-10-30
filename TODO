@@ -3,3 +3,4 @@ findAll => specific for a user
 link {to='/'} => enum
 i18n
 error boundary
+lazy loading

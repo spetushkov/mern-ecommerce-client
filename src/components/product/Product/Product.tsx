@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { Alert, Button, Card, Col, Form, Image, ListGroup, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { AppSpinner } from '../../AppSpinner';
+import { Spinner } from '../../Spinner';
 import { ProductRating } from '../ProductRating';
 import { ProductState } from './ProductStore';
 
@@ -33,7 +33,7 @@ export const Product = (props: Props): JSX.Element => {
   }, [history, product, quantity]);
 
   if (loading) {
-    return <AppSpinner />;
+    return <Spinner />;
   }
 
   if (error) {
