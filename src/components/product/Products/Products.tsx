@@ -8,8 +8,7 @@ import { ProductsSkeleton } from './skeletons/ProductsSkeleton';
 type Props = ProductsState;
 
 export const Products = (props: Props): JSX.Element => {
-  // common is a default namespace (1-st element in the array below)
-  const { t } = useTranslation(['common', 'validation']);
+  const { t } = useTranslation('Products');
 
   const { loading, data, error } = props;
   const products = data ? data.data : null;
@@ -24,9 +23,8 @@ export const Products = (props: Props): JSX.Element => {
 
   return (
     <>
-      <h4>common namespace: {t('common:products.header')}</h4>
-      <h4>validation namespace: {t('validation:products.header')}</h4>
-      <h4>default namespace: {t('products.header')}</h4>
+      <h4>{t('common:products.header', { namespace: 'common' })}</h4>
+      <h4>{t('Products:products.header', { namespace: 'Products' })}</h4>
       <Row>
         {products &&
           products.map((product) => {

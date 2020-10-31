@@ -1,25 +1,22 @@
 import i18n from 'i18next';
 import languageDetector from 'i18next-browser-languagedetector';
+import httpBackend from 'i18next-http-backend';
 import { initReactI18next } from 'react-i18next';
-import commonDE from '../assets/locales/de/common.json';
-import validationDE from '../assets/locales/de/validation.json';
-import commonEN from '../assets/locales/en/common.json';
-import validationEN from '../assets/locales/en/validation.json';
-
-// common is a default namespace (1-st element in the array below)
-const resources = {
-  en: { common: commonEN, validation: validationEN },
-  de: { common: commonDE, validation: validationDE },
-};
 
 i18n
   .use(languageDetector)
   .use(initReactI18next)
+  .use(httpBackend)
   .init({
-    resources,
-    fallbackLng: 'en',
-    keySeparator: '.',
-    debug: false,
+    backend: {
+      loadPath: '/assets/locales/{{lng}}/{{ns}}.json',
+    },
+    ns: ['common'],
+    defaultNS: 'common',
+    nonExplicitSupportedLngs: true,
+    supportedLngs: ['en', 'de'],
+    fallbackLng: false,
+    debug: process.env.NODE_ENV === 'development',
     interpolation: {
       escapeValue: false,
     },
