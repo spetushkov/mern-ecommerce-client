@@ -5,7 +5,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const AppForm = (props: Props): JSX.Element => {
+export const Form = (props: Props): JSX.Element => {
   const { children } = props;
 
   return (

@@ -2,6 +2,7 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Product } from '../../../shared/Product';
+import { ProductEndpoint } from '../ProductEndpoint';
 import { ProductRating } from '../ProductRating';
 
 type Props = {
@@ -13,12 +14,12 @@ export const ProductsItem = (props: Props): JSX.Element => {
 
   return (
     <Card className='my-3 p-3 rounded'>
-      <Link to={`/products/${product.id}`}>
+      <Link to={ProductEndpoint.byId(product.id)}>
         <Card.Img src={product.image} variant='top' />
       </Link>
 
       <Card.Body>
-        <Link to={`/products/${product.id}`}>
+        <Link to={ProductEndpoint.byId(product.id)}>
           <Card.Title as='div'>
             <strong>{product.name}</strong>
           </Card.Title>

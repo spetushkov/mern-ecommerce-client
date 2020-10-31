@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { _404Screen } from '../screens/NotFoundScreen';
 import { ProductScreen } from '../screens/ProductScreen';
 import { ProductsScreen } from '../screens/ProductsScreen';
 import { SignInScreen } from '../screens/SignInScreen';
-import { _404Screen } from '../screens/_404Screen';
 
 export const Routes = (): JSX.Element => {
   return (

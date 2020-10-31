@@ -1,7 +1,7 @@
-import { ProductApiResponse } from '../../../api/ProductApi';
 import { ReducerAction } from '../../../store/reducer/ReducerAction';
 import { ReducerActionCreator } from '../../../store/reducer/ReducerActionCreator';
 import { ReducerState } from '../../../store/reducer/ReducerState';
+import { ProductApiResponse } from '../ProductApi';
 
 type Action = ReducerAction<ActionType, DataPayload>;
 const action = ReducerActionCreator<ActionType, DataPayload | Error>();

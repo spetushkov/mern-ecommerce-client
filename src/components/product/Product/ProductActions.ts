@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { ProductApi } from '../../../api/ProductApi';
+import { ProductApi } from '../ProductApi';
 import { ProductStore } from './ProductStore';
 
 const findById = (id: string) => async (dispatch: Dispatch): Promise<void> => {
