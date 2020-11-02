@@ -30,21 +30,21 @@ export const Cart = (props: Props): JSX.Element => {
     [orderItems],
   );
 
-  const onChangeOrderItemQuantityHandler = useCallback(
+  const changeOrderItemQuantityHandler = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>, id: string) => {
       dispatch(CartActions.addOrderItem(id, Number(e.target.value)));
     },
     [dispatch],
   );
 
-  const onRemoveOrderItemHandler = useCallback(
+  const removeOrderItemHandler = useCallback(
     (id: string) => {
       dispatch(CartActions.removeOrderItem(id));
     },
     [dispatch],
   );
 
-  const onCheckoutHandler = useCallback(() => {
+  const checkoutHandler = useCallback(() => {
     history.push(`${AuthEndpoint.signIn()}?redirect=shipping`);
   }, [history]);
 
@@ -87,7 +87,7 @@ export const Cart = (props: Props): JSX.Element => {
                     as='select'
                     value={orderItem.quantity}
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                      onChangeOrderItemQuantityHandler(e, orderItem.product)
+                      changeOrderItemQuantityHandler(e, orderItem.product)
                     }
                   >
                     {renderStockValues(orderItem.countInStock)}
@@ -97,7 +97,7 @@ export const Cart = (props: Props): JSX.Element => {
                   <Button
                     type='button'
                     variant='light'
-                    onClick={() => onRemoveOrderItemHandler(orderItem.product)}
+                    onClick={() => removeOrderItemHandler(orderItem.product)}
                   >
                     <i className='fa fa-trash' />
                   </Button>
@@ -107,7 +107,7 @@ export const Cart = (props: Props): JSX.Element => {
           ))}
       </ListGroup>
     );
-  }, [orderItems, onChangeOrderItemQuantityHandler, onRemoveOrderItemHandler, renderStockValues]);
+  }, [orderItems, changeOrderItemQuantityHandler, removeOrderItemHandler, renderStockValues]);
 
   return (
     <Row>
@@ -126,7 +126,7 @@ export const Cart = (props: Props): JSX.Element => {
                 type='button'
                 className='btn-block'
                 disabled={orderItems.length === 0}
-                onClick={onCheckoutHandler}
+                onClick={checkoutHandler}
               >
                 Proceed To Checkout
               </Button>

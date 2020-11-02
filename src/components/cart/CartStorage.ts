@@ -1,5 +1,5 @@
-import { OrderItem } from '../../shared/OrderItem';
-import { ShippingAddress } from '../../shared/ShippingAddress';
+import { OrderItem } from '../../externalTypes/OrderItem';
+import { ShippingAddress } from '../../externalTypes/ShippingAddress';
 import { PaymentMethod } from '../checkout/payment/PaymentMethod';
 
 const CartStorageKey = {

@@ -1,7 +1,7 @@
-import { AxiosInstance } from '../../http/AxiosInstance';
-import { PageableResult } from '../../shared/PageableResult';
-import { Product } from '../../shared/Product';
-import { Result } from '../../shared/Result';
+import { PageableResult } from '../../externalTypes/PageableResult';
+import { Product } from '../../externalTypes/Product';
+import { Result } from '../../externalTypes/Result';
+import { AppApi } from '../../http/AppApi';
 
 export type ProductApiPageResponse = PageableResult<Product, Error>;
 export type ProductApiResponse = Result<Product, Error>;
@@ -15,7 +15,7 @@ const ProductApiEndpoint = {
 
 const findAll = async (): Promise<ProductApiPageResponse> => {
   try {
-    const response = await AxiosInstance.get<ProductApiPageResponse>(ProductApiEndpoint.base());
+    const response = await AppApi.baseApi.get<ProductApiPageResponse>(ProductApiEndpoint.base());
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error);
@@ -24,7 +24,7 @@ const findAll = async (): Promise<ProductApiPageResponse> => {
 
 const findById = async (id: string): Promise<ProductApiResponse> => {
   try {
-    const response = await AxiosInstance.get<ProductApiResponse>(ProductApiEndpoint.byId(id));
+    const response = await AppApi.baseApi.get<ProductApiResponse>(ProductApiEndpoint.byId(id));
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error);
@@ -33,7 +33,7 @@ const findById = async (id: string): Promise<ProductApiResponse> => {
 
 const save = async (entity: Product): Promise<ProductApiResponse> => {
   try {
-    const response = await AxiosInstance.post<ProductApiResponse>(
+    const response = await AppApi.baseApi.post<ProductApiResponse>(
       ProductApiEndpoint.base(),
       entity,
     );
@@ -45,7 +45,7 @@ const save = async (entity: Product): Promise<ProductApiResponse> => {
 
 const updateById = async (id: string, query: Product): Promise<ProductApiResponse> => {
   try {
-    const response = await AxiosInstance.patch<ProductApiResponse>(
+    const response = await AppApi.baseApi.patch<ProductApiResponse>(
       ProductApiEndpoint.byId(id),
       query,
     );
@@ -57,7 +57,7 @@ const updateById = async (id: string, query: Product): Promise<ProductApiRespons
 
 const deleteById = async (id: string): Promise<void> => {
   try {
-    const response = await AxiosInstance.delete<ProductApiResponse>(ProductApiEndpoint.byId(id));
+    await AppApi.baseApi.delete<ProductApiResponse>(ProductApiEndpoint.byId(id));
   } catch (error) {
     return Promise.reject(error);
   }

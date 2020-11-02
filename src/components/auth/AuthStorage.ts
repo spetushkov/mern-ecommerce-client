@@ -1,4 +1,4 @@
-import { AuthData } from '../../shared/AuthData';
+import { AuthData } from '../../externalTypes/AuthData';
 
 const AuthStorageKey = {
   AUTH_AUTH_DATA: 'AUTH_AUTH_DATA',

@@ -1,10 +1,10 @@
 import { Dispatch } from 'redux';
-import { User } from '../../shared/User';
+import { User } from '../../externalTypes/User';
 import { AuthApi } from './AuthApi';
 import { AuthStorage } from './AuthStorage';
 import { AuthStore } from './AuthStore';
 
-const signUp = (user: User) => async (dispatch: Dispatch): Promise<void> => {
+const signUp = (user: Omit<User, 'id'>) => async (dispatch: Dispatch): Promise<void> => {
   try {
     dispatch(AuthStore.action('AUTH_LOAD'));
 
@@ -26,7 +26,9 @@ const signUp = (user: User) => async (dispatch: Dispatch): Promise<void> => {
   }
 };
 
-const sigIn = (user: Pick<User, 'name' | 'email'>) => async (dispatch: Dispatch): Promise<void> => {
+const sigIn = (user: Pick<User, 'email' | 'password'>) => async (
+  dispatch: Dispatch,
+): Promise<void> => {
   try {
     dispatch(AuthStore.action('AUTH_LOAD'));
 

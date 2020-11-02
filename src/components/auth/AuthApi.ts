@@ -1,7 +1,7 @@
-import { AxiosInstance } from '../../http/AxiosInstance';
-import { AuthData } from '../../shared/AuthData';
-import { Result } from '../../shared/Result';
-import { User } from '../../shared/User';
+import { AuthData } from '../../externalTypes/AuthData';
+import { Result } from '../../externalTypes/Result';
+import { User } from '../../externalTypes/User';
+import { AppApi } from '../../http/AppApi';
 
 export type AuthApiResponse = Result<AuthData, Error>;
 export type SignOutApiResponse = Result<boolean, Error>;
@@ -14,18 +14,18 @@ const AuthApiEndpoint = {
   signOut: (): string => `${baseUrl}/signOut`,
 };
 
-const signUp = async (user: User): Promise<AuthApiResponse> => {
+const signUp = async (user: Omit<User, 'id'>): Promise<AuthApiResponse> => {
   try {
-    const response = await AxiosInstance.post<AuthApiResponse>(AuthApiEndpoint.signUp(), user);
+    const response = await AppApi.baseApi.post<AuthApiResponse>(AuthApiEndpoint.signUp(), user);
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error);
   }
 };
 
-const signIn = async (user: Pick<User, 'name' | 'email'>): Promise<AuthApiResponse> => {
+const signIn = async (user: Pick<User, 'email' | 'password'>): Promise<AuthApiResponse> => {
   try {
-    const response = await AxiosInstance.post<AuthApiResponse>(AuthApiEndpoint.signIn(), user);
+    const response = await AppApi.baseApi.post<AuthApiResponse>(AuthApiEndpoint.signIn(), user);
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error);
@@ -34,7 +34,7 @@ const signIn = async (user: Pick<User, 'name' | 'email'>): Promise<AuthApiRespon
 
 const signOut = async (): Promise<SignOutApiResponse> => {
   try {
-    const response = await AxiosInstance.get<SignOutApiResponse>(AuthApiEndpoint.signOut());
+    const response = await AppApi.baseApi.get<SignOutApiResponse>(AuthApiEndpoint.signOut());
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error);

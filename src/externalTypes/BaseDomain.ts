@@ -4,6 +4,4 @@ export interface BaseDomain {
   createdBy?: string;
   updatedAt?: string;
   updatedBy?: string;
-
-  getPrimaryKeys(): string[];
 }

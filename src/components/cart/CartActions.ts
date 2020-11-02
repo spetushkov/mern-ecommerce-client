@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
-import { OrderItem } from '../../shared/OrderItem';
-import { Product } from '../../shared/Product';
-import { ShippingAddress } from '../../shared/ShippingAddress';
+import { OrderItem } from '../../externalTypes/OrderItem';
+import { Product } from '../../externalTypes/Product';
+import { ShippingAddress } from '../../externalTypes/ShippingAddress';
 import { State } from '../../store/Store';
 import { PaymentMethod } from '../checkout/payment/PaymentMethod';
 import { ProductApi } from '../product/ProductApi';

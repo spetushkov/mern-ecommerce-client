@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { SignIn } from '../components/auth/SignIn';
+import { SignUp } from '../components/auth/SignUp';
 import { State } from '../store/Store';
 
-export const SignInScreen = (): JSX.Element => {
+export const SignUpScreen = (): JSX.Element => {
   const authState = useSelector((state: State) => state.auth);
 
-  return <SignIn {...authState} />;
+  return <SignUp {...authState} />;
 };

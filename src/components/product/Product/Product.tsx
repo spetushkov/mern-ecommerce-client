@@ -1,21 +1,20 @@
 import React, { useCallback, useState } from 'react';
-import { Alert, Button, Card, Col, Form, Image, ListGroup, Row } from 'react-bootstrap';
-import { Link, useHistory } from 'react-router-dom';
-import { Spinner } from '../../Spinner';
+import { Button, Card, Col, Form, Image, ListGroup, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { StateError } from '../../StateError';
+import { StateLoader } from '../../StateLoader';
 import { ProductRating } from '../ProductRating';
 import { ProductState } from './ProductStore';
 
 type Props = ProductState;
 
 export const Product = (props: Props): JSX.Element => {
-  const history = useHistory();
-
   const { loading, data, error } = props;
   const product = data ? data.data : null;
 
   const [quantity, setQuantity] = useState(1);
 
-  const onChangeQuantityHandler = useCallback(
+  const changeQuantityHandler = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       e.preventDefault();
 
@@ -28,20 +27,28 @@ export const Product = (props: Props): JSX.Element => {
     if (!product) {
       return;
     }
+  }, [product]);
 
-    history.push(`/cart/${product.id}?quantity=${quantity}`);
-  }, [history, product, quantity]);
+  const renderCountInStockValues = useCallback(() => {
+    if (!product) {
+      return;
+    }
 
-  if (loading) {
-    return <Spinner />;
-  }
-
-  if (error) {
-    return <Alert variant='danger'>{error.message}</Alert>;
-  }
+    const keys = [...Array(product.countInStock).keys()];
+    return keys.map((key) => {
+      const optionvalue = key + 1;
+      return (
+        <option key={optionvalue} value={optionvalue}>
+          {optionvalue}
+        </option>
+      );
+    });
+  }, [product]);
 
   return (
     <>
+      {loading && <StateLoader />}
+      {error && <StateError error={error} />}
       <Link className='btn btn-light my-3' to='/'>
         Go Back
       </Link>
@@ -82,12 +89,8 @@ export const Product = (props: Props): JSX.Element => {
                     <Row>
                       <Col>Quantity:</Col>
                       <Col>
-                        <Form.Control
-                          as='select'
-                          value={quantity}
-                          onChange={onChangeQuantityHandler}
-                        >
-                          {renderStockValues(product.countInStock)}
+                        <Form.Control as='select' value={quantity} onChange={changeQuantityHandler}>
+                          {renderCountInStockValues()}
                         </Form.Control>
                       </Col>
                     </Row>
@@ -110,16 +113,4 @@ export const Product = (props: Props): JSX.Element => {
       )}
     </>
   );
-};
-
-const renderStockValues = (countInStock: number) => {
-  const keys = [...Array(countInStock).keys()];
-  return keys.map((key) => {
-    const optionvalue = key + 1;
-    return (
-      <option key={optionvalue} value={optionvalue}>
-        {optionvalue}
-      </option>
-    );
-  });
 };
