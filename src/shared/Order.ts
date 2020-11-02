@@ -1,28 +1,8 @@
 import { BaseDomain } from './BaseDomain';
-import { Product } from './Product';
+import { OrderItem } from './OrderItem';
+import { PaymentResult } from './PaymentResult';
+import { ShippingAddress } from './ShippingAddress';
 import { User } from './User';
-
-interface OrderItem {
-  name: string;
-  quantity: number;
-  image: string;
-  price: number;
-  product: Product | string; // reference: OrderItem MANY_TO_ONE Order
-}
-
-interface ShippingAddress {
-  address: string;
-  city: string;
-  postalCode: string;
-  country: string;
-}
-
-interface PaymentResult {
-  id?: string;
-  status?: string;
-  update_time?: string;
-  email_address?: string;
-}
 
 export interface Order extends BaseDomain {
   user: User | string; // reference: Order MANY_TO_ONE User

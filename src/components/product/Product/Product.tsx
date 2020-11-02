@@ -1,21 +1,21 @@
 import React, { useCallback, useState } from 'react';
 import { Alert, Button, Card, Col, Form, Image, ListGroup, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Spinner } from '../../Spinner';
 import { ProductRating } from '../ProductRating';
 import { ProductState } from './ProductStore';
 
-type Props = ProductState & {
-  history: any;
-};
+type Props = ProductState;
 
 export const Product = (props: Props): JSX.Element => {
-  const { loading, data, error, history } = props;
+  const history = useHistory();
+
+  const { loading, data, error } = props;
   const product = data ? data.data : null;
 
   const [quantity, setQuantity] = useState(1);
 
-  const onSelectQuantityHandler = useCallback(
+  const onChangeQuantityHandler = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       e.preventDefault();
 
@@ -85,7 +85,7 @@ export const Product = (props: Props): JSX.Element => {
                         <Form.Control
                           as='select'
                           value={quantity}
-                          onChange={onSelectQuantityHandler}
+                          onChange={onChangeQuantityHandler}
                         >
                           {renderStockValues(product.countInStock)}
                         </Form.Control>

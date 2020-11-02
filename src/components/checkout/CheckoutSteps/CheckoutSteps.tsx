@@ -1,5 +1,9 @@
 import React from 'react';
 import { Nav } from 'react-bootstrap';
+import { AuthEndpoint } from '../../auth/AuthEndpoint';
+import { OrderEndpoint } from '../order/OrderEndpoint';
+import { PaymentEndpoint } from '../payment/PaymentEndpoint';
+import { ShippingEndpoint } from '../shipping/ShippingEndpoint';
 import { CheckoutStepsItem } from './CheckoutStepsItem';
 
 type Props = {
@@ -14,10 +18,10 @@ export const CheckoutSteps = (props: Props): JSX.Element => {
 
   return (
     <Nav className='justify-content-center mb-4'>
-      <CheckoutStepsItem step={step1} linkUrl='/signin' linkName='Sign In' />
-      <CheckoutStepsItem step={step2} linkUrl='/shipping' linkName='Shipping' />
-      <CheckoutStepsItem step={step3} linkUrl='/payment' linkName='Payment' />
-      <CheckoutStepsItem step={step4} linkUrl='/placeorder' linkName='Place Order' />
+      <CheckoutStepsItem step={step1} linkUrl={AuthEndpoint.signIn()} linkName='Sign In' />
+      <CheckoutStepsItem step={step2} linkUrl={ShippingEndpoint.base()} linkName='Shipping' />
+      <CheckoutStepsItem step={step3} linkUrl={PaymentEndpoint.base()} linkName='Payment' />
+      <CheckoutStepsItem step={step4} linkUrl={OrderEndpoint.base()} linkName='Place Order' />
     </Nav>
   );
 };

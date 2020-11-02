@@ -1,18 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { Product } from '../components/product/Product/Product';
 import { ProductActions } from '../components/product/Product/ProductActions';
 import { State } from '../store/Store';
 
-type Props = {
-  match: any;
-  history: any;
+type Params = {
+  id: string;
 };
 
-export const ProductScreen = (props: Props): JSX.Element => {
+export const ProductScreen = (): JSX.Element => {
   const dispatch = useDispatch();
-  const { match, history } = props;
-  const { id } = match.params;
+  const { id } = useParams<Params>();
 
   const productState = useSelector((state: State) => state.product);
 
@@ -20,5 +19,5 @@ export const ProductScreen = (props: Props): JSX.Element => {
     dispatch(ProductActions.findById(id));
   }, [dispatch, id]);
 
-  return <Product {...productState} history={history} />;
+  return <Product {...productState} />;
 };

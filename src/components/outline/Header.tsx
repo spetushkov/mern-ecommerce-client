@@ -3,6 +3,8 @@ import React from 'react';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { LinkContainer } from 'react-router-bootstrap';
+import { AuthEndpoint } from '../auth/AuthEndpoint';
+import { CartEndpoint } from '../cart/CartEndpoint';
 
 export const Header = (): JSX.Element => {
   const { i18n } = useTranslation();
@@ -31,7 +33,7 @@ export const Header = (): JSX.Element => {
                 <NavDropdown.Item onClick={() => changeLanguage('en')}>English</NavDropdown.Item>
                 <NavDropdown.Item onClick={() => changeLanguage('de')}>German</NavDropdown.Item>
               </NavDropdown>
-              <LinkContainer to='/cart'>
+              <LinkContainer to={CartEndpoint.base()}>
                 <Nav.Link>
                   <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
                   Cart
@@ -39,13 +41,10 @@ export const Header = (): JSX.Element => {
               </LinkContainer>
               {userInfo ? (
                 <NavDropdown title='some name' id='userName'>
-                  <LinkContainer to='/profile'>
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
-                  </LinkContainer>
                   <NavDropdown.Item onClick={signOutHandler}>Sign Out</NavDropdown.Item>
                 </NavDropdown>
               ) : (
-                <LinkContainer to='/signin'>
+                <LinkContainer to={AuthEndpoint.signIn()}>
                   <Nav.Link>
                     <FontAwesomeIcon icon={['fas', 'user']} />
                     Sign In

@@ -12,6 +12,10 @@ const findById = (id: string) => async (dispatch: Dispatch): Promise<void> => {
       return;
     }
 
+    if (!data.data) {
+      return;
+    }
+
     dispatch(ProductStore.action('PRODUCT_SUCCESS', data));
   } catch (error) {
     dispatch(ProductStore.action('PRODUCT_FAIL', error));

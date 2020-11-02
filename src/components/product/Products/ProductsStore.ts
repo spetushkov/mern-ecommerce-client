@@ -9,6 +9,8 @@ const action = ReducerActionCreator<ActionType, DataPayload | Error>();
 type DataPayload = ProductApiPageResponse;
 type ActionType = 'PRODUCTS_LOAD' | 'PRODUCTS_SUCCESS' | 'PRODUCTS_FAIL';
 
+export type ProductsState = ReducerState<DataPayload> & {};
+
 const initialState: ProductsState = {
   loading: false,
   data: null,
@@ -30,7 +32,6 @@ const reducer = (state = initialState, action: Action): ProductsState => {
   }
 };
 
-export type ProductsState = ReducerState<DataPayload> & {};
 export const ProductsStore = {
   action,
   reducer,

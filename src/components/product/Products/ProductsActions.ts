@@ -12,6 +12,10 @@ const findAll = () => async (dispatch: Dispatch): Promise<void> => {
       return;
     }
 
+    if (!data.data) {
+      return;
+    }
+
     dispatch(ProductsStore.action('PRODUCTS_SUCCESS', data));
   } catch (error) {
     dispatch(ProductsStore.action('PRODUCTS_FAIL', error));
