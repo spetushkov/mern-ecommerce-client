@@ -3,9 +3,9 @@ import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { useQuery } from '../../http/useQuery';
-import { FormContainer } from '../FormContainer';
-import { StateError } from '../StateError';
-import { StateLoader } from '../StateLoader';
+import { StoreError } from '../../store/StoreError';
+import { StoreLoader } from '../../store/StoreLoader';
+import { JustifyCenter } from '../JustifyCenter';
 import { AuthActions } from './AuthActions';
 import { AuthEndpoint } from './AuthEndpoint';
 import { AuthState } from './AuthStore';
@@ -42,9 +42,9 @@ export const SignIn = (props: Props): JSX.Element => {
 
   return (
     <>
-      {loading && <StateLoader />}
-      {error && <StateError error={error} />}
-      <FormContainer>
+      {loading && <StoreLoader />}
+      {error && <StoreError error={error} />}
+      <JustifyCenter>
         <h1>Sign In</h1>
         <Form onSubmit={submitHandler}>
           <Form.Group controlId='email'>
@@ -81,7 +81,7 @@ export const SignIn = (props: Props): JSX.Element => {
             </Link>
           </Col>
         </Row>
-      </FormContainer>
+      </JustifyCenter>
     </>
   );
 };

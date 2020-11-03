@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { Product } from '../../../externalTypes/Product';
+import { Product } from '../../../external/Product';
 import { ProductEndpoint } from '../ProductEndpoint';
 import { ProductRating } from '../ProductRating';
 

@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { Button, Card, Col, Form, Image, ListGroup, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { StateError } from '../../StateError';
-import { StateLoader } from '../../StateLoader';
+import { StoreError } from '../../../store/StoreError';
+import { StoreLoader } from '../../../store/StoreLoader';
 import { ProductRating } from '../ProductRating';
 import { ProductState } from './ProductStore';
 
@@ -47,8 +47,8 @@ export const Product = (props: Props): JSX.Element => {
 
   return (
     <>
-      {loading && <StateLoader />}
-      {error && <StateError error={error} />}
+      {loading && <StoreLoader />}
+      {error && <StoreError error={error} />}
       <Link className='btn btn-light my-3' to='/'>
         Go Back
       </Link>

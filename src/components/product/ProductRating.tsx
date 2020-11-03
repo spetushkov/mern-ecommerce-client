@@ -1,6 +1,6 @@
 import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
 import React, { useCallback } from 'react';
-import { Product } from '../../externalTypes/Product';
+import { Product } from '../../external/Product';
 
 type Props = {
   product: Product;

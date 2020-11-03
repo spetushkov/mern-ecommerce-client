@@ -1,7 +1,7 @@
-import { PageableResult } from '../../externalTypes/PageableResult';
-import { Product } from '../../externalTypes/Product';
-import { Result } from '../../externalTypes/Result';
-import { AppApi } from '../../http/AppApi';
+import { AppApi } from '../../app/AppApi';
+import { PageableResult } from '../../external/PageableResult';
+import { Product } from '../../external/Product';
+import { Result } from '../../external/Result';
 
 export type ProductApiPageResponse = PageableResult<Product, Error>;
 export type ProductApiResponse = Result<Product, Error>;

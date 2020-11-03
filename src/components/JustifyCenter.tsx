@@ -5,7 +5,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const FormContainer = (props: Props): JSX.Element => {
+export const JustifyCenter = (props: Props): JSX.Element => {
   const { children } = props;
 
   return (

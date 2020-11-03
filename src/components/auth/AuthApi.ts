@@ -1,7 +1,7 @@
-import { AuthData } from '../../externalTypes/AuthData';
-import { Result } from '../../externalTypes/Result';
-import { User } from '../../externalTypes/User';
-import { AppApi } from '../../http/AppApi';
+import { AppApi } from '../../app/AppApi';
+import { AuthData } from '../../external/AuthData';
+import { Result } from '../../external/Result';
+import { User } from '../../external/User';
 
 export type AuthApiResponse = Result<AuthData, Error>;
 export type SignOutApiResponse = Result<boolean, Error>;

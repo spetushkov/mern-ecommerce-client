@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-bootstrap';
-import { ApiError } from '../http/AppApi';
+import { ApiError } from '../app/AppApi';
 
 type Props = {
   error: ApiError | Error;
 };
 
-export const StateError = (props: Props): JSX.Element => {
+export const StoreError = (props: Props): JSX.Element => {
   const { error } = props;
 
   const message = error.message;

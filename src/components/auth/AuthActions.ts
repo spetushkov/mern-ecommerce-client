@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { User } from '../../externalTypes/User';
+import { User } from '../../external/User';
 import { AuthApi } from './AuthApi';
 import { AuthStorage } from './AuthStorage';
 import { AuthStore } from './AuthStore';

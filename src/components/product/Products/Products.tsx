@@ -1,8 +1,8 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { StateError } from '../../StateError';
-import { StateLoader } from '../../StateLoader';
+import { StoreError } from '../../../store/StoreError';
+import { StoreLoader } from '../../../store/StoreLoader';
 import { ProductsItem } from './ProductsItem';
 import { ProductsState } from './ProductsStore';
 
@@ -16,10 +16,10 @@ export const Products = (props: Props): JSX.Element => {
 
   return (
     <>
-      {loading && <StateLoader />}
-      {error && <StateError error={error} />}
+      {loading && <StoreLoader />}
+      {error && <StoreError error={error} />}
       <h4>{t('common:products.header', { namespace: 'common' })}</h4>
-      <h4>{t('Products:products.header', { namespace: 'Products' })}</h4>
+      <h4>{t('Products:products.header', { namespace: 'Products!' })}</h4>
       <Row>
         {products &&
           products.map((product) => {

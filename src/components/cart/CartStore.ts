@@ -1,5 +1,5 @@
-import { OrderItem } from '../../externalTypes/OrderItem';
-import { ShippingAddress } from '../../externalTypes/ShippingAddress';
+import { OrderItem } from '../../external/OrderItem';
+import { ShippingAddress } from '../../external/ShippingAddress';
 import { ReducerAction } from '../../store/reducer/ReducerAction';
 import { ReducerActionCreator } from '../../store/reducer/ReducerActionCreator';
 import { PaymentMethod } from '../checkout/payment/PaymentMethod';

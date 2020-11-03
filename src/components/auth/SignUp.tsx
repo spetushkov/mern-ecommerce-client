@@ -1,14 +1,19 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, Button, Col, Form, Row } from 'react-bootstrap';
+import { FormikHelpers, useFormik } from 'formik';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { useQuery } from '../../http/useQuery';
-import { FormContainer } from '../FormContainer';
-import { StateError } from '../StateError';
-import { StateLoader } from '../StateLoader';
-import { AuthActions } from './AuthActions';
+import { StoreError } from '../../store/StoreError';
+import { StoreLoader } from '../../store/StoreLoader';
+import { FormControl } from '../form/FormControl';
+import { FormControlError } from '../form/FormControlError';
+import { FormError } from '../form/FormError';
+import { validateForm } from '../form/validateForm';
+import { JustifyCenter } from '../JustifyCenter';
 import { AuthEndpoint } from './AuthEndpoint';
 import { AuthState } from './AuthStore';
+import { SignUpForm } from './SignUpForm';
 
 type Props = AuthState;
 
@@ -20,12 +25,6 @@ export const SignUp = (props: Props): JSX.Element => {
   const { loading, data, error } = props;
   const authData = data ? data.data : null;
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState('');
-
   const redirect = query.get('redirect');
 
   useEffect(() => {
@@ -34,61 +33,92 @@ export const SignUp = (props: Props): JSX.Element => {
     }
   }, [authData, history, redirect]);
 
-  const submitHandler = useCallback(
-    (e: React.FormEvent<HTMLElement>) => {
-      e.preventDefault();
+  const [formErrors, setFormErrors] = useState([] as string[]);
 
-      if (password !== confirmPassword) {
-        setMessage('Passwords do not match');
+  const submitFormHandler = useCallback(
+    (values: SignUpForm, actions: FormikHelpers<SignUpForm>): void => {
+      console.log(JSON.stringify(values));
+      actions.setSubmitting(false);
+
+      if (values.password !== values.confirmPassword) {
+        setFormErrors(['Passwords do not match']);
       } else {
-        dispatch(AuthActions.signUp({ name, email, password }));
+        // dispatch(AuthActions.signUp({ name, email, password }));
       }
     },
-    [dispatch, name, email, password, confirmPassword],
+    [],
   );
+
+  const initialFormState = useMemo(() => new SignUpForm(), []);
+
+  const signUpForm = useFormik<SignUpForm>({
+    initialValues: initialFormState,
+    validate: (values) => validateForm(values, SignUpForm),
+    onSubmit: submitFormHandler,
+  });
 
   return (
     <>
-      {loading && <StateLoader />}
-      {error && <StateError error={error} />}
-      <FormContainer>
+      {loading && <StoreLoader />}
+      {error && <StoreError error={error} />}
+      <JustifyCenter>
         <h1>Sign Up</h1>
-        {message && <Alert variant='danger'>{message}</Alert>}
-        <Form onSubmit={submitHandler}>
-          <Form.Group controlId='name'>
-            <Form.Label>Name</Form.Label>
+        {<FormError errors={formErrors} />}
+        <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => signUpForm.handleSubmit(e)}>
+          <FormControl
+            form={signUpForm}
+            controlId='userName'
+            type='text'
+            label='User Name'
+            placeholder='Enter user name'
+          />
+          {/* <Form.Group controlId='userName'>
+            <Form.Label>User Name</Form.Label>
             <Form.Control
-              placeholder='Enter name'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+              name='userName'
+              type='text'
+              placeholder='Enter user name'
+              onChange={signUpForm.handleChange}
+              onBlur={signUpForm.handleBlur}
+              value={signUpForm.values.userName}
+            />
+            <FormControlError form={signUpForm} controlId='userName' />
+          </Form.Group> */}
           <Form.Group controlId='email'>
             <Form.Label>Email Address</Form.Label>
             <Form.Control
+              name='email'
               type='email'
               placeholder='Enter email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            ></Form.Control>
+              onChange={signUpForm.handleChange}
+              onBlur={signUpForm.handleBlur}
+              value={signUpForm.values.email}
+            />
+            <FormControlError form={signUpForm} controlId='email' />
           </Form.Group>
           <Form.Group controlId='password'>
             <Form.Label>Password</Form.Label>
             <Form.Control
+              name='password'
               type='password'
               placeholder='Enter password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            ></Form.Control>
+              onChange={signUpForm.handleChange}
+              onBlur={signUpForm.handleBlur}
+              value={signUpForm.values.password}
+            />
+            <FormControlError form={signUpForm} controlId='password' />
           </Form.Group>
           <Form.Group controlId='confirmPassword'>
             <Form.Label>Confirm Password</Form.Label>
             <Form.Control
+              name='confirmPassword'
               type='password'
               placeholder='Confirm password'
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            ></Form.Control>
+              onChange={signUpForm.handleChange}
+              onBlur={signUpForm.handleBlur}
+              value={signUpForm.values.confirmPassword}
+            />
+            <FormControlError form={signUpForm} controlId='confirmPassword' />
           </Form.Group>
           <Button type='submit' variant='primary'>
             Sign Up
@@ -106,7 +136,7 @@ export const SignUp = (props: Props): JSX.Element => {
             </Link>
           </Col>
         </Row>
-      </FormContainer>
+      </JustifyCenter>
     </>
   );
 };
