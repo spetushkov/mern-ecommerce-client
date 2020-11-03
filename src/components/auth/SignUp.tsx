@@ -52,8 +52,6 @@ export const SignUp = (props: Props): JSX.Element => {
       {loading && <StateLoader />}
       {error && <StateError error={error} />}
       <FormContainer>
-        {loading && <StateLoader />}
-        {error && <StateError error={error} />}
         <h1>Sign Up</h1>
         {message && <Alert variant='danger'>{message}</Alert>}
         <Form onSubmit={submitHandler}>
