@@ -1,30 +1,26 @@
+import { useField } from 'formik';
 import React from 'react';
-import { Form } from 'react-bootstrap';
-import { Form as FormikForm } from './Form';
+import { Form, FormControlProps } from 'react-bootstrap';
 import { FormControlError } from './FormControlError';
 
-type Props<T> = {
-  form: FormikForm<T>;
-  controlId: keyof T;
-  label?: string;
-  type?: string;
-  placeholder?: string;
-};
+type Props<T> = React.HTMLProps<any> &
+  FormControlProps & {
+    schema: T;
+    id: Extract<keyof T, string>;
+    label?: string;
+  };
 
 export const FormControl = <T,>(props: React.PropsWithChildren<Props<T>>): JSX.Element => {
-  const { form, controlId, label, ...restProps } = props;
+  const { id, label, ...restProps } = props;
+
+  const [fieldProps, fieldMeta] = useField(id);
+  console.log(fieldProps, fieldMeta);
 
   return (
-    <Form.Group controlId={controlId as string}>
+    <Form.Group controlId={id}>
       {label && <Form.Label>{label}</Form.Label>}
-      <Form.Control
-        {...restProps}
-        name={controlId as string}
-        value={form.values[controlId] as any}
-        onChange={form.handleChange}
-        onBlur={form.handleBlur}
-      />
-      <FormControlError form={form} controlId={controlId} />
+      <Form.Control {...fieldProps} {...restProps} name={id} />
+      <FormControlError fieldMeta={fieldMeta} />
     </Form.Group>
   );
 };
