@@ -1,5 +1,6 @@
 import { FieldMetaProps } from 'formik';
 import React from 'react';
+import { Style } from '../../style/Style';
 
 interface Props<T> {
   fieldMeta: FieldMetaProps<T>;
@@ -14,5 +15,19 @@ export const FormControlError = <T,>(
     return null;
   }
 
-  return <div>{fieldMeta.error}</div>;
+  const errors = [...fieldMeta.error];
+
+  return (
+    <div>
+      {errors.map((error, index) => (
+        <span key={index} style={styles.container}>
+          {error}
+        </span>
+      ))}
+    </div>
+  );
+};
+
+const styles: Style = {
+  container: { display: 'block', color: 'red' },
 };

@@ -1,14 +1,14 @@
-import { Formik, FormikHelpers } from 'formik';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Button, Col, Form as BSForm, Row } from 'react-bootstrap';
+import { Formik, FormikErrors, FormikHelpers, FormikProps } from 'formik';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { useQuery } from '../../http/useQuery';
 import { StoreError } from '../../store/StoreError';
 import { StoreLoader } from '../../store/StoreLoader';
-import { Form } from '../form/Form';
 import { FormControl } from '../form/FormControl';
 import { FormError } from '../form/FormError';
+import { FormUtils } from '../form/FormUtils';
 import { JustifyCenter } from '../JustifyCenter';
 import { AuthEndpoint } from './AuthEndpoint';
 import { AuthState } from './AuthStore';
@@ -36,26 +36,33 @@ export const SignUp = (props: Props): JSX.Element => {
 
   const initialFormState = useMemo(() => new SignUpForm(), []);
 
-  const validateFormHandler = useCallback((values: SignUpForm) => {
-    return Form.validate(values, SignUpForm);
-  }, []);
+  const validateFormHandler = async (values: SignUpForm): Promise<FormikErrors<SignUpForm>> => {
+    try {
+      const result = await FormUtils.validate(values, SignUpForm);
+      return Promise.resolve(result);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  };
 
-  const submitFormHandler = useCallback(
-    (values: SignUpForm, actions: FormikHelpers<SignUpForm>) => {
-      console.log(JSON.stringify(values));
+  const submitFormHandler = (values: SignUpForm, actions: FormikHelpers<SignUpForm>): void => {
+    console.log(JSON.stringify(values));
 
-      // const formState = Form.getState(values, SignUpForm);
+    // const formState = Form.getState(values, SignUpForm);
 
-      if (values.password !== values.confirmPassword) {
-        setFormErrors(['Passwords do not match']);
-      } else {
-        // dispatch(AuthActions.signUp({ name, email, password }));
-      }
+    if (values.password !== values.confirmPassword) {
+      setFormErrors(['Passwords do not match']);
+    } else {
+      // dispatch(AuthActions.signUp({ name, email, password }));
+    }
 
-      actions.setSubmitting(false);
-    },
-    [],
-  );
+    actions.setSubmitting(false);
+  };
+
+  const isFormValid = (form: FormikProps<SignUpForm>): boolean => {
+    // const result = form.isSubmitting;
+    return true;
+  };
 
   return (
     <>
@@ -71,7 +78,7 @@ export const SignUp = (props: Props): JSX.Element => {
           {(form) => (
             <>
               {<FormError errors={formErrors} />}
-              <BSForm onSubmit={(e: React.FormEvent<HTMLFormElement>) => form.handleSubmit(e)}>
+              <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => form.handleSubmit(e)}>
                 <FormControl
                   schema={form.values}
                   id='userName'
@@ -100,10 +107,10 @@ export const SignUp = (props: Props): JSX.Element => {
                   label='Confirm Password'
                   placeholder='Confirm password'
                 />
-                <Button type='submit' variant='primary' disabled={form.isSubmitting}>
+                <Button type='submit' variant='primary' disabled={!isFormValid(form)}>
                   Sign Up
                 </Button>
-              </BSForm>
+              </Form>
             </>
           )}
         </Formik>

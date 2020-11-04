@@ -44,19 +44,19 @@ export const Cart = (props: Props): JSX.Element => {
     [dispatch],
   );
 
-  const checkoutHandler = useCallback(() => {
+  const checkoutHandler = () => {
     history.push(`${AuthEndpoint.signIn()}?redirect=shipping`);
-  }, [history]);
+  };
 
-  const renderEmptyCart = useCallback(() => {
+  const renderEmptyCart = () => {
     return (
       <Alert variant='info'>
         Your cart is empty <Link to='/'>Go Back</Link>
       </Alert>
     );
-  }, []);
+  };
 
-  const renderStockValues = useCallback((countInStock: number) => {
+  const renderOrderItemStockValues = useCallback((countInStock: number) => {
     const keys = [...Array(countInStock).keys()];
     return keys.map((key) => {
       const optionValue = key + 1;
@@ -68,7 +68,7 @@ export const Cart = (props: Props): JSX.Element => {
     });
   }, []);
 
-  const renderCartItems = useCallback(() => {
+  const renderCartItems = () => {
     return (
       <ListGroup variant='flush'>
         {orderItems &&
@@ -90,7 +90,7 @@ export const Cart = (props: Props): JSX.Element => {
                       changeOrderItemQuantityHandler(e, orderItem.product)
                     }
                   >
-                    {renderStockValues(orderItem.countInStock)}
+                    {renderOrderItemStockValues(orderItem.countInStock)}
                   </Form.Control>
                 </Col>
                 <Col md={3}>
@@ -107,7 +107,7 @@ export const Cart = (props: Props): JSX.Element => {
           ))}
       </ListGroup>
     );
-  }, [orderItems, changeOrderItemQuantityHandler, removeOrderItemHandler, renderStockValues]);
+  };
 
   return (
     <Row>

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Button, Card, Col, Form, Image, ListGroup, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { StoreError } from '../../../store/StoreError';
@@ -14,36 +14,36 @@ export const Product = (props: Props): JSX.Element => {
 
   const [quantity, setQuantity] = useState(1);
 
-  const changeQuantityHandler = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
-      e.preventDefault();
+  const changeQuantityHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault();
 
-      setQuantity(Number(e.target.value));
+    setQuantity(Number(e.target.value));
+  };
+
+  const addToCartHandler = () => {
+    if (!product) {
+      return;
+    }
+  };
+
+  const renderCountInStockValues = useMemo(
+    () => () => {
+      if (!product) {
+        return;
+      }
+
+      const keys = [...Array(product.countInStock).keys()];
+      return keys.map((key) => {
+        const optionvalue = key + 1;
+        return (
+          <option key={optionvalue} value={optionvalue}>
+            {optionvalue}
+          </option>
+        );
+      });
     },
-    [setQuantity],
+    [product],
   );
-
-  const addToCartHandler = useCallback(() => {
-    if (!product) {
-      return;
-    }
-  }, [product]);
-
-  const renderCountInStockValues = useCallback(() => {
-    if (!product) {
-      return;
-    }
-
-    const keys = [...Array(product.countInStock).keys()];
-    return keys.map((key) => {
-      const optionvalue = key + 1;
-      return (
-        <option key={optionvalue} value={optionvalue}>
-          {optionvalue}
-        </option>
-      );
-    });
-  }, [product]);
 
   return (
     <>

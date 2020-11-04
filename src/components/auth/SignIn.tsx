@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
@@ -31,14 +31,11 @@ export const SignIn = (props: Props): JSX.Element => {
     }
   }, [authData, history, redirect]);
 
-  const submitHandler = useCallback(
-    (e: React.FormEvent<HTMLElement>) => {
-      e.preventDefault();
+  const submitHandler = (e: React.FormEvent<HTMLElement>) => {
+    e.preventDefault();
 
-      dispatch(AuthActions.sigIn({ email, password }));
-    },
-    [dispatch, email, password],
-  );
+    dispatch(AuthActions.sigIn({ email, password }));
+  };
 
   return (
     <>

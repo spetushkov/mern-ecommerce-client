@@ -16,7 +16,7 @@ const validate = async <T>(values: T, entityClass: Clazz<T>): Promise<FormikErro
   }
 };
 
-export const Form = {
+export const FormUtils = {
   getState,
   validate,
 };
