@@ -12,7 +12,7 @@ type Props<T> = {
 };
 
 export const FormControl = <T,>(props: React.PropsWithChildren<Props<T>>): JSX.Element => {
-  const { controlId, label, form, ...restProps } = props;
+  const { form, controlId, label, ...restProps } = props;
 
   return (
     <Form.Group controlId={controlId as string}>

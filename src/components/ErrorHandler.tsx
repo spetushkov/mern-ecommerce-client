@@ -1,4 +1,4 @@
-import React, { ErrorInfo } from 'react';
+import React from 'react';
 import { Logger } from '../log/Logger';
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
 
 type State = {
   error?: Error;
-  errorInfo?: ErrorInfo;
+  errorInfo?: React.ErrorInfo;
 };
 
 export class ErrorHandler extends React.Component<Props, State> {
@@ -15,7 +15,7 @@ export class ErrorHandler extends React.Component<Props, State> {
     return { error };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
     Logger.log(JSON.stringify({ error, errorInfo }));
 
     this.setState({ errorInfo });

@@ -7,7 +7,6 @@ import { useQuery } from '../../http/useQuery';
 import { StoreError } from '../../store/StoreError';
 import { StoreLoader } from '../../store/StoreLoader';
 import { FormControl } from '../form/FormControl';
-import { FormControlError } from '../form/FormControlError';
 import { FormError } from '../form/FormError';
 import { validateForm } from '../form/validateForm';
 import { JustifyCenter } from '../JustifyCenter';
@@ -72,54 +71,27 @@ export const SignUp = (props: Props): JSX.Element => {
             label='User Name'
             placeholder='Enter user name'
           />
-          {/* <Form.Group controlId='userName'>
-            <Form.Label>User Name</Form.Label>
-            <Form.Control
-              name='userName'
-              type='text'
-              placeholder='Enter user name'
-              onChange={signUpForm.handleChange}
-              onBlur={signUpForm.handleBlur}
-              value={signUpForm.values.userName}
-            />
-            <FormControlError form={signUpForm} controlId='userName' />
-          </Form.Group> */}
-          <Form.Group controlId='email'>
-            <Form.Label>Email Address</Form.Label>
-            <Form.Control
-              name='email'
-              type='email'
-              placeholder='Enter email'
-              onChange={signUpForm.handleChange}
-              onBlur={signUpForm.handleBlur}
-              value={signUpForm.values.email}
-            />
-            <FormControlError form={signUpForm} controlId='email' />
-          </Form.Group>
-          <Form.Group controlId='password'>
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              name='password'
-              type='password'
-              placeholder='Enter password'
-              onChange={signUpForm.handleChange}
-              onBlur={signUpForm.handleBlur}
-              value={signUpForm.values.password}
-            />
-            <FormControlError form={signUpForm} controlId='password' />
-          </Form.Group>
-          <Form.Group controlId='confirmPassword'>
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
-              name='confirmPassword'
-              type='password'
-              placeholder='Confirm password'
-              onChange={signUpForm.handleChange}
-              onBlur={signUpForm.handleBlur}
-              value={signUpForm.values.confirmPassword}
-            />
-            <FormControlError form={signUpForm} controlId='confirmPassword' />
-          </Form.Group>
+          <FormControl
+            form={signUpForm}
+            controlId='email'
+            type='email'
+            label='Email Address'
+            placeholder='Enter email'
+          />
+          <FormControl
+            form={signUpForm}
+            controlId='password'
+            type='password'
+            label='Password'
+            placeholder='Enter password'
+          />
+          <FormControl
+            form={signUpForm}
+            controlId='confirmPassword'
+            type='password'
+            label='Confirm password'
+            placeholder='Confirm password'
+          />
           <Button type='submit' variant='primary'>
             Sign Up
           </Button>
