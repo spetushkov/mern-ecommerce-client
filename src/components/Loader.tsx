@@ -1,6 +1,5 @@
 import React from 'react';
 import { Spinner } from 'react-bootstrap';
-import { Style } from '../style/Style';
 
 export const Loader = (): JSX.Element => {
   return (
@@ -10,6 +9,10 @@ export const Loader = (): JSX.Element => {
   );
 };
 
-const styles: Style = {
+type Styles = {
+  container: React.CSSProperties;
+};
+
+const styles: Styles = {
   container: { width: '100px', height: '100px', margin: 'auto', display: 'block' },
 };

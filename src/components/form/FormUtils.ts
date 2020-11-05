@@ -1,4 +1,4 @@
-import { FormikErrors } from 'formik';
+import { FormikErrors, FormikProps } from 'formik';
 import { ClassTransformer, Clazz } from '../../class/ClassTransformer';
 import { ClassValidator } from '../../class/ClassValidator';
 
@@ -16,7 +16,12 @@ const validate = async <T>(values: T, entityClass: Clazz<T>): Promise<FormikErro
   }
 };
 
+const isSubmittable = <T>(form: FormikProps<T>): boolean => {
+  return !form.isValidating && !form.isSubmitting && form.dirty && form.isValid;
+};
+
 export const FormUtils = {
   getState,
   validate,
+  isSubmittable,
 };

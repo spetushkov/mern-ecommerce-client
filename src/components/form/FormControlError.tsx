@@ -1,22 +1,17 @@
-import { FieldMetaProps } from 'formik';
 import React from 'react';
-import { Style } from '../../style/Style';
 
-interface Props<T> {
-  fieldMeta: FieldMetaProps<T>;
-}
+type Props = {
+  error?: string;
+};
 
-export const FormControlError = <T,>(
-  props: React.PropsWithChildren<Props<T>>,
-): JSX.Element | null => {
-  const { fieldMeta } = props;
+export const FormControlError = (props: Props): JSX.Element | null => {
+  const { error } = props;
 
-  if (!(fieldMeta.touched && fieldMeta.error)) {
+  if (!error) {
     return null;
   }
 
-  const errors = [...fieldMeta.error];
-
+  const errors = [...error];
   return (
     <div>
       {errors.map((error, index) => (
@@ -28,6 +23,10 @@ export const FormControlError = <T,>(
   );
 };
 
-const styles: Style = {
+type Styles = {
+  container: React.CSSProperties;
+};
+
+const styles: Styles = {
   container: { display: 'block', color: 'red' },
 };

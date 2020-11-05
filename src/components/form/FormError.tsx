@@ -1,6 +1,5 @@
 import React from 'react';
 import { Alert } from 'react-bootstrap';
-import { Style } from '../../style/Style';
 
 type Props = {
   errors: string[];
@@ -24,6 +23,10 @@ export const FormError = (props: Props): JSX.Element | null => {
   );
 };
 
-const styles: Style = {
+type Styles = {
+  container: React.CSSProperties;
+};
+
+const styles: Styles = {
   container: { display: 'block' },
 };

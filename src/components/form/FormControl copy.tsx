@@ -20,33 +20,23 @@ type Props<T> = GenericFieldHTMLAttributes &
     id: Extract<keyof T, string>;
     label?: string;
     helpText?: string;
-    instantFeedback?: boolean;
     controlRef?: React.RefObject<HTMLInputElement>;
     callbackRef?: (inputElement: HTMLInputElement) => void;
   };
 
 export const FormControl = <T,>(props: React.PropsWithChildren<Props<T>>): JSX.Element => {
-  const {
-    id,
-    label,
-    helpText,
-    instantFeedback = false,
-    controlRef,
-    callbackRef,
-    ...restProps
-  } = props;
+  const { id, label, helpText, controlRef, callbackRef, ...restProps } = props;
   const [field, meta] = useField(id);
 
-  // Display isValid status icon if:
-  // - instantFeedback is enabled
-  // - AND the input is focused AND value is longer than 2 characters or the input has been visited
-  // - AND there are no errors
+  // Show instant feedback if:
+  // - the input is focused AND value is longer than 2 characters
+  // - or, the input has been visited (touched === true)
   const [didFocus, setDidFocus] = useState(false);
   const onFocusHandler = () => setDidFocus(true);
-  const isValid =
-    instantFeedback && ((didFocus && field.value.trim().length > 2) || meta.touched) && !meta.error;
+  const showFeedback = (!!didFocus && field.value.trim().length > 2) || meta.touched;
 
   const isInvalid = !!(meta.touched && meta.error);
+  const isValid = showFeedback && !meta.error;
 
   return (
     <Form.Group controlId={id}>

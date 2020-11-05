@@ -15,7 +15,7 @@ i18n
     defaultNS: 'common',
     nonExplicitSupportedLngs: true,
     supportedLngs: ['en', 'de'],
-    load: 'all',
+    load: 'languageOnly',
     fallbackLng: false,
     debug: process.env.NODE_ENV === 'development',
     interpolation: {

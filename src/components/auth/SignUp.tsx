@@ -13,6 +13,7 @@ import { JustifyCenter } from '../JustifyCenter';
 import { AuthEndpoint } from './AuthEndpoint';
 import { AuthState } from './AuthStore';
 import { SignUpForm } from './SignUpForm';
+import { SignUpFormUtils } from './SignUpFormUtils';
 
 type Props = AuthState;
 
@@ -45,23 +46,23 @@ export const SignUp = (props: Props): JSX.Element => {
     }
   };
 
-  const submitFormHandler = (values: SignUpForm, actions: FormikHelpers<SignUpForm>): void => {
-    console.log(JSON.stringify(values));
+  const isFormSubmittable = (form: FormikProps<SignUpForm>) => {
+    return FormUtils.isSubmittable(form);
+  };
 
-    // const formState = Form.getState(values, SignUpForm);
+  const submitFormHandler = async (
+    values: SignUpForm,
+    actions: FormikHelpers<SignUpForm>,
+  ): Promise<void> => {
+    const formState = FormUtils.getState(values, SignUpForm);
 
-    if (values.password !== values.confirmPassword) {
+    if (formState.password !== formState.confirmPassword) {
       setFormErrors(['Passwords do not match']);
     } else {
       // dispatch(AuthActions.signUp({ name, email, password }));
     }
 
     actions.setSubmitting(false);
-  };
-
-  const isFormValid = (form: FormikProps<SignUpForm>): boolean => {
-    // const result = form.isSubmitting;
-    return true;
   };
 
   return (
@@ -78,7 +79,10 @@ export const SignUp = (props: Props): JSX.Element => {
           {(form) => (
             <>
               {<FormError errors={formErrors} />}
-              <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => form.handleSubmit(e)}>
+              <Form
+                onSubmit={(e: React.FormEvent<HTMLFormElement>) => form.handleSubmit(e)}
+                noValidate
+              >
                 <FormControl
                   schema={form.values}
                   id='userName'
@@ -99,6 +103,8 @@ export const SignUp = (props: Props): JSX.Element => {
                   type='password'
                   label='Password'
                   placeholder='Password'
+                  helpText={SignUpFormUtils.passwordMinLength('6')}
+                  instantFeedback={true}
                 />
                 <FormControl
                   schema={form.values}
@@ -107,8 +113,8 @@ export const SignUp = (props: Props): JSX.Element => {
                   label='Confirm Password'
                   placeholder='Confirm password'
                 />
-                <Button type='submit' variant='primary' disabled={!isFormValid(form)}>
-                  Sign Up
+                <Button type='submit' variant='primary' disabled={!isFormSubmittable(form)}>
+                  {form.isSubmitting ? 'Sign Up...' : 'Sign Up'}
                 </Button>
               </Form>
             </>
