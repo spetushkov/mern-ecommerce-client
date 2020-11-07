@@ -9,8 +9,7 @@ import { ProductState } from './ProductStore';
 type Props = ProductState;
 
 export const Product = (props: Props): JSX.Element => {
-  const { loading, data, error } = props;
-  const product = data ? data.data : null;
+  const { loading, data: product, error } = props;
 
   const [quantity, setQuantity] = useState(1);
 

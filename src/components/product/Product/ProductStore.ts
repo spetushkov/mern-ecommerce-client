@@ -1,15 +1,19 @@
+import { Product } from '../../../external/Product';
 import { ReducerAction } from '../../../store/reducer/ReducerAction';
 import { ReducerActionCreator } from '../../../store/reducer/ReducerActionCreator';
-import { ReducerState } from '../../../store/reducer/ReducerState';
-import { ProductApiResponse } from '../ProductApi';
 
-type Action = ReducerAction<ActionType, DataPayload>;
-const action = ReducerActionCreator<ActionType, DataPayload | Error>();
+type Action = ReducerAction<ActionType, Payload>;
+const action = ReducerActionCreator<ActionType, Payload | Error>();
 
-type DataPayload = ProductApiResponse;
+type Payload = Product;
+
 type ActionType = 'PRODUCT_LOAD' | 'PRODUCT_SUCCESS' | 'PRODUCT_FAIL';
 
-export type ProductState = ReducerState<DataPayload> & {};
+export type ProductState = {
+  loading: boolean;
+  data: Product | null;
+  error: Error | null;
+};
 
 const initialState: ProductState = {
   loading: false,
@@ -24,7 +28,7 @@ const reducer = (state = initialState, action: Action): ProductState => {
     case 'PRODUCT_LOAD':
       return { ...state, loading: true, error: null };
     case 'PRODUCT_SUCCESS':
-      return { ...state, loading: false, error: null, data: payload as DataPayload };
+      return { ...state, loading: false, error: null, data: payload as Product };
     case 'PRODUCT_FAIL':
       return { ...state, loading: false, error: payload as Error };
     default:

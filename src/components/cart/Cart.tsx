@@ -12,7 +12,7 @@ type Props = CartState;
 export const Cart = (props: Props): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { orderItems } = props;
+  const { orderItems } = props.data;
 
   const getOrderItemsCount = useMemo(
     () => () => {

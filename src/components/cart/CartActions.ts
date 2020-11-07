@@ -15,17 +15,17 @@ const addOrderItem = (id: string, quantity: number) => async (
   try {
     dispatch(CartStore.action('CART_LOAD'));
 
-    const data = await ProductApi.findById(id);
-    if (data.error) {
-      dispatch(CartStore.action('CART_FAIL', data.error));
+    const response = await ProductApi.findById(id);
+    if (response.error) {
+      dispatch(CartStore.action('CART_FAIL', response.error));
       return;
     }
 
-    if (!data.data) {
+    if (!response.data) {
       return;
     }
 
-    const product: Product = data.data;
+    const product: Product = response.data;
     const orderItem: OrderItem = {
       product: product.id,
       quantity,
@@ -37,7 +37,7 @@ const addOrderItem = (id: string, quantity: number) => async (
 
     dispatch(CartStore.action('CART_ADD_ORDER_ITEM', orderItem));
 
-    CartStorage.saveOrderItems(getState().cart.orderItems);
+    CartStorage.saveOrderItems(getState().cart.data.orderItems);
   } catch (error) {
     dispatch(CartStore.action('CART_FAIL', error));
   }
@@ -51,7 +51,7 @@ const removeOrderItem = (id: string) => (getState: () => State): void => {
 
     CartStore.action('CART_REMOVE_ORDER_ITEM', orderItem);
 
-    CartStorage.saveOrderItems(getState().cart.orderItems);
+    CartStorage.saveOrderItems(getState().cart.data.orderItems);
   } catch (error) {
     CartStore.action('CART_FAIL', error);
   }

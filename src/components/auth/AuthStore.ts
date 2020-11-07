@@ -1,19 +1,26 @@
+import { AuthData } from '../../external/AuthData';
 import { ReducerAction } from '../../store/reducer/ReducerAction';
 import { ReducerActionCreator } from '../../store/reducer/ReducerActionCreator';
-import { ReducerState } from '../../store/reducer/ReducerState';
-import { AuthApiResponse } from './AuthApi';
+import { AuthStorage } from './AuthStorage';
 
-type Action = ReducerAction<ActionType, DataPayload>;
-const action = ReducerActionCreator<ActionType, DataPayload | Error>();
+type Action = ReducerAction<ActionType, Payload>;
+const action = ReducerActionCreator<ActionType, Payload | Error>();
 
-type DataPayload = AuthApiResponse;
+type Payload = AuthData;
+
 type ActionType = 'AUTH_LOAD' | 'AUTH_SUCCESS' | 'AUTH_FAIL' | 'SIGNOUT_SUCCESS';
 
-export type AuthState = ReducerState<DataPayload> & {};
+export type AuthState = {
+  loading: boolean;
+  data: AuthData | null;
+  error: Error | null;
+};
+
+const authStorage = new AuthStorage();
 
 const initialState: AuthState = {
   loading: false,
-  data: null,
+  data: authStorage.find(),
   error: null,
 };
 
@@ -24,7 +31,7 @@ const reducer = (state = initialState, action: Action): AuthState => {
     case 'AUTH_LOAD':
       return { ...state, loading: true, error: null };
     case 'AUTH_SUCCESS':
-      return { ...state, loading: false, error: null, data: payload as DataPayload };
+      return { ...state, loading: false, error: null, data: payload as AuthData };
     case 'SIGNOUT_SUCCESS':
       return { ...state, loading: false, error: null, data: null };
     case 'AUTH_FAIL':

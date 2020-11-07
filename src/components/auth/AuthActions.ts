@@ -3,25 +3,26 @@ import { User } from '../../external/User';
 import { AuthApi } from './AuthApi';
 import { AuthStorage } from './AuthStorage';
 import { AuthStore } from './AuthStore';
-import { SignUpForm } from './SignUpForm';
 
-const signUp = (body: SignUpForm) => async (dispatch: Dispatch): Promise<void> => {
+const authStorage = new AuthStorage();
+
+const signUp = (user: User) => async (dispatch: Dispatch): Promise<void> => {
   try {
     dispatch(AuthStore.action('AUTH_LOAD'));
 
-    const data = await AuthApi.signUp(body);
-    if (data.error) {
-      dispatch(AuthStore.action('AUTH_FAIL', data.error));
+    const response = await AuthApi.signUp(user);
+    if (response.error) {
+      dispatch(AuthStore.action('AUTH_FAIL', response.error));
       return;
     }
 
-    if (!data.data) {
+    if (!response.data) {
       return;
     }
 
-    dispatch(AuthStore.action('AUTH_SUCCESS', data));
+    dispatch(AuthStore.action('AUTH_SUCCESS', response.data));
 
-    AuthStorage.saveAuthData(data.data);
+    authStorage.save(response.data);
   } catch (error) {
     dispatch(AuthStore.action('AUTH_FAIL', error));
   }
@@ -33,19 +34,19 @@ const sigIn = (user: Pick<User, 'email' | 'password'>) => async (
   try {
     dispatch(AuthStore.action('AUTH_LOAD'));
 
-    const data = await AuthApi.signIn(user);
-    if (data.error) {
-      dispatch(AuthStore.action('AUTH_FAIL', data.error));
+    const response = await AuthApi.signIn(user);
+    if (response.error) {
+      dispatch(AuthStore.action('AUTH_FAIL', response.error));
       return;
     }
 
-    if (!data.data) {
+    if (!response.data) {
       return;
     }
 
-    dispatch(AuthStore.action('AUTH_SUCCESS', data));
+    dispatch(AuthStore.action('AUTH_SUCCESS', response.data));
 
-    AuthStorage.saveAuthData(data.data);
+    authStorage.save(response.data);
   } catch (error) {
     dispatch(AuthStore.action('AUTH_FAIL', error));
   }
@@ -55,19 +56,19 @@ const sigOut = () => async (dispatch: Dispatch): Promise<void> => {
   try {
     dispatch(AuthStore.action('AUTH_LOAD'));
 
-    const data = await AuthApi.signOut();
-    if (data.error) {
-      dispatch(AuthStore.action('AUTH_FAIL', data.error));
+    const response = await AuthApi.signOut();
+    if (response.error) {
+      dispatch(AuthStore.action('AUTH_FAIL', response.error));
       return;
     }
 
-    if (!data.data) {
+    if (!response.data) {
       return;
     }
 
     dispatch(AuthStore.action('SIGNOUT_SUCCESS'));
 
-    AuthStorage.removeAuthData();
+    authStorage.remove();
   } catch (error) {
     dispatch(AuthStore.action('AUTH_FAIL', error));
   }

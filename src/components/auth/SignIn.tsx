@@ -17,8 +17,7 @@ export const SignIn = (props: Props): JSX.Element => {
   const query = useQuery();
   const history = useHistory();
 
-  const { loading, data, error } = props;
-  const authData = data ? data.data : null;
+  const { loading, data: authData, error } = props;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

@@ -6,17 +6,19 @@ const findAll = () => async (dispatch: Dispatch): Promise<void> => {
   try {
     dispatch(ProductsStore.action('PRODUCTS_LOAD'));
 
-    const data = await ProductApi.findAll();
-    if (data.error) {
-      dispatch(ProductsStore.action('PRODUCTS_FAIL', data.error));
+    const response = await ProductApi.findAll();
+    if (response.error) {
+      dispatch(ProductsStore.action('PRODUCTS_FAIL', response.error));
       return;
     }
 
-    if (!data.data) {
+    if (!response.data || !response.paginator) {
       return;
     }
 
-    dispatch(ProductsStore.action('PRODUCTS_SUCCESS', data));
+    const { data, paginator } = response;
+
+    dispatch(ProductsStore.action('PRODUCTS_SUCCESS', { data, paginator }));
   } catch (error) {
     dispatch(ProductsStore.action('PRODUCTS_FAIL', error));
   }

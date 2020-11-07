@@ -4,10 +4,11 @@ import { ReducerAction } from '../../store/reducer/ReducerAction';
 import { ReducerActionCreator } from '../../store/reducer/ReducerActionCreator';
 import { PaymentMethod } from '../checkout/payment/PaymentMethod';
 
-type Action = ReducerAction<ActionType, DataPayload>;
-const action = ReducerActionCreator<ActionType, DataPayload | Error>();
+type Action = ReducerAction<ActionType, Payload>;
+const action = ReducerActionCreator<ActionType, Payload | Error>();
 
-type DataPayload = OrderItem | Pick<OrderItem, 'product'> | ShippingAddress | PaymentMethod;
+type Payload = Pick<OrderItem, 'product'> | OrderItem | ShippingAddress | PaymentMethod;
+
 type ActionType =
   | 'CART_LOAD'
   | 'CART_ADD_ORDER_ITEM'
@@ -18,17 +19,21 @@ type ActionType =
 
 export type CartState = {
   loading: boolean;
-  orderItems: OrderItem[];
-  shippingAddress: ShippingAddress | null;
-  paymentMethod: PaymentMethod | null;
+  data: {
+    orderItems: OrderItem[];
+    shippingAddress: ShippingAddress | null;
+    paymentMethod: PaymentMethod | null;
+  };
   error: Error | null;
 };
 
 const initialState: CartState = {
   loading: false,
-  orderItems: [],
-  shippingAddress: null,
-  paymentMethod: null,
+  data: {
+    orderItems: [],
+    shippingAddress: null,
+    paymentMethod: null,
+  },
   error: null,
 };
 
@@ -58,40 +63,74 @@ const load = (state: CartState): CartState => {
 };
 
 const addOrderItem = (state: CartState, orderItemAdd: OrderItem): CartState => {
-  const orderItemFound = state.orderItems.find(
+  const orderItemFound = state.data.orderItems.find(
     (orderItem) => orderItem.product === orderItemAdd.product,
   );
 
-  let orderItemsUpdated = [];
+  let orderItemsUpdated: OrderItem[] = [];
   if (orderItemFound) {
-    const index = state.orderItems.findIndex(
+    const index = state.data.orderItems.findIndex(
       (orderItem) => orderItem.product === orderItemFound.product,
     );
     const orderItemUpdated = { ...orderItemFound, quantity: orderItemAdd.quantity };
-    orderItemsUpdated = [...state.orderItems];
+    orderItemsUpdated = [...state.data.orderItems];
     orderItemsUpdated[index] = orderItemUpdated;
   } else {
-    orderItemsUpdated = [...state.orderItems, orderItemAdd];
+    orderItemsUpdated = [...state.data.orderItems, orderItemAdd];
   }
-  return { ...state, orderItems: orderItemsUpdated, loading: false, error: null };
+
+  return {
+    ...state,
+    data: {
+      ...state.data,
+      orderItems: orderItemsUpdated,
+    },
+    loading: false,
+    error: null,
+  };
 };
 
 const removeOrderItem = (
   state: CartState,
   productItemRemove: Pick<OrderItem, 'product'>,
 ): CartState => {
-  const itemsUpdated = state.orderItems.filter(
+  const itemsUpdated = state.data.orderItems.filter(
     (item) => item.product !== productItemRemove.product,
   );
-  return { ...state, orderItems: itemsUpdated, loading: false, error: null };
+
+  return {
+    ...state,
+    data: {
+      ...state.data,
+      orderItems: itemsUpdated,
+    },
+    loading: false,
+    error: null,
+  };
 };
 
 const saveShippingAddress = (state: CartState, shippingAddress: ShippingAddress): CartState => {
-  return { ...state, shippingAddress, loading: false, error: null };
+  return {
+    ...state,
+    data: {
+      ...state.data,
+      shippingAddress,
+    },
+    loading: false,
+    error: null,
+  };
 };
 
 const savePaymentMethod = (state: CartState, paymentMethod: PaymentMethod): CartState => {
-  return { ...state, paymentMethod, loading: false, error: null };
+  return {
+    ...state,
+    data: {
+      ...state.data,
+      paymentMethod,
+    },
+    loading: false,
+    error: null,
+  };
 };
 
 const fail = (state: CartState, error: Error): CartState => {
