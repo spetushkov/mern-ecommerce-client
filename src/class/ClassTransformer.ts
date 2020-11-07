@@ -26,4 +26,8 @@ export class ClassTransformer {
   static clone<T>(entity: T): T {
     return classToClass<T>(entity);
   }
+
+  // static serialize<T>(entity: T): Object {
+  //   return class
+  // }
 }

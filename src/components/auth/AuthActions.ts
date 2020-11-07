@@ -3,12 +3,13 @@ import { User } from '../../external/User';
 import { AuthApi } from './AuthApi';
 import { AuthStorage } from './AuthStorage';
 import { AuthStore } from './AuthStore';
+import { SignUpForm } from './SignUpForm';
 
-const signUp = (user: Omit<User, 'id'>) => async (dispatch: Dispatch): Promise<void> => {
+const signUp = (body: SignUpForm) => async (dispatch: Dispatch): Promise<void> => {
   try {
     dispatch(AuthStore.action('AUTH_LOAD'));
 
-    const data = await AuthApi.signUp(user);
+    const data = await AuthApi.signUp(body);
     if (data.error) {
       dispatch(AuthStore.action('AUTH_FAIL', data.error));
       return;

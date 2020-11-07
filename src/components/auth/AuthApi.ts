@@ -2,6 +2,7 @@ import { AppApi } from '../../app/AppApi';
 import { AuthData } from '../../external/AuthData';
 import { Result } from '../../external/Result';
 import { User } from '../../external/User';
+import { SignUpForm } from './SignUpForm';
 
 export type AuthApiResponse = Result<AuthData, Error>;
 export type SignOutApiResponse = Result<boolean, Error>;
@@ -14,9 +15,9 @@ const AuthApiEndpoint = {
   signOut: (): string => `${baseUrl}/signOut`,
 };
 
-const signUp = async (user: Omit<User, 'id'>): Promise<AuthApiResponse> => {
+const signUp = async (body: SignUpForm): Promise<AuthApiResponse> => {
   try {
-    const response = await AppApi.baseApi.post<AuthApiResponse>(AuthApiEndpoint.signUp(), user);
+    const response = await AppApi.baseApi.post<AuthApiResponse>(AuthApiEndpoint.signUp(), body);
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error);

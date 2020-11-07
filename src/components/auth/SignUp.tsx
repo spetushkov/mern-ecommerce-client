@@ -10,6 +10,7 @@ import { FormControl } from '../form/FormControl';
 import { FormError } from '../form/FormError';
 import { FormUtils } from '../form/FormUtils';
 import { JustifyCenter } from '../JustifyCenter';
+import { AuthActions } from './AuthActions';
 import { AuthEndpoint } from './AuthEndpoint';
 import { AuthState } from './AuthStore';
 import { SignUpForm } from './SignUpForm';
@@ -52,17 +53,17 @@ export const SignUp = (props: Props): JSX.Element => {
 
   const submitFormHandler = async (
     values: SignUpForm,
-    actions: FormikHelpers<SignUpForm>,
+    FormActions: FormikHelpers<SignUpForm>,
   ): Promise<void> => {
     const formState = FormUtils.getState(values, SignUpForm);
 
     if (formState.password !== formState.confirmPassword) {
       setFormErrors(['Passwords do not match']);
     } else {
-      // dispatch(AuthActions.signUp({ name, email, password }));
+      dispatch(AuthActions.signUp(formState));
     }
 
-    actions.setSubmitting(false);
+    FormActions.setSubmitting(false);
   };
 
   return (
@@ -85,7 +86,7 @@ export const SignUp = (props: Props): JSX.Element => {
               >
                 <FormControl
                   schema={form.values}
-                  id='userName'
+                  id='name'
                   type='text'
                   label='User Name'
                   placeholder='User name'

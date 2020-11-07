@@ -1,12 +1,16 @@
-import { Expose } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { User } from '../../external/User';
 import { SignUpFormUtils } from './SignUpFormUtils';
 
-export class SignUpForm {
+export class SignUpForm implements User {
+  @Exclude()
+  id = '';
+
   @Expose()
   @IsString()
   @IsNotEmpty()
-  userName = '';
+  name = '';
 
   @Expose()
   @IsString()
