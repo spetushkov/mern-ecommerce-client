@@ -1,6 +1,12 @@
 import { AuthData } from '../../external/AuthData';
+import { AuthToken } from '../../external/AuthToken';
+import { User } from '../../external/User';
 import { BaseLocalStorage } from '../../srorage/BaseLocalStorage';
-import { AuthDataEntity } from './AuthDataEntity';
+
+class AuthDataEntity implements AuthData {
+  user!: User;
+  authToken!: AuthToken;
+}
 
 export class AuthStorage extends BaseLocalStorage<AuthData> {
   constructor() {

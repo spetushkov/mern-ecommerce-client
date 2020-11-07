@@ -3,16 +3,16 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { useQuery } from '../../http/useQuery';
-import { StoreError } from '../../store/StoreError';
-import { StoreLoader } from '../../store/StoreLoader';
-import { FormControl } from '../form/FormControl';
-import { FormError } from '../form/FormError';
-import { FormUtils } from '../form/FormUtils';
-import { JustifyCenter } from '../JustifyCenter';
-import { AuthActions } from './AuthActions';
-import { AuthEndpoint } from './AuthEndpoint';
-import { AuthState } from './AuthStore';
+import { useQuery } from '../../../http/useQuery';
+import { Endpoint } from '../../../router/Endpoint';
+import { StoreError } from '../../../store/StoreError';
+import { StoreLoader } from '../../../store/StoreLoader';
+import { JustifyCenter } from '../../content/JustifyCenter';
+import { FormControl } from '../../form/FormControl';
+import { FormError } from '../../form/FormError';
+import { FormUtils } from '../../form/FormUtils';
+import { AuthActions } from '../AuthActions';
+import { AuthState } from '../AuthStore';
 import { SignUpForm } from './SignUpForm';
 import { SignUpFormUtils } from './SignUpFormUtils';
 
@@ -123,11 +123,7 @@ export const SignUp = (props: Props): JSX.Element => {
         <Row className='py-3'>
           <Col>
             Have an Account?{' '}
-            <Link
-              to={
-                redirect ? `${AuthEndpoint.signIn()}?redirect=${redirect}` : AuthEndpoint.signIn()
-              }
-            >
+            <Link to={redirect ? `${Endpoint.signIn()}?redirect=${redirect}` : Endpoint.signIn()}>
               Sign In
             </Link>
           </Col>

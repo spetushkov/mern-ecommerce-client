@@ -19,7 +19,7 @@ export const Products = (props: Props): JSX.Element => {
       {loading && <StoreLoader />}
       {error && <StoreError error={error} />}
       <h4>{t('common:products.header', { namespace: 'common' })}</h4>
-      <h4>{t('Products:products.header', { namespace: 'Products!' })}</h4>
+      <h4>{t('Products:products.header', { namespace: 'Products' })}</h4>
       <Row>
         {products &&
           products.map((product) => {

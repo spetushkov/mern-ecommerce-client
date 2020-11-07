@@ -1,5 +1,5 @@
 import React from 'react';
-import { Logger } from '../log/Logger';
+import { Logger } from '../../log/Logger';
 
 type Props = {
   children: React.ReactNode;

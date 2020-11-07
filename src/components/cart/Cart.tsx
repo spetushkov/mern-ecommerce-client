@@ -2,8 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import { Alert, Button, Card, Col, Form, Image, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { AuthEndpoint } from '../auth/AuthEndpoint';
-import { ProductEndpoint } from '../product/ProductEndpoint';
+import { Endpoint } from '../../router/Endpoint';
 import { CartActions } from './CartActions';
 import { CartState } from './CartStore';
 
@@ -45,7 +44,7 @@ export const Cart = (props: Props): JSX.Element => {
   );
 
   const checkoutHandler = () => {
-    history.push(`${AuthEndpoint.signIn()}?redirect=shipping`);
+    history.push(`${Endpoint.signIn()}?redirect=shipping`);
   };
 
   const renderEmptyCart = () => {
@@ -79,7 +78,7 @@ export const Cart = (props: Props): JSX.Element => {
                   <Image src={orderItem.image} alt={orderItem.name} fluid rounded />
                 </Col>
                 <Col md={3}>
-                  <Link to={ProductEndpoint.byId(orderItem.product)}>{orderItem.name}</Link>
+                  <Link to={Endpoint.products(orderItem.product)}>{orderItem.name}</Link>
                 </Col>
                 <Col md={2}>${orderItem.price}</Col>
                 <Col md={2}>

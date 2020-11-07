@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { SignUp } from '../components/auth/SignUp';
+import { SignUp } from '../components/auth/signup/SignUp';
 import { State } from '../store/Store';
 
 export const SignUpScreen = (): JSX.Element => {

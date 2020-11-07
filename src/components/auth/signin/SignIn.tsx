@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { useQuery } from '../../http/useQuery';
-import { StoreError } from '../../store/StoreError';
-import { StoreLoader } from '../../store/StoreLoader';
-import { JustifyCenter } from '../JustifyCenter';
-import { AuthActions } from './AuthActions';
-import { AuthEndpoint } from './AuthEndpoint';
-import { AuthState } from './AuthStore';
+import { useQuery } from '../../../http/useQuery';
+import { Endpoint } from '../../../router/Endpoint';
+import { StoreError } from '../../../store/StoreError';
+import { StoreLoader } from '../../../store/StoreLoader';
+import { JustifyCenter } from '../../content/JustifyCenter';
+import { AuthActions } from '../AuthActions';
+import { AuthState } from '../AuthStore';
 
 type Props = AuthState;
 
@@ -68,11 +68,7 @@ export const SignIn = (props: Props): JSX.Element => {
         <Row className='py-3'>
           <Col>
             New Customer?{' '}
-            <Link
-              to={
-                redirect ? `${AuthEndpoint.signUp()}?redirect=${redirect}` : AuthEndpoint.signUp()
-              }
-            >
+            <Link to={redirect ? `${Endpoint.signUp()}?redirect=${redirect}` : Endpoint.signUp()}>
               Sign Up
             </Link>
           </Col>

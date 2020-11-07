@@ -1,5 +1,5 @@
 import React from 'react';
-import { ErrorHandler } from '../components/ErrorHandler';
+import { ErrorHandler } from '../components/exception/ErrorHandler';
 import { Body } from '../components/outline/Body';
 import { Footer } from '../components/outline/Footer';
 import { Header } from '../components/outline/Header';

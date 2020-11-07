@@ -3,8 +3,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { AuthStore } from '../components/auth/AuthStore';
 import { CartStore } from '../components/cart/CartStore';
-import { ProductStore } from '../components/product/Product/ProductStore';
-import { ProductsStore } from '../components/product/Products/ProductsStore';
+import { ProductsStore } from '../components/product/products/ProductsStore';
+import { ProductStore } from '../components/product/ProductStore';
 
 const combinedReducer = combineReducers({
   products: ProductsStore.reducer,

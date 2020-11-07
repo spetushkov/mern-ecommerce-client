@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Product } from '../components/product/Product/Product';
-import { ProductActions } from '../components/product/Product/ProductActions';
+import { Product } from '../components/product/Product';
+import { ProductActions } from '../components/product/ProductActions';
 import { State } from '../store/Store';
 
 type Params = {

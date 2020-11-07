@@ -1,6 +1,6 @@
 import { Exclude, Expose } from 'class-transformer';
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
-import { User } from '../../external/User';
+import { User } from '../../../external/User';
 import { SignUpFormUtils } from './SignUpFormUtils';
 
 export class SignUpForm implements User {

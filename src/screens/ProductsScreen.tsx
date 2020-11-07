@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Products } from '../components/product/Products/Products';
-import { ProductsActions } from '../components/product/Products/ProductsActions';
+import { Products } from '../components/product/products/Products';
+import { ProductsActions } from '../components/product/products/ProductsActions';
 import { State } from '../store/Store';
 
 export const ProductsScreen = (): JSX.Element => {

@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import { Button, Card, Col, Form, Image, ListGroup, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { StoreError } from '../../../store/StoreError';
-import { StoreLoader } from '../../../store/StoreLoader';
-import { ProductRating } from '../ProductRating';
+import { StoreError } from '../../store/StoreError';
+import { StoreLoader } from '../../store/StoreLoader';
 import { ProductState } from './ProductStore';
+import { ProductRating } from './rating/ProductRating';
 
 type Props = ProductState;
 

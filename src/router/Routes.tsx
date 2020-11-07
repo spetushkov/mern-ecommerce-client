@@ -6,7 +6,7 @@ import { ProductsScreen } from '../screens/ProductsScreen';
 import { SignInScreen } from '../screens/SignInScreen';
 import { SignUpScreen } from '../screens/SignUpScreen';
 
-export const BodyRoutes = (): JSX.Element => {
+export const Routes = (): JSX.Element => {
   return (
     <Switch>
       <Route exact path='/signin' component={SignInScreen} />
