@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import { Alert, Button, Card, Col, Form, Image, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { Endpoint } from '../../router/Endpoint';
+import { RouterEndpoint } from '../../router/RouterEndpoint';
 import { CartActions } from './CartActions';
 import { CartState } from './CartStore';
 
@@ -44,13 +44,13 @@ export const Cart = (props: Props): JSX.Element => {
   );
 
   const checkoutHandler = () => {
-    history.push(`${Endpoint.signIn('shipping')}`);
+    history.push(`${RouterEndpoint.signIn('shipping')}`);
   };
 
   const renderEmptyCart = () => {
     return (
       <Alert variant='info'>
-        Your cart is empty <Link to={Endpoint.home()}>Go Back</Link>
+        Your cart is empty <Link to={RouterEndpoint.home()}>Go Back</Link>
       </Alert>
     );
   };
@@ -78,7 +78,7 @@ export const Cart = (props: Props): JSX.Element => {
                   <Image src={orderItem.image} alt={orderItem.name} fluid rounded />
                 </Col>
                 <Col md={3}>
-                  <Link to={Endpoint.products(orderItem.product)}>{orderItem.name}</Link>
+                  <Link to={RouterEndpoint.products(orderItem.product)}>{orderItem.name}</Link>
                 </Col>
                 <Col md={2}>${orderItem.price}</Col>
                 <Col md={2}>

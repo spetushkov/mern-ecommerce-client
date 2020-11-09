@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Endpoint } from '../../router/Endpoint';
+import { RouterEndpoint } from '../../router/RouterEndpoint';
 import { State } from '../../store/Store';
 
 export const useUserAuthorizer = (redirect?: string): void => {
@@ -12,7 +12,7 @@ export const useUserAuthorizer = (redirect?: string): void => {
 
   useEffect(() => {
     if (!authData) {
-      history.push(Endpoint.signIn(redirect ? redirect : history.location.pathname));
+      history.push(RouterEndpoint.signIn(redirect ? redirect : history.location.pathname));
     }
   }, [authData, history, redirect]);
 };

@@ -1,12 +1,16 @@
 import { Dispatch } from 'redux';
+import { State } from '../../../store/Store';
+import { AuthUtils } from '../../auth/AuthUtils';
 import { ProductApi } from '../ProductApi';
 import { ProductsStore } from './ProductsStore';
 
-const findAll = () => async (dispatch: Dispatch): Promise<void> => {
+const findAll = () => async (dispatch: Dispatch, getState: () => State): Promise<void> => {
   try {
     dispatch(ProductsStore.action('PRODUCTS_LOAD'));
 
-    const response = await ProductApi.findAll();
+    const token = AuthUtils.getToken(getState().auth);
+
+    const response = await ProductApi.findAll(token);
     if (response.error) {
       dispatch(ProductsStore.action('PRODUCTS_FAIL', response.error));
       return;

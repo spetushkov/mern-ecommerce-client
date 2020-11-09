@@ -1,4 +1,4 @@
-export const Endpoint = {
+export const RouterEndpoint = {
   signUp: (redirect?: string): string => {
     return redirect ? `/signup?redirect=${redirect}` : `/signup`;
   },

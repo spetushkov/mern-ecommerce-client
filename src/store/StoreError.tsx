@@ -28,12 +28,14 @@ export const StoreError = (props: Props): JSX.Element => {
       <div>
         <Alert variant='danger'>{message}</Alert>
       </div>
-      <div>
-        <details>
-          <summary>Click for error details</summary>
-          {details && details}
-        </details>
-      </div>
+      {details && (
+        <div>
+          <details>
+            <summary>Click for error details</summary>
+            {details}
+          </details>
+        </div>
+      )}
     </div>
   );
 };

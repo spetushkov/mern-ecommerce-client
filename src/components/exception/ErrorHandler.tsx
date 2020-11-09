@@ -36,12 +36,14 @@ export class ErrorHandler extends React.Component<Props, State> {
         <div>
           <p>There was an error in loading this page.</p>
         </div>
-        <div>
-          <details>
-            <summary>Click for error details</summary>
-            {errorInfo && errorInfo.componentStack}
-          </details>
-        </div>
+        {errorInfo && (
+          <div>
+            <details>
+              <summary>Click for error details</summary>
+              {errorInfo.componentStack}
+            </details>
+          </div>
+        )}
       </div>
     );
   }

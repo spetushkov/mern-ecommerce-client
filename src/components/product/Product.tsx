@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Button, Card, Col, Form, Image, ListGroup, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { Endpoint } from '../../router/Endpoint';
+import { RouterEndpoint } from '../../router/RouterEndpoint';
 import { StoreError } from '../../store/StoreError';
 import { StoreLoader } from '../../store/StoreLoader';
 import { ProductState } from './ProductStore';
@@ -49,7 +49,7 @@ export const Product = (props: Props): JSX.Element => {
     <>
       {loading && <StoreLoader />}
       {error && <StoreError error={error} />}
-      <Link className='btn btn-light my-3' to={Endpoint.home()}>
+      <Link className='btn btn-light my-3' to={RouterEndpoint.home()}>
         Go Back
       </Link>
       {product && (

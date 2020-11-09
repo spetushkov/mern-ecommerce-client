@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Endpoint } from '../../../router/Endpoint';
+import { RouterEndpoint } from '../../../router/RouterEndpoint';
 import { StoreError } from '../../../store/StoreError';
 import { StoreLoader } from '../../../store/StoreLoader';
 import { JustifyCenter } from '../../content/JustifyCenter';
@@ -114,7 +114,9 @@ export const SignUp = (props: Props): JSX.Element => {
         <Row className='py-3'>
           <Col>
             Have an Account?{' '}
-            <Link to={redirect ? `${Endpoint.signIn(redirect)}` : Endpoint.signIn()}>Sign In</Link>
+            <Link to={redirect ? `${RouterEndpoint.signIn(redirect)}` : RouterEndpoint.signIn()}>
+              Sign In
+            </Link>
           </Col>
         </Row>
       </JustifyCenter>

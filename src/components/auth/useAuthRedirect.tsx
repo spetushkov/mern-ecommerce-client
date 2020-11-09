@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthData } from '../../external/AuthData';
 import { useQueryParams } from '../../http/useQueryParams';
-import { Endpoint } from '../../router/Endpoint';
+import { RouterEndpoint } from '../../router/RouterEndpoint';
 
 export const useAuthRedirect = (authData: AuthData | null): string | null => {
   const queryParams = useQueryParams();
@@ -12,7 +12,7 @@ export const useAuthRedirect = (authData: AuthData | null): string | null => {
 
   useEffect(() => {
     if (authData) {
-      history.push(redirect ? redirect : Endpoint.home());
+      history.push(redirect ? redirect : RouterEndpoint.home());
     }
   }, [authData, history, redirect]);
 

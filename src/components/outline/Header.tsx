@@ -4,7 +4,7 @@ import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Endpoint } from '../../router/Endpoint';
+import { RouterEndpoint } from '../../router/RouterEndpoint';
 import { State } from '../../store/Store';
 import { AuthActions } from '../auth/AuthActions';
 
@@ -27,7 +27,7 @@ export const Header = (): JSX.Element => {
     <header>
       <Navbar bg='dark' variant='dark' expand='lg'>
         <Container>
-          <LinkContainer to={Endpoint.home()}>
+          <LinkContainer to={RouterEndpoint.home()}>
             <Navbar.Brand>ProShop</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
@@ -37,7 +37,7 @@ export const Header = (): JSX.Element => {
                 <NavDropdown.Item onClick={() => changeLanguage('en')}>English</NavDropdown.Item>
                 <NavDropdown.Item onClick={() => changeLanguage('de')}>German</NavDropdown.Item>
               </NavDropdown>
-              <LinkContainer to={Endpoint.cart()}>
+              <LinkContainer to={RouterEndpoint.cart()}>
                 <Nav.Link>
                   <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
                   Cart
@@ -48,7 +48,7 @@ export const Header = (): JSX.Element => {
                   <NavDropdown.Item onClick={signOutHandler}>Sign Out</NavDropdown.Item>
                 </NavDropdown>
               ) : (
-                <LinkContainer to={Endpoint.signIn()}>
+                <LinkContainer to={RouterEndpoint.signIn()}>
                   <Nav.Link>
                     <FontAwesomeIcon icon={['fas', 'user']} />
                     Sign In
