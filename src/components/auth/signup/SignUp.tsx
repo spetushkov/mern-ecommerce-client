@@ -1,9 +1,8 @@
 import { Formik, FormikErrors, FormikHelpers, FormikProps } from 'formik';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import { useQuery } from '../../../http/useQuery';
+import { Link } from 'react-router-dom';
 import { Endpoint } from '../../../router/Endpoint';
 import { StoreError } from '../../../store/StoreError';
 import { StoreLoader } from '../../../store/StoreLoader';
@@ -13,25 +12,17 @@ import { FormError } from '../../form/FormError';
 import { FormUtils } from '../../form/FormUtils';
 import { AuthActions } from '../AuthActions';
 import { AuthState } from '../AuthStore';
+import { useAuthRedirect } from '../useAuthRedirect';
 import { SignUpForm } from './SignUpForm';
 import { SignUpFormUtils } from './SignUpFormUtils';
 
 type Props = AuthState;
 
 export const SignUp = (props: Props): JSX.Element => {
-  const dispatch = useDispatch();
-  const query = useQuery();
-  const history = useHistory();
-
   const { loading, data: authData, error } = props;
+  const dispatch = useDispatch();
 
-  const redirect = query.get('redirect');
-
-  useEffect(() => {
-    if (authData && redirect) {
-      history.push(redirect);
-    }
-  }, [authData, history, redirect]);
+  const redirect = useAuthRedirect(authData);
 
   const [formErrors, setFormErrors] = useState([] as string[]);
 
@@ -123,9 +114,7 @@ export const SignUp = (props: Props): JSX.Element => {
         <Row className='py-3'>
           <Col>
             Have an Account?{' '}
-            <Link to={redirect ? `${Endpoint.signIn()}?redirect=${redirect}` : Endpoint.signIn()}>
-              Sign In
-            </Link>
+            <Link to={redirect ? `${Endpoint.signIn(redirect)}` : Endpoint.signIn()}>Sign In</Link>
           </Col>
         </Row>
       </JustifyCenter>

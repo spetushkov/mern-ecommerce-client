@@ -9,9 +9,9 @@ import { ProductsState } from './ProductsStore';
 type Props = ProductsState;
 
 export const Products = (props: Props): JSX.Element => {
+  const { loading, data, error } = props;
   const { t } = useTranslation('Products');
 
-  const { loading, data, error } = props;
   const products = data ? data.data : null;
 
   return (

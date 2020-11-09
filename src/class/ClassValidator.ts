@@ -1,4 +1,4 @@
-import { validate, ValidationError, ValidatorOptions } from 'class-validator';
+import * as Validator from 'class-validator';
 
 export class ClassValidator {
   static async validate(
@@ -6,12 +6,10 @@ export class ClassValidator {
     skipMissingProperties: boolean,
   ): Promise<Record<string, string[]>> {
     try {
-      const options: ValidatorOptions = {
+      const options: Validator.ValidatorOptions = {
         skipUndefinedProperties: false,
         skipNullProperties: false,
         skipMissingProperties,
-        whitelist: true,
-        forbidNonWhitelisted: false,
         dismissDefaultMessages: false,
         validationError: {
           target: true,
@@ -20,7 +18,7 @@ export class ClassValidator {
         forbidUnknownValues: true,
       };
 
-      const errors = await validate(obj, options);
+      const errors = await Validator.validate(obj, options);
       if (errors.length === 0) {
         return Promise.resolve({});
       }
@@ -34,7 +32,7 @@ export class ClassValidator {
 
   private static reduceErrors(
     accumulator: Record<string, string[]>,
-    errors: ValidationError[],
+    errors: Validator.ValidationError[],
   ): Record<string, string[]> {
     let accumulatorUpdated = { ...accumulator };
     errors.forEach((error) => {

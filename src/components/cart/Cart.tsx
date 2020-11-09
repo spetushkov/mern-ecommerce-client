@@ -9,9 +9,9 @@ import { CartState } from './CartStore';
 type Props = CartState;
 
 export const Cart = (props: Props): JSX.Element => {
+  const { orderItems } = props.data;
   const dispatch = useDispatch();
   const history = useHistory();
-  const { orderItems } = props.data;
 
   const getOrderItemsCount = useMemo(
     () => () => {
@@ -44,13 +44,13 @@ export const Cart = (props: Props): JSX.Element => {
   );
 
   const checkoutHandler = () => {
-    history.push(`${Endpoint.signIn()}?redirect=shipping`);
+    history.push(`${Endpoint.signIn('shipping')}`);
   };
 
   const renderEmptyCart = () => {
     return (
       <Alert variant='info'>
-        Your cart is empty <Link to='/'>Go Back</Link>
+        Your cart is empty <Link to={Endpoint.home()}>Go Back</Link>
       </Alert>
     );
   };

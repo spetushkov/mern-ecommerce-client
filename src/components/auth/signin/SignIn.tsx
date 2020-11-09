@@ -1,39 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import { useQuery } from '../../../http/useQuery';
+import { Link } from 'react-router-dom';
 import { Endpoint } from '../../../router/Endpoint';
 import { StoreError } from '../../../store/StoreError';
 import { StoreLoader } from '../../../store/StoreLoader';
 import { JustifyCenter } from '../../content/JustifyCenter';
 import { AuthActions } from '../AuthActions';
 import { AuthState } from '../AuthStore';
+import { useAuthRedirect } from '../useAuthRedirect';
 
 type Props = AuthState;
 
 export const SignIn = (props: Props): JSX.Element => {
-  const dispatch = useDispatch();
-  const query = useQuery();
-  const history = useHistory();
-
   const { loading, data: authData, error } = props;
+  const dispatch = useDispatch();
+
+  const redirect = useAuthRedirect(authData);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const redirect = query.get('redirect');
-
-  useEffect(() => {
-    if (authData && redirect) {
-      history.push(redirect);
-    }
-  }, [authData, history, redirect]);
-
   const submitHandler = (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
 
-    dispatch(AuthActions.sigIn({ email, password }));
+    dispatch(AuthActions.signIn({ email, password }));
   };
 
   return (
@@ -68,9 +59,7 @@ export const SignIn = (props: Props): JSX.Element => {
         <Row className='py-3'>
           <Col>
             New Customer?{' '}
-            <Link to={redirect ? `${Endpoint.signUp()}?redirect=${redirect}` : Endpoint.signUp()}>
-              Sign Up
-            </Link>
+            <Link to={redirect ? `${Endpoint.signUp(redirect)}` : Endpoint.signUp()}>Sign Up</Link>
           </Col>
         </Row>
       </JustifyCenter>

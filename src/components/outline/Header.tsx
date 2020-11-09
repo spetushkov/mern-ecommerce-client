@@ -2,17 +2,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Endpoint } from '../../router/Endpoint';
+import { State } from '../../store/Store';
+import { AuthActions } from '../auth/AuthActions';
 
 export const Header = (): JSX.Element => {
   const { i18n } = useTranslation();
+  const dispatch = useDispatch();
+
+  const authState = useSelector((state: State) => state.auth);
+  const { data: authData } = authState;
 
   const signOutHandler = () => {
-    console.log('signOutHandler');
+    dispatch(AuthActions.signOut());
   };
-
-  const userInfo = null;
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -22,8 +27,8 @@ export const Header = (): JSX.Element => {
     <header>
       <Navbar bg='dark' variant='dark' expand='lg'>
         <Container>
-          <LinkContainer to='/'>
-            <Navbar.Brand>ProSHop</Navbar.Brand>
+          <LinkContainer to={Endpoint.home()}>
+            <Navbar.Brand>ProShop</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
@@ -38,8 +43,8 @@ export const Header = (): JSX.Element => {
                   Cart
                 </Nav.Link>
               </LinkContainer>
-              {userInfo ? (
-                <NavDropdown title='some name' id='userName'>
+              {authData ? (
+                <NavDropdown title={authData.user.name} id='userName'>
                   <NavDropdown.Item onClick={signOutHandler}>Sign Out</NavDropdown.Item>
                 </NavDropdown>
               ) : (

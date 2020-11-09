@@ -28,7 +28,7 @@ const signUp = (user: User) => async (dispatch: Dispatch): Promise<void> => {
   }
 };
 
-const sigIn = (user: Pick<User, 'email' | 'password'>) => async (
+const signIn = (user: Pick<User, 'email' | 'password'>) => async (
   dispatch: Dispatch,
 ): Promise<void> => {
   try {
@@ -52,7 +52,7 @@ const sigIn = (user: Pick<User, 'email' | 'password'>) => async (
   }
 };
 
-const sigOut = () => async (dispatch: Dispatch): Promise<void> => {
+const signOut = () => async (dispatch: Dispatch): Promise<void> => {
   try {
     dispatch(AuthStore.action('AUTH_LOAD'));
 
@@ -76,6 +76,6 @@ const sigOut = () => async (dispatch: Dispatch): Promise<void> => {
 
 export const AuthActions = {
   signUp,
-  sigIn,
-  sigOut,
+  signIn,
+  signOut,
 };
