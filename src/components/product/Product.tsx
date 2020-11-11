@@ -1,22 +1,33 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Button, Card, Col, Form, Image, ListGroup, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
 import { RouterEndpoint } from '../../router/RouterEndpoint';
+import { State } from '../../store/Store';
 import { StoreError } from '../../store/StoreError';
 import { StoreLoader } from '../../store/StoreLoader';
-import { ProductState } from './ProductStore';
+import { CartActions } from '../cart/CartActions';
+import { ProductActions } from './ProductActions';
 import { ProductRating } from './rating/ProductRating';
 
-type Props = ProductState;
+type Params = {
+  id: string;
+};
 
-export const Product = (props: Props): JSX.Element => {
-  const { loading, data: product, error } = props;
+export const Product = (): JSX.Element => {
+  const dispatch = useDispatch();
+  const { id } = useParams<Params>();
+
+  useEffect(() => {
+    dispatch(ProductActions.findById(id));
+  }, [dispatch, id]);
+
+  const productState = useSelector((state: State) => state.product);
+  const { loading, data: product, error } = productState;
 
   const [quantity, setQuantity] = useState(1);
 
   const changeQuantityHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    e.preventDefault();
-
     setQuantity(Number(e.target.value));
   };
 
@@ -24,26 +35,25 @@ export const Product = (props: Props): JSX.Element => {
     if (!product) {
       return;
     }
+
+    dispatch(CartActions.addOrderItem(product.id, quantity));
   };
 
-  const renderCountInStockValues = useMemo(
-    () => () => {
-      if (!product) {
-        return;
-      }
+  const countInStockValues = useMemo(() => {
+    if (!product) {
+      return;
+    }
 
-      const keys = [...Array(product.countInStock).keys()];
-      return keys.map((key) => {
-        const optionvalue = key + 1;
-        return (
-          <option key={optionvalue} value={optionvalue}>
-            {optionvalue}
-          </option>
-        );
-      });
-    },
-    [product],
-  );
+    const keys = [...Array(product.countInStock).keys()];
+    return keys.map((key) => {
+      const optionvalue = key + 1;
+      return (
+        <option key={optionvalue} value={optionvalue}>
+          {optionvalue}
+        </option>
+      );
+    });
+  }, [product]);
 
   return (
     <>
@@ -90,7 +100,7 @@ export const Product = (props: Props): JSX.Element => {
                       <Col>Quantity:</Col>
                       <Col>
                         <Form.Control as='select' value={quantity} onChange={changeQuantityHandler}>
-                          {renderCountInStockValues()}
+                          {countInStockValues}
                         </Form.Control>
                       </Col>
                     </Row>

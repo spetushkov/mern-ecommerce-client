@@ -3,6 +3,7 @@ import { ShippingAddress } from '../../external/ShippingAddress';
 import { ReducerAction } from '../../store/reducer/ReducerAction';
 import { ReducerActionCreator } from '../../store/reducer/ReducerActionCreator';
 import { PaymentMethod } from '../checkout/payment/PaymentMethod';
+import { CartStorage } from './CartStorage';
 
 type Action = ReducerAction<ActionType, Payload>;
 const action = ReducerActionCreator<ActionType, Payload | Error>();
@@ -27,10 +28,12 @@ export type CartState = {
   error: Error | null;
 };
 
+const cartStorage = new CartStorage();
+
 const initialState: CartState = {
   loading: false,
   data: {
-    orderItems: [],
+    orderItems: cartStorage.find() as OrderItem[],
     shippingAddress: null,
     paymentMethod: null,
   },

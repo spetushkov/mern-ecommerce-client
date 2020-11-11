@@ -10,12 +10,12 @@ export class BaseLocalStorage<T> implements Storage<T> {
     this.entityClass = entityClass;
   }
 
-  find(): T | null {
+  find(): T | T[] | null {
     const data = localStorage.getItem(this.key);
     return data ? ClassTransformer.deserialize(this.entityClass, data) : null;
   }
 
-  save(data: T): void {
+  save(data: T | T[]): void {
     localStorage.setItem(this.key, ClassTransformer.serialize(data));
   }
 

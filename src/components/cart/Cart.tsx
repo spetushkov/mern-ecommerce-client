@@ -1,33 +1,29 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useCallback, useMemo } from 'react';
 import { Alert, Button, Card, Col, Form, Image, ListGroup, Row } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { RouterEndpoint } from '../../router/RouterEndpoint';
+import { State } from '../../store/Store';
 import { CartActions } from './CartActions';
-import { CartState } from './CartStore';
+import { CartUtils } from './CartUtils';
 
-type Props = CartState;
-
-export const Cart = (props: Props): JSX.Element => {
-  const { orderItems } = props.data;
+export const Cart = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const getOrderItemsCount = useMemo(
-    () => () => {
-      return orderItems.reduce((accumulator, item) => accumulator + item.quantity, 0);
-    },
-    [orderItems],
-  );
+  const cartState = useSelector((state: State) => state.cart);
+  const { orderItems } = cartState.data;
 
-  const getOrderItemsTotal = useMemo(
-    () => () => {
-      return orderItems
-        .reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)
-        .toFixed(2);
-    },
-    [orderItems],
-  );
+  const orderItemsCount = useMemo(() => {
+    return CartUtils.getOrderItemsCount(orderItems);
+  }, [orderItems]);
+
+  const orderItemsTotal = useMemo(() => {
+    return orderItems
+      .reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)
+      .toFixed(2);
+  }, [orderItems]);
 
   const changeOrderItemQuantityHandler = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>, id: string) => {
@@ -77,9 +73,7 @@ export const Cart = (props: Props): JSX.Element => {
                 <Col md={2}>
                   <Image src={orderItem.image} alt={orderItem.name} fluid rounded />
                 </Col>
-                <Col md={3}>
-                  <Link to={RouterEndpoint.products(orderItem.product)}>{orderItem.name}</Link>
-                </Col>
+                <Col md={3}>{orderItem.name}</Col>
                 <Col md={2}>${orderItem.price}</Col>
                 <Col md={2}>
                   <Form.Control
@@ -98,7 +92,7 @@ export const Cart = (props: Props): JSX.Element => {
                     variant='light'
                     onClick={() => removeOrderItemHandler(orderItem.product)}
                   >
-                    <i className='fa fa-trash' />
+                    <FontAwesomeIcon icon={['fas', 'trash']} />
                   </Button>
                 </Col>
               </Row>
@@ -118,7 +112,7 @@ export const Cart = (props: Props): JSX.Element => {
         <Card>
           <ListGroup variant='flush'>
             <ListGroup.Item>
-              <h4>Subtotal ({getOrderItemsCount()}) items</h4>${getOrderItemsTotal()}
+              <h4>Subtotal ({orderItemsCount}) items</h4>${orderItemsTotal}
             </ListGroup.Item>
             <ListGroup.Item>
               <Button

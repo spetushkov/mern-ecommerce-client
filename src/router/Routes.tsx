@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { CartScreen } from '../screens/CartScreen';
 import { HomeScreen } from '../screens/HomeScreen';
 import { NotFoundScreen } from '../screens/NotFoundScreen';
 import { ProductScreen } from '../screens/ProductScreen';
@@ -12,6 +13,7 @@ export const Routes = (): JSX.Element => {
       <Route exact path='/signup' component={SignUpScreen} />
       <Route exact path='/signin' component={SignInScreen} />
       <Route exact path='/products/:id' component={ProductScreen} />
+      <Route path='/cart' component={CartScreen} />
       <Route exact path='/' component={HomeScreen} />
       <Route component={NotFoundScreen} />
     </Switch>

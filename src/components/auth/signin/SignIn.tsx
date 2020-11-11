@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RouterEndpoint } from '../../../router/RouterEndpoint';
+import { State } from '../../../store/Store';
 import { StoreError } from '../../../store/StoreError';
 import { StoreLoader } from '../../../store/StoreLoader';
 import { JustifyCenter } from '../../content/JustifyCenter';
 import { AuthActions } from '../AuthActions';
-import { AuthState } from '../AuthStore';
 import { useAuthRedirect } from '../useAuthRedirect';
 
-type Props = AuthState;
-
-export const SignIn = (props: Props): JSX.Element => {
-  const { loading, data: authData, error } = props;
+export const SignIn = (): JSX.Element => {
   const dispatch = useDispatch();
+
+  const authState = useSelector((state: State) => state.auth);
+  const { loading, data: authData, error } = authState;
 
   const redirect = useAuthRedirect(authData);
 

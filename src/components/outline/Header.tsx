@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,6 +7,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { RouterEndpoint } from '../../router/RouterEndpoint';
 import { State } from '../../store/Store';
 import { AuthActions } from '../auth/AuthActions';
+import { CartUtils } from '../cart/CartUtils';
 
 export const Header = (): JSX.Element => {
   const { i18n } = useTranslation();
@@ -14,6 +15,13 @@ export const Header = (): JSX.Element => {
 
   const authState = useSelector((state: State) => state.auth);
   const { data: authData } = authState;
+
+  const cartState = useSelector((state: State) => state.cart);
+  const { orderItems } = cartState.data;
+
+  const orderItemsCount = useMemo(() => {
+    return CartUtils.getOrderItemsCount(orderItems);
+  }, [orderItems]);
 
   const signOutHandler = () => {
     dispatch(AuthActions.signOut());
@@ -39,6 +47,7 @@ export const Header = (): JSX.Element => {
               </NavDropdown>
               <LinkContainer to={RouterEndpoint.cart()}>
                 <Nav.Link>
+                  ({orderItemsCount})
                   <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
                   Cart
                 </Nav.Link>

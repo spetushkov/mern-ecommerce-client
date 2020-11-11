@@ -8,6 +8,8 @@ import { ProductApi } from '../product/ProductApi';
 import { CartStorage } from './CartStorage';
 import { CartStore } from './CartStore';
 
+const cartStorage = new CartStorage();
+
 const addOrderItem = (id: string, quantity: number) => async (
   dispatch: Dispatch,
   getState: () => State,
@@ -37,41 +39,41 @@ const addOrderItem = (id: string, quantity: number) => async (
 
     dispatch(CartStore.action('CART_ADD_ORDER_ITEM', orderItem));
 
-    CartStorage.saveOrderItems(getState().cart.data.orderItems);
+    cartStorage.save(getState().cart.data.orderItems);
   } catch (error) {
     dispatch(CartStore.action('CART_FAIL', error));
   }
 };
 
-const removeOrderItem = (id: string) => (getState: () => State): void => {
+const removeOrderItem = (id: string) => (dispatch: Dispatch, getState: () => State): void => {
   try {
     const orderItem: Pick<OrderItem, 'product'> = {
       product: id,
     };
 
-    CartStore.action('CART_REMOVE_ORDER_ITEM', orderItem);
+    dispatch(CartStore.action('CART_REMOVE_ORDER_ITEM', orderItem));
 
-    CartStorage.saveOrderItems(getState().cart.data.orderItems);
+    cartStorage.save(getState().cart.data.orderItems);
   } catch (error) {
     CartStore.action('CART_FAIL', error);
   }
 };
 
-const saveShippingAddress = (shippingAddress: ShippingAddress): void => {
+const saveShippingAddress = (shippingAddress: ShippingAddress) => (dispatch: Dispatch): void => {
   try {
-    CartStore.action('CART_SAVE_SHIPPING_ADDRESS', shippingAddress);
+    dispatch(CartStore.action('CART_SAVE_SHIPPING_ADDRESS', shippingAddress));
 
-    CartStorage.saveShippingAddress(shippingAddress);
+    // CartStorage.saveShippingAddress(shippingAddress);
   } catch (error) {
     CartStore.action('CART_FAIL', error);
   }
 };
 
-const savePaymentMethod = (paymentMethod: PaymentMethod): void => {
+const savePaymentMethod = (paymentMethod: PaymentMethod) => (dispatch: Dispatch): void => {
   try {
-    CartStore.action('CART_SAVE_PAYMENT_METHOD', paymentMethod);
+    dispatch(CartStore.action('CART_SAVE_PAYMENT_METHOD', paymentMethod));
 
-    CartStorage.savePaymentMethod(paymentMethod);
+    // CartStorage.savePaymentMethod(paymentMethod);
   } catch (error) {
     CartStore.action('CART_FAIL', error);
   }

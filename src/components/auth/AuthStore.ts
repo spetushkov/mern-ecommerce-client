@@ -20,7 +20,7 @@ const authStorage = new AuthStorage();
 
 const initialState: AuthState = {
   loading: false,
-  data: authStorage.find(),
+  data: authStorage.find() as AuthData,
   error: null,
 };
 

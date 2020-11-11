@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { State } from '../../../store/Store';
 import { StoreError } from '../../../store/StoreError';
 import { StoreLoader } from '../../../store/StoreLoader';
+import { ProductsActions } from './ProductsActions';
 import { ProductsItem } from './ProductsItem';
-import { ProductsState } from './ProductsStore';
 
-type Props = ProductsState;
+export const Products = (): JSX.Element => {
+  const dispatch = useDispatch();
 
-export const Products = (props: Props): JSX.Element => {
-  const { loading, data, error } = props;
+  useEffect(() => {
+    dispatch(ProductsActions.findAll());
+  }, [dispatch]);
+
+  const productsState = useSelector((state: State) => state.products);
+  const { loading, data, error } = productsState;
+
   const { t } = useTranslation('Products');
 
   const products = data ? data.data : null;

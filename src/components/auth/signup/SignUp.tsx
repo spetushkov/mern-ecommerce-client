@@ -1,9 +1,10 @@
 import { Formik, FormikErrors, FormikHelpers, FormikProps } from 'formik';
 import React, { useMemo, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RouterEndpoint } from '../../../router/RouterEndpoint';
+import { State } from '../../../store/Store';
 import { StoreError } from '../../../store/StoreError';
 import { StoreLoader } from '../../../store/StoreLoader';
 import { JustifyCenter } from '../../content/JustifyCenter';
@@ -11,16 +12,15 @@ import { FormControl } from '../../form/FormControl';
 import { FormError } from '../../form/FormError';
 import { FormUtils } from '../../form/FormUtils';
 import { AuthActions } from '../AuthActions';
-import { AuthState } from '../AuthStore';
 import { useAuthRedirect } from '../useAuthRedirect';
 import { SignUpForm } from './SignUpForm';
 import { SignUpFormUtils } from './SignUpFormUtils';
 
-type Props = AuthState;
-
-export const SignUp = (props: Props): JSX.Element => {
-  const { loading, data: authData, error } = props;
+export const SignUp = (): JSX.Element => {
   const dispatch = useDispatch();
+
+  const authState = useSelector((state: State) => state.auth);
+  const { loading, data: authData, error } = authState;
 
   const redirect = useAuthRedirect(authData);
 
