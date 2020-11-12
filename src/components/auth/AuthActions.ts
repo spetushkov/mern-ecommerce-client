@@ -1,8 +1,8 @@
 import { Dispatch } from 'redux';
-import { User } from '../../external/User';
 import { AuthApi } from './AuthApi';
 import { AuthStorage } from './AuthStorage';
 import { AuthStore } from './AuthStore';
+import { User } from './type/User';
 
 const authStorage = new AuthStorage();
 

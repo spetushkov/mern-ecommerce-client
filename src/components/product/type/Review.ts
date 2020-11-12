@@ -1,4 +1,4 @@
-import { BaseDomain } from './BaseDomain';
+import { BaseDomain } from '../../../type/BaseDomain';
 
 export interface Review extends BaseDomain {
   name: string;

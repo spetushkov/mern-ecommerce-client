@@ -22,6 +22,7 @@ export const Header = (): JSX.Element => {
   const orderItemsCount = useMemo(() => {
     return CartUtils.getOrderItemsCount(orderItems);
   }, [orderItems]);
+  console.log('orderItemsCount', orderItemsCount);
 
   const signOutHandler = () => {
     dispatch(AuthActions.signOut());
@@ -47,7 +48,7 @@ export const Header = (): JSX.Element => {
               </NavDropdown>
               <LinkContainer to={RouterEndpoint.cart()}>
                 <Nav.Link>
-                  ({orderItemsCount})
+                  {orderItemsCount > 0 && <span>{orderItemsCount}</span>}
                   <FontAwesomeIcon icon={['fas', 'shopping-cart']} />
                   Cart
                 </Nav.Link>

@@ -1,8 +1,8 @@
-import { BaseDomain } from './BaseDomain';
-import { OrderItem } from './OrderItem';
-import { PaymentResult } from './PaymentResult';
-import { ShippingAddress } from './ShippingAddress';
-import { User } from './User';
+import { BaseDomain } from '../../../../type/BaseDomain';
+import { User } from '../../../auth/type/User';
+import { OrderItem } from '../../orderItem/type/OrderItem';
+import { PaymentResult } from '../../paymentMethod/type/PaymentResult';
+import { ShippingAddress } from '../../shippingAddress/type/ShippingAddress';
 
 export interface Order extends BaseDomain {
   user: User | string; // reference: Order MANY_TO_ONE User

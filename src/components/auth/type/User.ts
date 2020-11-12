@@ -1,4 +1,4 @@
-import { BaseDomain } from './BaseDomain';
+import { BaseDomain } from '../../../type/BaseDomain';
 
 export interface User extends BaseDomain {
   name: string;

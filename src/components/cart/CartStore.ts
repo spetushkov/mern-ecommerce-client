@@ -1,9 +1,10 @@
-import { OrderItem } from '../../external/OrderItem';
-import { ShippingAddress } from '../../external/ShippingAddress';
 import { ReducerAction } from '../../store/reducer/ReducerAction';
 import { ReducerActionCreator } from '../../store/reducer/ReducerActionCreator';
-import { PaymentMethod } from '../checkout/payment/PaymentMethod';
-import { CartStorage } from './CartStorage';
+import { OrderItemStorage } from './orderItem/OrderItemStorage';
+import { OrderItem } from './orderItem/type/OrderItem';
+import { PaymentMethod } from './paymentMethod/PaymentMethod';
+import { ShippingAddressStorage } from './shippingAddress/ShippingAddressStorage';
+import { ShippingAddress } from './shippingAddress/type/ShippingAddress';
 
 type Action = ReducerAction<ActionType, Payload>;
 const action = ReducerActionCreator<ActionType, Payload | Error>();
@@ -28,13 +29,14 @@ export type CartState = {
   error: Error | null;
 };
 
-const cartStorage = new CartStorage();
+const orderItemStorage = new OrderItemStorage();
+const shippingAddressStorage = new ShippingAddressStorage();
 
 const initialState: CartState = {
   loading: false,
   data: {
-    orderItems: cartStorage.find() as OrderItem[],
-    shippingAddress: null,
+    orderItems: orderItemStorage.find() as OrderItem[],
+    shippingAddress: shippingAddressStorage.find() as ShippingAddress,
     paymentMethod: null,
   },
   error: null,
@@ -66,20 +68,22 @@ const load = (state: CartState): CartState => {
 };
 
 const addOrderItem = (state: CartState, orderItemAdd: OrderItem): CartState => {
-  const orderItemFound = state.data.orderItems.find(
-    (orderItem) => orderItem.product === orderItemAdd.product,
-  );
+  let { orderItems } = state.data;
+  if (!orderItems) {
+    orderItems = [];
+  }
+
+  const orderItemFound =
+    orderItems && orderItems.find((orderItem) => orderItem.product === orderItemAdd.product);
 
   let orderItemsUpdated: OrderItem[] = [];
   if (orderItemFound) {
-    const index = state.data.orderItems.findIndex(
-      (orderItem) => orderItem.product === orderItemFound.product,
-    );
+    const index = orderItems.findIndex((orderItem) => orderItem.product === orderItemFound.product);
     const orderItemUpdated = { ...orderItemFound, quantity: orderItemAdd.quantity };
-    orderItemsUpdated = [...state.data.orderItems];
+    orderItemsUpdated = [...orderItems];
     orderItemsUpdated[index] = orderItemUpdated;
   } else {
-    orderItemsUpdated = [...state.data.orderItems, orderItemAdd];
+    orderItemsUpdated = [...orderItems, orderItemAdd];
   }
 
   return {

@@ -1,8 +1,8 @@
 import { AxiosRequestConfig } from 'axios';
 import { AppApi } from '../../app/AppApi';
-import { PageableResult } from '../../external/PageableResult';
-import { Product } from '../../external/Product';
-import { Result } from '../../external/Result';
+import { PageableResult } from '../../type/PageableResult';
+import { Result } from '../../type/Result';
+import { Product } from './type/Product';
 
 export type ProductApiPageResponse = PageableResult<Product, Error>;
 export type ProductApiResponse = Result<Product, Error>;

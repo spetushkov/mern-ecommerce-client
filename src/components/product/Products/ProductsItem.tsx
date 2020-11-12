@@ -1,9 +1,9 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { Product } from '../../../external/Product';
 import { RouterEndpoint } from '../../../router/RouterEndpoint';
 import { ProductRating } from '../rating/ProductRating';
+import { Product } from '../type/Product';
 
 type Props = {
   product: Product;

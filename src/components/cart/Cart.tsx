@@ -21,8 +21,10 @@ export const Cart = (): JSX.Element => {
 
   const orderItemsTotal = useMemo(() => {
     return orderItems
-      .reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)
-      .toFixed(2);
+      ? orderItems
+          .reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)
+          .toFixed(2)
+      : 0.0;
   }, [orderItems]);
 
   const changeOrderItemQuantityHandler = useCallback(
@@ -102,11 +104,15 @@ export const Cart = (): JSX.Element => {
     );
   };
 
+  const isCheckoutable = (): boolean => {
+    return orderItems && orderItems.length > 0;
+  };
+
   return (
     <Row>
       <Col md={8}>
         <h1>Shopping Cart</h1>
-        {orderItems.length === 0 ? renderEmptyCart() : renderCartItems()}
+        {!isCheckoutable() ? renderEmptyCart() : renderCartItems()}
       </Col>
       <Col md={4}>
         <Card>
@@ -118,7 +124,7 @@ export const Cart = (): JSX.Element => {
               <Button
                 type='button'
                 className='btn-block'
-                disabled={orderItems.length === 0}
+                disabled={!isCheckoutable()}
                 onClick={checkoutHandler}
               >
                 Proceed To Checkout

@@ -1,7 +1,7 @@
 import { AppApi } from '../../app/AppApi';
-import { AuthData } from '../../external/AuthData';
-import { Result } from '../../external/Result';
-import { User } from '../../external/User';
+import { Result } from '../../type/Result';
+import { AuthData } from './type/AuthData';
+import { User } from './type/User';
 
 export type AuthApiResponse = Result<AuthData, Error>;
 export type SignOutApiResponse = Result<boolean, Error>;

@@ -1,7 +1,7 @@
-import { AuthData } from '../../external/AuthData';
-import { AuthToken } from '../../external/AuthToken';
-import { User } from '../../external/User';
 import { BaseLocalStorage } from '../../srorage/BaseLocalStorage';
+import { AuthData } from './type/AuthData';
+import { AuthToken } from './type/AuthToken';
+import { User } from './type/User';
 
 class AuthDataEntity implements AuthData {
   user!: User;

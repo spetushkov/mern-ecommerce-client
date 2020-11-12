@@ -9,7 +9,7 @@ type Props = {
 export const StoreError = (props: Props): JSX.Element => {
   const { error } = props;
 
-  const message = error.message;
+  const { message, stack } = error;
   const [details, setDetails] = useState();
 
   useEffect(() => {
@@ -28,14 +28,16 @@ export const StoreError = (props: Props): JSX.Element => {
       <div>
         <Alert variant='danger'>{message}</Alert>
       </div>
-      {details && (
-        <div>
-          <details>
-            <summary>Click for error details</summary>
-            {details}
-          </details>
-        </div>
-      )}
+      {details ||
+        (stack && (
+          <div>
+            <details>
+              <summary>Click for error details</summary>
+              {details && details}
+              {stack && stack}
+            </details>
+          </div>
+        ))}
     </div>
   );
 };

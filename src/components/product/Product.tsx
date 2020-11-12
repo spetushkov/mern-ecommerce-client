@@ -23,7 +23,11 @@ export const Product = (): JSX.Element => {
   }, [dispatch, id]);
 
   const productState = useSelector((state: State) => state.product);
-  const { loading, data: product, error } = productState;
+  const { loading, data: product, error: productError } = productState;
+
+  const cartState = useSelector((state: State) => state.cart);
+  const { error: cartError } = cartState;
+  console.log('cartError', cartError);
 
   const [quantity, setQuantity] = useState(1);
 
@@ -58,7 +62,8 @@ export const Product = (): JSX.Element => {
   return (
     <>
       {loading && <StoreLoader />}
-      {error && <StoreError error={error} />}
+      {productError && <StoreError error={productError} />}
+      {cartError && <StoreError error={cartError} />}
       <Link className='btn btn-light my-3' to={RouterEndpoint.home()}>
         Go Back
       </Link>

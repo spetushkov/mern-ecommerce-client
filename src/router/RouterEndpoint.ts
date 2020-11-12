@@ -6,10 +6,10 @@ export const RouterEndpoint = {
     return redirect ? `/signin?redirect=${redirect}` : `/signin`;
   },
   signOut: (): string => `/signout`,
+  cart: (): string => `/cart`,
   shipping: (): string => `/shipping`,
   payment: (): string => `/payment`,
   order: (): string => `/order`,
-  cart: (): string => `/cart`,
   products: (id: string): string => `/products/${id}`,
   home: (): string => `/`,
 };

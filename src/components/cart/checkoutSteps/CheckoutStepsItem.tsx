@@ -3,7 +3,7 @@ import { Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 type Props = {
-  step: boolean;
+  step?: boolean;
   linkUrl: string;
   linkName: string;
 };

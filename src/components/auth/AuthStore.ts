@@ -1,7 +1,7 @@
-import { AuthData } from '../../external/AuthData';
 import { ReducerAction } from '../../store/reducer/ReducerAction';
 import { ReducerActionCreator } from '../../store/reducer/ReducerActionCreator';
 import { AuthStorage } from './AuthStorage';
+import { AuthData } from './type/AuthData';
 
 type Action = ReducerAction<ActionType, Payload>;
 const action = ReducerActionCreator<ActionType, Payload | Error>();

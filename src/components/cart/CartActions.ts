@@ -1,14 +1,16 @@
 import { Dispatch } from 'redux';
-import { OrderItem } from '../../external/OrderItem';
-import { Product } from '../../external/Product';
-import { ShippingAddress } from '../../external/ShippingAddress';
 import { State } from '../../store/Store';
-import { PaymentMethod } from '../checkout/payment/PaymentMethod';
 import { ProductApi } from '../product/ProductApi';
-import { CartStorage } from './CartStorage';
+import { Product } from '../product/type/Product';
 import { CartStore } from './CartStore';
+import { OrderItemStorage } from './orderItem/OrderItemStorage';
+import { OrderItem } from './orderItem/type/OrderItem';
+import { PaymentMethod } from './paymentMethod/PaymentMethod';
+import { ShippingAddressStorage } from './shippingAddress/ShippingAddressStorage';
+import { ShippingAddress } from './shippingAddress/type/ShippingAddress';
 
-const cartStorage = new CartStorage();
+const cartStorage = new OrderItemStorage();
+const shippingAddressStorage = new ShippingAddressStorage();
 
 const addOrderItem = (id: string, quantity: number) => async (
   dispatch: Dispatch,
@@ -63,7 +65,7 @@ const saveShippingAddress = (shippingAddress: ShippingAddress) => (dispatch: Dis
   try {
     dispatch(CartStore.action('CART_SAVE_SHIPPING_ADDRESS', shippingAddress));
 
-    // CartStorage.saveShippingAddress(shippingAddress);
+    shippingAddressStorage.save(shippingAddress);
   } catch (error) {
     CartStore.action('CART_FAIL', error);
   }

@@ -1,6 +1,6 @@
-import { Product } from '../../external/Product';
 import { ReducerAction } from '../../store/reducer/ReducerAction';
 import { ReducerActionCreator } from '../../store/reducer/ReducerActionCreator';
+import { Product } from './type/Product';
 
 type Action = ReducerAction<ActionType, Payload>;
 const action = ReducerActionCreator<ActionType, Payload | Error>();
