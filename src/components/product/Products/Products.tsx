@@ -4,27 +4,30 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../../../store/Store';
 import { StoreError } from '../../../store/StoreError';
-import { StoreLoader } from '../../../store/StoreLoader';
-import { ProductsActions } from './ProductsActions';
+import { ProductActions } from '../ProductActions';
 import { ProductsItem } from './ProductsItem';
+import { ProductsSkeleton } from './skeletons/ProductsSkeleton';
 
 export const Products = (): JSX.Element => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(ProductsActions.findAll());
+    dispatch(ProductActions.findAll());
   }, [dispatch]);
 
-  const productsState = useSelector((state: State) => state.products);
-  const { loading, data, error } = productsState;
+  const productState = useSelector((state: State) => state.product);
+  const { loading, data, error } = productState;
 
   const { t } = useTranslation('Products');
 
-  const products = data ? data.data : null;
+  const products = data.products ? data.products.data : null;
+
+  if (loading) {
+    return <ProductsSkeleton />;
+  }
 
   return (
     <>
-      {loading && <StoreLoader />}
       {error && <StoreError error={error} />}
       <h4>{t('common:products.header', { namespace: 'common' })}</h4>
       <h4>{t('Products:products.header', { namespace: 'Products' })}</h4>

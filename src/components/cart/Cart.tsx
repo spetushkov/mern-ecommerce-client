@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { RouterEndpoint } from '../../router/RouterEndpoint';
 import { State } from '../../store/Store';
+import { NumberUtils } from '../../utils/NumberUtils';
 import { CartActions } from './CartActions';
 import { CartUtils } from './CartUtils';
 
@@ -21,9 +22,9 @@ export const Cart = (): JSX.Element => {
 
   const orderItemsTotal = useMemo(() => {
     return orderItems
-      ? orderItems
-          .reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)
-          .toFixed(2)
+      ? NumberUtils.toFixed(
+          orderItems.reduce((accumulator, item) => accumulator + item.quantity * item.price, 0),
+        )
       : 0.0;
   }, [orderItems]);
 
@@ -105,7 +106,7 @@ export const Cart = (): JSX.Element => {
   };
 
   const isCheckoutable = (): boolean => {
-    return orderItems && orderItems.length > 0;
+    return orderItems && orderItems.length > 0 ? true : false;
   };
 
   return (

@@ -22,7 +22,6 @@ export const Header = (): JSX.Element => {
   const orderItemsCount = useMemo(() => {
     return CartUtils.getOrderItemsCount(orderItems);
   }, [orderItems]);
-  console.log('orderItemsCount', orderItemsCount);
 
   const signOutHandler = () => {
     dispatch(AuthActions.signOut());

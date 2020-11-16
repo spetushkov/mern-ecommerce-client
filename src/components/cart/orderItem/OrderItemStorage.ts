@@ -1,4 +1,4 @@
-import { BaseLocalStorage } from '../../../srorage/BaseLocalStorage';
+import { BaseIterableLocalStorage } from '../../../srorage/BaseIterableLocalStorage';
 import { OrderItem } from './type/OrderItem';
 
 class OrderItemEntity implements OrderItem {
@@ -10,7 +10,7 @@ class OrderItemEntity implements OrderItem {
   countInStock = 0;
 }
 
-export class OrderItemStorage extends BaseLocalStorage<OrderItemEntity> {
+export class OrderItemStorage extends BaseIterableLocalStorage<OrderItem> {
   constructor() {
     super('CART_ORDER_ITEMS', OrderItemEntity);
   }

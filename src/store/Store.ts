@@ -3,14 +3,14 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { AuthStore } from '../components/auth/AuthStore';
 import { CartStore } from '../components/cart/CartStore';
-import { ProductsStore } from '../components/product/products/ProductsStore';
+import { OrderStore } from '../components/cart/order/OrderStore';
 import { ProductStore } from '../components/product/ProductStore';
 
 const combinedReducer = combineReducers({
-  products: ProductsStore.reducer,
   product: ProductStore.reducer,
   cart: CartStore.reducer,
   auth: AuthStore.reducer,
+  order: OrderStore.reducer,
 });
 
 const middleware = [thunk];

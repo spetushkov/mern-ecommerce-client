@@ -35,6 +35,7 @@ const findById = async (id: string): Promise<ProductApiResponse> => {
   }
 };
 
+// not used, example
 const save = async (entity: Product): Promise<ProductApiResponse> => {
   try {
     const endpoint = `${baseUrl}`;
@@ -46,6 +47,7 @@ const save = async (entity: Product): Promise<ProductApiResponse> => {
   }
 };
 
+// not used, example
 const updateById = async (id: string, query: Product): Promise<ProductApiResponse> => {
   try {
     const endpoint = `${baseUrl}/${id}`;
@@ -57,6 +59,7 @@ const updateById = async (id: string, query: Product): Promise<ProductApiRespons
   }
 };
 
+// not used, example
 const deleteById = async (id: string): Promise<void> => {
   try {
     const endpoint = `${baseUrl}/${id}`;

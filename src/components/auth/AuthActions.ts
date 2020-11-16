@@ -8,11 +8,11 @@ const authStorage = new AuthStorage();
 
 const signUp = (user: User) => async (dispatch: Dispatch): Promise<void> => {
   try {
-    dispatch(AuthStore.action('AUTH_LOAD'));
+    dispatch(AuthStore.action('AUTH_PENDING'));
 
     const response = await AuthApi.signUp(user);
     if (response.error) {
-      dispatch(AuthStore.action('AUTH_FAIL', response.error));
+      dispatch(AuthStore.action('AUTH_ERROR', response.error));
       return;
     }
 
@@ -20,11 +20,11 @@ const signUp = (user: User) => async (dispatch: Dispatch): Promise<void> => {
       return;
     }
 
-    dispatch(AuthStore.action('AUTH_SUCCESS', response.data));
+    dispatch(AuthStore.action('SIGNUP', response.data));
 
     authStorage.save(response.data);
   } catch (error) {
-    dispatch(AuthStore.action('AUTH_FAIL', error));
+    dispatch(AuthStore.action('AUTH_ERROR', error));
   }
 };
 
@@ -32,11 +32,11 @@ const signIn = (user: Pick<User, 'email' | 'password'>) => async (
   dispatch: Dispatch,
 ): Promise<void> => {
   try {
-    dispatch(AuthStore.action('AUTH_LOAD'));
+    dispatch(AuthStore.action('AUTH_PENDING'));
 
     const response = await AuthApi.signIn(user);
     if (response.error) {
-      dispatch(AuthStore.action('AUTH_FAIL', response.error));
+      dispatch(AuthStore.action('AUTH_ERROR', response.error));
       return;
     }
 
@@ -44,21 +44,21 @@ const signIn = (user: Pick<User, 'email' | 'password'>) => async (
       return;
     }
 
-    dispatch(AuthStore.action('AUTH_SUCCESS', response.data));
+    dispatch(AuthStore.action('SIGNIN', response.data));
 
     authStorage.save(response.data);
   } catch (error) {
-    dispatch(AuthStore.action('AUTH_FAIL', error));
+    dispatch(AuthStore.action('AUTH_ERROR', error));
   }
 };
 
 const signOut = () => async (dispatch: Dispatch): Promise<void> => {
   try {
-    dispatch(AuthStore.action('AUTH_LOAD'));
+    dispatch(AuthStore.action('AUTH_PENDING'));
 
     const response = await AuthApi.signOut();
     if (response.error) {
-      dispatch(AuthStore.action('AUTH_FAIL', response.error));
+      dispatch(AuthStore.action('AUTH_ERROR', response.error));
       return;
     }
 
@@ -66,11 +66,11 @@ const signOut = () => async (dispatch: Dispatch): Promise<void> => {
       return;
     }
 
-    dispatch(AuthStore.action('SIGNOUT_SUCCESS'));
+    dispatch(AuthStore.action('SIGNOUT'));
 
     authStorage.remove();
   } catch (error) {
-    dispatch(AuthStore.action('AUTH_FAIL', error));
+    dispatch(AuthStore.action('AUTH_ERROR', error));
   }
 };
 

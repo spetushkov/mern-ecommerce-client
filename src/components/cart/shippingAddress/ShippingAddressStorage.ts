@@ -8,7 +8,7 @@ class ShippingAddressEntity implements ShippingAddress {
   country = '';
 }
 
-export class ShippingAddressStorage extends BaseLocalStorage<ShippingAddressEntity> {
+export class ShippingAddressStorage extends BaseLocalStorage<ShippingAddress> {
   constructor() {
     super('CART_SHIPPING_ADDRESS', ShippingAddressEntity);
   }

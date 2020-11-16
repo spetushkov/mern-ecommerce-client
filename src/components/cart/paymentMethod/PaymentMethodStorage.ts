@@ -1,12 +1,12 @@
 import { BaseLocalStorage } from '../../../srorage/BaseLocalStorage';
-import { PaymentMethod } from './PaymentMethod';
+import { PaymentMethod } from './type/PaymentMethod';
 
 class PaymentMethodEntity {
   value!: PaymentMethod;
 }
 
-export class ShippingAddressStorage extends BaseLocalStorage<PaymentMethodEntity> {
+export class PaymentMethodStorage extends BaseLocalStorage<PaymentMethodEntity> {
   constructor() {
-    super('CART_SHIPPING_ADDRESS', PaymentMethodEntity);
+    super('CART_PAYMENT_METHOD', PaymentMethodEntity);
   }
 }

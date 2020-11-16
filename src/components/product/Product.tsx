@@ -23,11 +23,11 @@ export const Product = (): JSX.Element => {
   }, [dispatch, id]);
 
   const productState = useSelector((state: State) => state.product);
-  const { loading, data: product, error: productError } = productState;
+  const { loading, data, error: productError } = productState;
+  const product = data.product ? data.product : null;
 
   const cartState = useSelector((state: State) => state.cart);
   const { error: cartError } = cartState;
-  console.log('cartError', cartError);
 
   const [quantity, setQuantity] = useState(1);
 

@@ -24,7 +24,7 @@ export const SignUp = (): JSX.Element => {
 
   const redirect = useAuthRedirect(authData);
 
-  const [formErrors, setFormErrors] = useState([] as string[]);
+  const [formErrors, setFormErrors] = useState<string[]>([]);
 
   const initialFormState = useMemo(() => new SignUpForm(), []);
 

@@ -5,23 +5,23 @@ import { Product } from '../product/type/Product';
 import { CartStore } from './CartStore';
 import { OrderItemStorage } from './orderItem/OrderItemStorage';
 import { OrderItem } from './orderItem/type/OrderItem';
-import { PaymentMethod } from './paymentMethod/PaymentMethod';
+import { PaymentMethodStorage } from './paymentMethod/PaymentMethodStorage';
+import { PaymentMethod } from './paymentMethod/type/PaymentMethod';
 import { ShippingAddressStorage } from './shippingAddress/ShippingAddressStorage';
 import { ShippingAddress } from './shippingAddress/type/ShippingAddress';
 
 const cartStorage = new OrderItemStorage();
-const shippingAddressStorage = new ShippingAddressStorage();
 
 const addOrderItem = (id: string, quantity: number) => async (
   dispatch: Dispatch,
   getState: () => State,
 ): Promise<void> => {
   try {
-    dispatch(CartStore.action('CART_LOAD'));
+    dispatch(CartStore.action('CART_PENDING'));
 
     const response = await ProductApi.findById(id);
     if (response.error) {
-      dispatch(CartStore.action('CART_FAIL', response.error));
+      dispatch(CartStore.action('CART_ERROR', response.error));
       return;
     }
 
@@ -43,7 +43,7 @@ const addOrderItem = (id: string, quantity: number) => async (
 
     cartStorage.save(getState().cart.data.orderItems);
   } catch (error) {
-    dispatch(CartStore.action('CART_FAIL', error));
+    dispatch(CartStore.action('CART_ERROR', error));
   }
 };
 
@@ -57,7 +57,7 @@ const removeOrderItem = (id: string) => (dispatch: Dispatch, getState: () => Sta
 
     cartStorage.save(getState().cart.data.orderItems);
   } catch (error) {
-    CartStore.action('CART_FAIL', error);
+    CartStore.action('CART_ERROR', error);
   }
 };
 
@@ -65,9 +65,10 @@ const saveShippingAddress = (shippingAddress: ShippingAddress) => (dispatch: Dis
   try {
     dispatch(CartStore.action('CART_SAVE_SHIPPING_ADDRESS', shippingAddress));
 
+    const shippingAddressStorage = new ShippingAddressStorage();
     shippingAddressStorage.save(shippingAddress);
   } catch (error) {
-    CartStore.action('CART_FAIL', error);
+    CartStore.action('CART_ERROR', error);
   }
 };
 
@@ -75,9 +76,10 @@ const savePaymentMethod = (paymentMethod: PaymentMethod) => (dispatch: Dispatch)
   try {
     dispatch(CartStore.action('CART_SAVE_PAYMENT_METHOD', paymentMethod));
 
-    // CartStorage.savePaymentMethod(paymentMethod);
+    const paymentMethodStorage = new PaymentMethodStorage();
+    paymentMethodStorage.save({ value: paymentMethod });
   } catch (error) {
-    CartStore.action('CART_FAIL', error);
+    CartStore.action('CART_ERROR', error);
   }
 };
 

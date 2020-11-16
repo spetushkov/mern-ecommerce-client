@@ -34,4 +34,8 @@ export class ClassTransformer {
   static deserialize<T>(entityClass: Clazz<T>, entity: string): T {
     return Tranformer.deserialize(entityClass, entity);
   }
+
+  static deserializeIterable<T>(entityClass: Clazz<T>, entity: string): T[] {
+    return Tranformer.deserializeArray(entityClass, entity);
+  }
 }

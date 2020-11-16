@@ -2,7 +2,8 @@ import { ReducerAction } from '../../store/reducer/ReducerAction';
 import { ReducerActionCreator } from '../../store/reducer/ReducerActionCreator';
 import { OrderItemStorage } from './orderItem/OrderItemStorage';
 import { OrderItem } from './orderItem/type/OrderItem';
-import { PaymentMethod } from './paymentMethod/PaymentMethod';
+import { PaymentMethodStorage } from './paymentMethod/PaymentMethodStorage';
+import { PaymentMethod } from './paymentMethod/type/PaymentMethod';
 import { ShippingAddressStorage } from './shippingAddress/ShippingAddressStorage';
 import { ShippingAddress } from './shippingAddress/type/ShippingAddress';
 
@@ -12,32 +13,45 @@ const action = ReducerActionCreator<ActionType, Payload | Error>();
 type Payload = Pick<OrderItem, 'product'> | OrderItem | ShippingAddress | PaymentMethod;
 
 type ActionType =
-  | 'CART_LOAD'
+  | 'CART_PENDING'
   | 'CART_ADD_ORDER_ITEM'
   | 'CART_REMOVE_ORDER_ITEM'
   | 'CART_SAVE_SHIPPING_ADDRESS'
   | 'CART_SAVE_PAYMENT_METHOD'
-  | 'CART_FAIL';
+  | 'CART_ERROR';
 
 export type CartState = {
   loading: boolean;
   data: {
-    orderItems: OrderItem[];
+    orderItems: OrderItem[] | null;
     shippingAddress: ShippingAddress | null;
     paymentMethod: PaymentMethod | null;
   };
   error: Error | null;
 };
 
-const orderItemStorage = new OrderItemStorage();
-const shippingAddressStorage = new ShippingAddressStorage();
+const getOrderItemsFromStorage = () => {
+  const orderItemStorage = new OrderItemStorage();
+  return orderItemStorage.findAll();
+};
+
+const getShippingAddressFromStorage = () => {
+  const shippingAddressStorage = new ShippingAddressStorage();
+  return shippingAddressStorage.find();
+};
+
+const getPaymentMethodFromStorage = () => {
+  const paymentMethodStorage = new PaymentMethodStorage();
+  const paymentMethodEntity = paymentMethodStorage.find();
+  return paymentMethodEntity ? paymentMethodEntity.value : null;
+};
 
 const initialState: CartState = {
   loading: false,
   data: {
-    orderItems: orderItemStorage.find() as OrderItem[],
-    shippingAddress: shippingAddressStorage.find() as ShippingAddress,
-    paymentMethod: null,
+    orderItems: getOrderItemsFromStorage(),
+    shippingAddress: getShippingAddressFromStorage(),
+    paymentMethod: getPaymentMethodFromStorage(),
   },
   error: null,
 };
@@ -46,7 +60,7 @@ const reducer = (state = initialState, action: Action): CartState => {
   const { type, payload } = action;
 
   switch (type) {
-    case 'CART_LOAD':
+    case 'CART_PENDING':
       return load(state);
     case 'CART_ADD_ORDER_ITEM':
       return addOrderItem(state, payload as OrderItem);
@@ -56,7 +70,7 @@ const reducer = (state = initialState, action: Action): CartState => {
       return saveShippingAddress(state, payload as ShippingAddress);
     case 'CART_SAVE_PAYMENT_METHOD':
       return savePaymentMethod(state, payload as PaymentMethod);
-    case 'CART_FAIL':
+    case 'CART_ERROR':
       return fail(state, payload as Error);
     default:
       return state;
@@ -101,6 +115,10 @@ const removeOrderItem = (
   state: CartState,
   productItemRemove: Pick<OrderItem, 'product'>,
 ): CartState => {
+  if (!state.data.orderItems) {
+    return state;
+  }
+
   const itemsUpdated = state.data.orderItems.filter(
     (item) => item.product !== productItemRemove.product,
   );
