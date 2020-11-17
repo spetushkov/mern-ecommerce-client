@@ -5,6 +5,7 @@ import { HomeScreen } from '../screens/HomeScreen';
 import { NotFoundScreen } from '../screens/NotFoundScreen';
 import { OrderScreen } from '../screens/OrderScreen';
 import { PaymentScreen } from '../screens/PaymentScreen';
+import { PlaceOrderScreen } from '../screens/PlaceOrderScreen';
 import { ProductScreen } from '../screens/ProductScreen';
 import { ShippingScreen } from '../screens/ShippingScreen';
 import { SignInScreen } from '../screens/SignInScreen';
@@ -19,7 +20,8 @@ export const Routes = (): JSX.Element => {
       <Route path='/cart' component={CartScreen} />
       <Route path='/shipping' component={ShippingScreen} />
       <Route path='/payment' component={PaymentScreen} />
-      <Route path='/order' component={OrderScreen} />
+      <Route path='/placeorder' component={PlaceOrderScreen} />
+      <Route exact path='/orders/:id' component={OrderScreen} />
       <Route exact path='/' component={HomeScreen} />
       <Route component={NotFoundScreen} />
     </Switch>

@@ -1,115 +1,117 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Alert, Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import { RouterEndpoint } from '../../../router/RouterEndpoint';
+import { useParams } from 'react-router-dom';
 import { State } from '../../../store/Store';
 import { StoreError } from '../../../store/StoreError';
 import { StoreLoader } from '../../../store/StoreLoader';
 import { NumberUtils } from '../../../utils/NumberUtils';
-import { CheckoutSteps } from '../checkoutSteps/CheckoutSteps';
+import { User } from '../../auth/type/User';
 import { OrderActions } from './OrderActions';
-import { Order as OrderType } from './type/Order';
+import { OrderToPay } from './OrderApi';
+
+type Params = {
+  id: string;
+};
 
 export const Order = (): JSX.Element => {
   const dispatch = useDispatch();
-  const history = useHistory();
-
-  const cartState = useSelector((state: State) => state.cart);
-  const { orderItems, shippingAddress, paymentMethod } = cartState.data;
+  const { id } = useParams<Params>();
 
   const orderState = useSelector((state: State) => state.order);
-  const { loading, error } = orderState;
+  const { loading, data, error } = orderState;
+  const order = data.order;
+  const user = order && order.user ? (order.user as User) : null;
 
-  if (!shippingAddress) {
-    history.push(RouterEndpoint.shipping());
-  }
+  useEffect(() => {
+    dispatch(OrderActions.findById(id));
+  }, [dispatch, id]);
 
-  if (!paymentMethod) {
-    history.push(RouterEndpoint.payment());
-  }
-
-  const orderItemsPrice = NumberUtils.round(
-    orderItems
-      ? orderItems.reduce((accumulator, item) => accumulator + item.price * item.quantity, 0)
-      : 0,
-  );
-
-  const shippingPrice = NumberUtils.round(orderItemsPrice > 100 ? 0 : 14.99);
-
-  const taxPrice = NumberUtils.round(0.15 * orderItemsPrice);
-
-  const totalPrice = NumberUtils.round(orderItemsPrice + shippingPrice + taxPrice);
-
-  const placeOrderHandler = () => {
-    if (!orderItems) {
-      return;
-    }
-
-    const order: OrderType = {
-      id: '',
-      orderItems,
-      shippingAddress,
-      paymentMethod,
-      taxPrice,
-      shippingPrice,
-      isPaid: false,
-      isDelivered: false,
+  const payOrderHandler = () => {
+    const orderToPay: OrderToPay = {
+      paymentResult: {
+        id: 'id1',
+        status: 'status1',
+        update_time: 'update_time1',
+        email_address: 'email_address1', //payer.email_address
+      },
     };
+    dispatch(OrderActions.payById(id, orderToPay));
+  };
 
-    dispatch(OrderActions.save(order));
+  const payOrderValidHandler = (): boolean => {
+    return !loading && !error && !!order && !order.isPaid;
   };
 
   return (
     <>
       {loading && <StoreLoader />}
       {error && <StoreError error={error} />}
-      <CheckoutSteps step1 step2 step3 />
+      <h2>Order {order && order.id}</h2>
       <Row>
         <Col md={8}>
           <ListGroup variant='flush'>
-            {shippingAddress && (
+            {user && (
               <ListGroup.Item>
-                <h2>Shipping Address</h2>
+                <h2>Customer</h2>
+                <p>{user.name}</p>
                 <p>
-                  {shippingAddress.address}, {shippingAddress.city} {shippingAddress.postalCode},{' '}
-                  {shippingAddress.country}
+                  <a href={`mailto:${user.email}`}>{user.email}</a>
                 </p>
               </ListGroup.Item>
             )}
 
-            {paymentMethod && (
+            {order && order.shippingAddress && (
               <ListGroup.Item>
-                <h2>Payment Method</h2>
-                <p>{paymentMethod}</p>
+                <h2>Shipping</h2>
+                <p>
+                  {order.shippingAddress.address}, {order.shippingAddress.city}{' '}
+                  {order.shippingAddress.postalCode}, {order.shippingAddress.country}
+                </p>
+                <p>
+                  {order.isDelivered ? (
+                    <Alert variant='success'>Delivered on {order.deliveredAt}</Alert>
+                  ) : (
+                    <Alert variant='danger'>Not delivered</Alert>
+                  )}
+                </p>
+              </ListGroup.Item>
+            )}
+
+            {order && order.paymentMethod && (
+              <ListGroup.Item>
+                <h2>Payment</h2>
+                <p>{order.paymentMethod}</p>
+                <p>
+                  {order.isPaid ? (
+                    <Alert variant='success'>Paid on {order.paidAt}</Alert>
+                  ) : (
+                    <Alert variant='danger'>Not paid</Alert>
+                  )}
+                </p>
               </ListGroup.Item>
             )}
 
             <ListGroup.Item>
-              <h2>Order Items</h2>
-              {!orderItems || orderItems.length === 0 ? (
-                <Alert variant='info'>
-                  Your cart is empty <Link to={RouterEndpoint.home()}>Go Back</Link>
-                </Alert>
-              ) : (
-                <ListGroup variant='flush'>
-                  {orderItems &&
-                    orderItems.map((item, index) => (
-                      <ListGroup.Item key={index}>
-                        <Row>
-                          <Col md={2}>
-                            <Image src={item.image} alt={item.name} fluid rounded />
-                          </Col>
-                          <Col md={6}>{item.name}</Col>
-                          <Col md={4}>
-                            {item.quantity} x ${item.price} = $
-                            {NumberUtils.toFixed(item.quantity * item.price)}
-                          </Col>
-                        </Row>
-                      </ListGroup.Item>
-                    ))}
-                </ListGroup>
-              )}
+              <h2>Items</h2>
+              <ListGroup variant='flush'>
+                {order &&
+                  order.orderItems &&
+                  order.orderItems.map((item, index) => (
+                    <ListGroup.Item key={index}>
+                      <Row>
+                        <Col md={2}>
+                          <Image src={item.image} alt={item.name} fluid rounded />
+                        </Col>
+                        <Col md={6}>{item.name}</Col>
+                        <Col md={4}>
+                          {item.quantity} x ${item.price} = $
+                          {NumberUtils.toFixed(item.quantity * item.price)}
+                        </Col>
+                      </Row>
+                    </ListGroup.Item>
+                  ))}
+              </ListGroup>
             </ListGroup.Item>
           </ListGroup>
         </Col>
@@ -117,40 +119,40 @@ export const Order = (): JSX.Element => {
           <Card>
             <ListGroup variant='flush'>
               <ListGroup.Item>
-                <h2>Order Summary</h2>
+                <h2>Summary</h2>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Items</Col>
-                  <Col>${NumberUtils.toFixed(orderItemsPrice)}</Col>
+                  <Col>${NumberUtils.toFixed(order ? order.orderItemsPrice : 0)}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Shipping</Col>
-                  <Col>${NumberUtils.toFixed(shippingPrice)}</Col>
+                  <Col>${NumberUtils.toFixed(order ? order.shippingPrice : 0)}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Tax</Col>
-                  <Col>${NumberUtils.toFixed(taxPrice)}</Col>
+                  <Col>${NumberUtils.toFixed(order ? order.taxPrice : 0)}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Total</Col>
-                  <Col>${NumberUtils.toFixed(totalPrice)}</Col>
+                  <Col>${NumberUtils.toFixed(order ? order.totalPrice : 0)}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Button
                   type='button'
                   className='btn-block'
-                  disabled={orderItemsPrice === 0}
-                  onClick={placeOrderHandler}
+                  disabled={!payOrderValidHandler()}
+                  onClick={payOrderHandler}
                 >
-                  Place Order
+                  Pay Order
                 </Button>
               </ListGroup.Item>
             </ListGroup>

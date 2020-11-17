@@ -9,7 +9,8 @@ export const RouterEndpoint = {
   cart: (): string => `/cart`,
   shipping: (): string => `/shipping`,
   payment: (): string => `/payment`,
-  order: (): string => `/order`,
+  placeOrder: (): string => `/placeorder`,
+  orders: (id: string): string => `/orders/${id}`,
   products: (id: string): string => `/products/${id}`,
   home: (): string => `/`,
 };

@@ -29,7 +29,7 @@ export const PaymentMethod = (): JSX.Element => {
 
     dispatch(CartActions.savePaymentMethod(paymentMethod));
 
-    history.push(RouterEndpoint.order());
+    history.push(RouterEndpoint.placeOrder());
   };
 
   return (

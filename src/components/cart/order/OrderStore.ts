@@ -9,7 +9,13 @@ const action = ReducerActionCreator<ActionType, Payload | Error>();
 type Orders = Pick<OrderApiPageResponse, 'data' | 'paginator'>;
 type Payload = Order | Orders;
 
-type ActionType = 'ORDER_PENDING' | 'ORDER_FIND_ALL' | 'ORDER_SAVE' | 'ORDER_ERROR';
+type ActionType =
+  | 'ORDER_PENDING'
+  | 'ORDER_FIND_ALL'
+  | 'ORDER_FIND_BY_ID'
+  | 'ORDER_SAVE'
+  | 'ORDER_PAY_BY_ID'
+  | 'ORDER_ERROR';
 
 export type OrderState = {
   loading: boolean;
@@ -45,7 +51,9 @@ const reducer = (state = initialState, action: Action): OrderState => {
           orders: payload as Orders,
         },
       };
+    case 'ORDER_FIND_BY_ID':
     case 'ORDER_SAVE':
+    case 'ORDER_PAY_BY_ID':
       return {
         ...state,
         loading: false,

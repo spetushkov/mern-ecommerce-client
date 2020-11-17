@@ -10,11 +10,13 @@ export interface Order extends BaseDomain {
   orderItems: OrderItem[]; // reference (embedded doc): Order ONE_TO_ONE OrderItem
   shippingAddress: ShippingAddress | null;
   paymentMethod: PaymentMethod | null;
-  taxPrice: number;
+  orderItemsPrice: number;
   shippingPrice: number;
+  taxPrice: number;
+  totalPrice: number;
   paymentResult?: PaymentResult;
-  isPaid: boolean;
+  isPaid?: boolean;
   paidAt?: Date;
-  isDelivered: boolean;
+  isDelivered?: boolean;
   deliveredAt?: Date;
 }

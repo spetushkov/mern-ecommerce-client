@@ -24,7 +24,7 @@ export const Product = (): JSX.Element => {
 
   const productState = useSelector((state: State) => state.product);
   const { loading, data, error: productError } = productState;
-  const product = data.product ? data.product : null;
+  const product = data.product;
 
   const cartState = useSelector((state: State) => state.cart);
   const { error: cartError } = cartState;

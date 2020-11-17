@@ -22,7 +22,11 @@ export const CheckoutSteps = (props: Props): JSX.Element => {
       />
       <CheckoutStepsItem step={step2} linkUrl={RouterEndpoint.shipping()} linkName='Shipping' />
       <CheckoutStepsItem step={step3} linkUrl={RouterEndpoint.payment()} linkName='Payment' />
-      <CheckoutStepsItem step={step4} linkUrl={RouterEndpoint.order()} linkName='Place Order' />
+      <CheckoutStepsItem
+        step={step4}
+        linkUrl={RouterEndpoint.placeOrder()}
+        linkName='Place Order'
+      />
     </Nav>
   );
 };
