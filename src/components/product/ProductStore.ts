@@ -9,7 +9,7 @@ const action = ReducerActionCreator<ActionType, Payload | Error>();
 type Products = Pick<ProductApiPageResponse, 'data' | 'paginator'>;
 type Payload = Product | Products;
 
-type ActionType = 'PRODUCT_PENDING' | 'PRODUCT_FIND_ALL' | 'PRODUCT_FIND_BY_ID' | 'PRODUCT_ERROR';
+type ActionType = 'PRODUCT_REQUEST' | 'PRODUCT_FIND_ALL' | 'PRODUCT_FIND_BY_ID' | 'PRODUCT_ERROR';
 
 export type ProductState = {
   loading: boolean;
@@ -33,7 +33,7 @@ const reducer = (state = initialState, action: Action): ProductState => {
   const { type, payload } = action;
 
   switch (type) {
-    case 'PRODUCT_PENDING':
+    case 'PRODUCT_REQUEST':
       return { ...state, loading: true, error: null };
     case 'PRODUCT_FIND_ALL':
       return {

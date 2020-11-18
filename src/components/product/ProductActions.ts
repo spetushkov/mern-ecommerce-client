@@ -6,7 +6,7 @@ import { ProductStore } from './ProductStore';
 
 const findAll = () => async (dispatch: Dispatch, getState: () => State): Promise<void> => {
   try {
-    dispatch(ProductStore.action('PRODUCT_PENDING'));
+    dispatch(ProductStore.action('PRODUCT_REQUEST'));
 
     const token = AuthUtils.getToken(getState().auth);
 
@@ -30,7 +30,7 @@ const findAll = () => async (dispatch: Dispatch, getState: () => State): Promise
 
 const findById = (id: string) => async (dispatch: Dispatch): Promise<void> => {
   try {
-    dispatch(ProductStore.action('PRODUCT_PENDING'));
+    dispatch(ProductStore.action('PRODUCT_REQUEST'));
 
     const response = await ProductApi.findById(id);
     if (response.error) {

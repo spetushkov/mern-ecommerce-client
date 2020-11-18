@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-import { Alert, Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Alert, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
+import { PayPalButton } from 'react-paypal-button-v2';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { State } from '../../../store/Store';
@@ -7,8 +8,10 @@ import { StoreError } from '../../../store/StoreError';
 import { StoreLoader } from '../../../store/StoreLoader';
 import { NumberUtils } from '../../../utils/NumberUtils';
 import { User } from '../../auth/type/User';
+import { PayPalPaymentResult } from '../../payPal/PayPalPaymentResult';
+import { PayPalUtils } from '../../payPal/PayPalUtils';
+import { CartActions } from '../CartActions';
 import { OrderActions } from './OrderActions';
-import { OrderToPay } from './OrderApi';
 
 type Params = {
   id: string;
@@ -22,25 +25,31 @@ export const Order = (): JSX.Element => {
   const { loading, data, error } = orderState;
   const order = data.order;
   const user = order && order.user ? (order.user as User) : null;
+  const payPalClientId = (data.config && data.config.payPalClientId) ?? undefined;
+
+  const [payPalSdkReady, setPayPalSdkReady] = useState(false);
 
   useEffect(() => {
     dispatch(OrderActions.findById(id));
   }, [dispatch, id]);
 
-  const payOrderHandler = () => {
-    const orderToPay: OrderToPay = {
-      paymentResult: {
-        id: 'id1',
-        status: 'status1',
-        update_time: 'update_time1',
-        email_address: 'email_address1', //payer.email_address
-      },
-    };
-    dispatch(OrderActions.payById(id, orderToPay));
+  useEffect(() => {
+    dispatch(OrderActions.configFindById('payPalClientId'));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (payPalClientId) {
+      PayPalUtils.initSdk(payPalClientId, () => setPayPalSdkReady(true));
+    }
+  }, [payPalClientId]);
+
+  const payOrderWithPayPalHandler = (paymentResult: PayPalPaymentResult) => {
+    dispatch(OrderActions.pay(id, { paymentResult }));
+    dispatch(CartActions.reset());
   };
 
-  const payOrderValidHandler = (): boolean => {
-    return !loading && !error && !!order && !order.isPaid;
+  const isPayOrderWithPayPal = (): boolean => {
+    return !loading && !error && payPalSdkReady && !!order && !order.isPaid && order.totalPrice > 0;
   };
 
   return (
@@ -68,13 +77,11 @@ export const Order = (): JSX.Element => {
                   {order.shippingAddress.address}, {order.shippingAddress.city}{' '}
                   {order.shippingAddress.postalCode}, {order.shippingAddress.country}
                 </p>
-                <p>
-                  {order.isDelivered ? (
-                    <Alert variant='success'>Delivered on {order.deliveredAt}</Alert>
-                  ) : (
-                    <Alert variant='danger'>Not delivered</Alert>
-                  )}
-                </p>
+                {order.isDelivered ? (
+                  <Alert variant='success'>Delivered on {order.deliveredAt}</Alert>
+                ) : (
+                  <Alert variant='danger'>Not delivered</Alert>
+                )}
               </ListGroup.Item>
             )}
 
@@ -82,13 +89,11 @@ export const Order = (): JSX.Element => {
               <ListGroup.Item>
                 <h2>Payment</h2>
                 <p>{order.paymentMethod}</p>
-                <p>
-                  {order.isPaid ? (
-                    <Alert variant='success'>Paid on {order.paidAt}</Alert>
-                  ) : (
-                    <Alert variant='danger'>Not paid</Alert>
-                  )}
-                </p>
+                {order.isPaid ? (
+                  <Alert variant='success'>Paid on {order.paidAt}</Alert>
+                ) : (
+                  <Alert variant='danger'>Not paid</Alert>
+                )}
               </ListGroup.Item>
             )}
 
@@ -145,16 +150,14 @@ export const Order = (): JSX.Element => {
                   <Col>${NumberUtils.toFixed(order ? order.totalPrice : 0)}</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>
-                <Button
-                  type='button'
-                  className='btn-block'
-                  disabled={!payOrderValidHandler()}
-                  onClick={payOrderHandler}
-                >
-                  Pay Order
-                </Button>
-              </ListGroup.Item>
+              {isPayOrderWithPayPal() && (
+                <ListGroup.Item>
+                  <PayPalButton
+                    amount={(order && order.totalPrice) ?? 0}
+                    onSuccess={payOrderWithPayPalHandler}
+                  />
+                </ListGroup.Item>
+              )}
             </ListGroup>
           </Card>
         </Col>

@@ -2,11 +2,11 @@ import { AxiosRequestConfig } from 'axios';
 import { AppApi } from '../../../app/AppApi';
 import { PageableResult } from '../../../type/PageableResult';
 import { Result } from '../../../type/Result';
+import { PayPalPaymentResult } from '../../payPal/PayPalPaymentResult';
 import { Order } from './type/Order';
 
 export type OrderApiPageResponse = PageableResult<Order, Error>;
 export type OrderApiResponse = Result<Order, Error>;
-export type OrderToPay = Pick<Order, 'paymentResult'>;
 const baseUrl = '/orders';
 
 const findAll = async (token: string | null): Promise<OrderApiPageResponse> => {
@@ -57,10 +57,10 @@ const save = async (token: string | null, entity: Order): Promise<OrderApiRespon
   }
 };
 
-const payById = async (
+const pay = async (
   token: string | null,
   id: string,
-  query: OrderToPay,
+  query: { paymentResult: PayPalPaymentResult },
 ): Promise<OrderApiResponse> => {
   try {
     const endpoint = `${baseUrl}/${id}`;
@@ -84,5 +84,5 @@ export const OrderApi = {
   findAll,
   findById,
   save,
-  payById,
+  pay,
 };

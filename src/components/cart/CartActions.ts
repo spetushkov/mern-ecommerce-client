@@ -10,14 +10,12 @@ import { PaymentMethod } from './paymentMethod/type/PaymentMethod';
 import { ShippingAddressStorage } from './shippingAddress/ShippingAddressStorage';
 import { ShippingAddress } from './shippingAddress/type/ShippingAddress';
 
-const cartStorage = new OrderItemStorage();
-
 const addOrderItem = (id: string, quantity: number) => async (
   dispatch: Dispatch,
   getState: () => State,
 ): Promise<void> => {
   try {
-    dispatch(CartStore.action('CART_PENDING'));
+    dispatch(CartStore.action('CART_REQUEST'));
 
     const response = await ProductApi.findById(id);
     if (response.error) {
@@ -41,6 +39,7 @@ const addOrderItem = (id: string, quantity: number) => async (
 
     dispatch(CartStore.action('CART_ADD_ORDER_ITEM', orderItem));
 
+    const cartStorage = new OrderItemStorage();
     cartStorage.save(getState().cart.data.orderItems);
   } catch (error) {
     dispatch(CartStore.action('CART_ERROR', error));
@@ -55,6 +54,7 @@ const removeOrderItem = (id: string) => (dispatch: Dispatch, getState: () => Sta
 
     dispatch(CartStore.action('CART_REMOVE_ORDER_ITEM', orderItem));
 
+    const cartStorage = new OrderItemStorage();
     cartStorage.save(getState().cart.data.orderItems);
   } catch (error) {
     CartStore.action('CART_ERROR', error);
@@ -83,9 +83,27 @@ const savePaymentMethod = (paymentMethod: PaymentMethod) => (dispatch: Dispatch)
   }
 };
 
+const reset = () => (dispatch: Dispatch): void => {
+  try {
+    dispatch(CartStore.action('CART_RESET'));
+
+    const paymentMethodStorage = new PaymentMethodStorage();
+    paymentMethodStorage.remove();
+
+    const shippingAddressStorage = new ShippingAddressStorage();
+    shippingAddressStorage.remove();
+
+    const cartStorage = new OrderItemStorage();
+    cartStorage.remove();
+  } catch (error) {
+    CartStore.action('CART_ERROR', error);
+  }
+};
+
 export const CartActions = {
   addOrderItem,
   removeOrderItem,
   saveShippingAddress,
   savePaymentMethod,
+  reset,
 };

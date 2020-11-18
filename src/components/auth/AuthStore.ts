@@ -8,7 +8,7 @@ const action = ReducerActionCreator<ActionType, Payload | Error>();
 
 type Payload = AuthData;
 
-type ActionType = 'AUTH_PENDING' | 'SIGNUP' | 'SIGNIN' | 'SIGNOUT' | 'AUTH_ERROR';
+type ActionType = 'AUTH_REQUEST' | 'SIGNUP' | 'SIGNIN' | 'SIGNOUT' | 'AUTH_ERROR';
 
 export type AuthState = {
   loading: boolean;
@@ -28,7 +28,7 @@ const reducer = (state = initialState, action: Action): AuthState => {
   const { type, payload } = action;
 
   switch (type) {
-    case 'AUTH_PENDING':
+    case 'AUTH_REQUEST':
       return { ...state, loading: true, error: null };
     case 'SIGNUP':
     case 'SIGNIN':

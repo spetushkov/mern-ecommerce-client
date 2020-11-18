@@ -8,7 +8,7 @@ const authStorage = new AuthStorage();
 
 const signUp = (user: User) => async (dispatch: Dispatch): Promise<void> => {
   try {
-    dispatch(AuthStore.action('AUTH_PENDING'));
+    dispatch(AuthStore.action('AUTH_REQUEST'));
 
     const response = await AuthApi.signUp(user);
     if (response.error) {
@@ -32,7 +32,7 @@ const signIn = (user: Pick<User, 'email' | 'password'>) => async (
   dispatch: Dispatch,
 ): Promise<void> => {
   try {
-    dispatch(AuthStore.action('AUTH_PENDING'));
+    dispatch(AuthStore.action('AUTH_REQUEST'));
 
     const response = await AuthApi.signIn(user);
     if (response.error) {
@@ -54,7 +54,7 @@ const signIn = (user: Pick<User, 'email' | 'password'>) => async (
 
 const signOut = () => async (dispatch: Dispatch): Promise<void> => {
   try {
-    dispatch(AuthStore.action('AUTH_PENDING'));
+    dispatch(AuthStore.action('AUTH_REQUEST'));
 
     const response = await AuthApi.signOut();
     if (response.error) {

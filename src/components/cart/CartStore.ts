@@ -13,11 +13,12 @@ const action = ReducerActionCreator<ActionType, Payload | Error>();
 type Payload = Pick<OrderItem, 'product'> | OrderItem | ShippingAddress | PaymentMethod;
 
 type ActionType =
-  | 'CART_PENDING'
+  | 'CART_REQUEST'
   | 'CART_ADD_ORDER_ITEM'
   | 'CART_REMOVE_ORDER_ITEM'
   | 'CART_SAVE_SHIPPING_ADDRESS'
   | 'CART_SAVE_PAYMENT_METHOD'
+  | 'CART_RESET'
   | 'CART_ERROR';
 
 export type CartState = {
@@ -60,7 +61,7 @@ const reducer = (state = initialState, action: Action): CartState => {
   const { type, payload } = action;
 
   switch (type) {
-    case 'CART_PENDING':
+    case 'CART_REQUEST':
       return load(state);
     case 'CART_ADD_ORDER_ITEM':
       return addOrderItem(state, payload as OrderItem);
@@ -70,6 +71,8 @@ const reducer = (state = initialState, action: Action): CartState => {
       return saveShippingAddress(state, payload as ShippingAddress);
     case 'CART_SAVE_PAYMENT_METHOD':
       return savePaymentMethod(state, payload as PaymentMethod);
+    case 'CART_RESET':
+      return reset(state);
     case 'CART_ERROR':
       return fail(state, payload as Error);
     default:
@@ -152,6 +155,19 @@ const savePaymentMethod = (state: CartState, paymentMethod: PaymentMethod): Cart
     data: {
       ...state.data,
       paymentMethod,
+    },
+    loading: false,
+    error: null,
+  };
+};
+
+const reset = (state: CartState): CartState => {
+  return {
+    ...state,
+    data: {
+      orderItems: null,
+      shippingAddress: null,
+      paymentMethod: null,
     },
     loading: false,
     error: null,

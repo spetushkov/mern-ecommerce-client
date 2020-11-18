@@ -1,13 +1,16 @@
 import { Dispatch } from 'redux';
 import { State } from '../../../store/Store';
 import { AuthUtils } from '../../auth/AuthUtils';
-import { OrderApi, OrderToPay } from './OrderApi';
+import { ConfigApi } from '../../config/ConfigApi';
+import { Config } from '../../config/type/Config';
+import { PayPalPaymentResult } from '../../payPal/PayPalPaymentResult';
+import { OrderApi } from './OrderApi';
 import { OrderStore } from './OrderStore';
 import { Order } from './type/Order';
 
 const findAll = () => async (dispatch: Dispatch, getState: () => State): Promise<void> => {
   try {
-    dispatch(OrderStore.action('ORDER_PENDING'));
+    dispatch(OrderStore.action('ORDER_REQUEST'));
 
     const token = AuthUtils.getToken(getState().auth);
 
@@ -34,7 +37,7 @@ const findById = (id: string) => async (
   getState: () => State,
 ): Promise<void> => {
   try {
-    dispatch(OrderStore.action('ORDER_PENDING'));
+    dispatch(OrderStore.action('ORDER_REQUEST'));
 
     const token = AuthUtils.getToken(getState().auth);
 
@@ -56,7 +59,7 @@ const findById = (id: string) => async (
 
 const save = (order: Order) => async (dispatch: Dispatch, getState: () => State): Promise<void> => {
   try {
-    dispatch(OrderStore.action('ORDER_PENDING'));
+    dispatch(OrderStore.action('ORDER_REQUEST'));
 
     const token = AuthUtils.getToken(getState().auth);
 
@@ -76,16 +79,11 @@ const save = (order: Order) => async (dispatch: Dispatch, getState: () => State)
   }
 };
 
-const payById = (id: string, order: OrderToPay) => async (
-  dispatch: Dispatch,
-  getState: () => State,
-): Promise<void> => {
+const configFindById = (id: keyof Config) => async (dispatch: Dispatch): Promise<void> => {
   try {
-    dispatch(OrderStore.action('ORDER_PENDING'));
+    dispatch(OrderStore.action('ORDER_REQUEST'));
 
-    const token = AuthUtils.getToken(getState().auth);
-
-    const response = await OrderApi.payById(token, id, order);
+    const response = await ConfigApi.findById(id);
     if (response.error) {
       dispatch(OrderStore.action('ORDER_ERROR', response.error));
       return;
@@ -95,7 +93,32 @@ const payById = (id: string, order: OrderToPay) => async (
       return;
     }
 
-    dispatch(OrderStore.action('ORDER_PAY_BY_ID', response.data));
+    dispatch(OrderStore.action('ORDER_CONFIG_FIND_BY_ID', response.data));
+  } catch (error) {
+    dispatch(OrderStore.action('ORDER_ERROR', error));
+  }
+};
+
+const pay = (id: string, paymentResult: { paymentResult: PayPalPaymentResult }) => async (
+  dispatch: Dispatch,
+  getState: () => State,
+): Promise<void> => {
+  try {
+    dispatch(OrderStore.action('ORDER_REQUEST'));
+
+    const token = AuthUtils.getToken(getState().auth);
+
+    const response = await OrderApi.pay(token, id, paymentResult);
+    if (response.error) {
+      dispatch(OrderStore.action('ORDER_ERROR', response.error));
+      return;
+    }
+
+    if (!response.data) {
+      return;
+    }
+
+    dispatch(OrderStore.action('ORDER_PAY', response.data));
   } catch (error) {
     dispatch(OrderStore.action('ORDER_ERROR', error));
   }
@@ -105,5 +128,6 @@ export const OrderActions = {
   findAll,
   findById,
   save,
-  payById,
+  configFindById,
+  pay,
 };
