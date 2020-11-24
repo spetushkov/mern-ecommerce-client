@@ -12,6 +12,8 @@ import { ProductsScreen } from '../screens/ProductsScreen';
 import { ShippingScreen } from '../screens/ShippingScreen';
 import { SignInScreen } from '../screens/SignInScreen';
 import { SignUpScreen } from '../screens/SignUpScreen';
+import { UserScreen } from '../screens/UserScreen';
+import { UsersScreen } from '../screens/UsersScreen';
 
 export const Routes = (): JSX.Element => {
   return (
@@ -26,6 +28,8 @@ export const Routes = (): JSX.Element => {
       <Route path='/placeorder' component={PlaceOrderScreen} />
       <Route exact path='/orders' component={OrdersScreen} />
       <Route exact path='/orders/:id' component={OrderScreen} />
+      <Route exact path='/users' component={UsersScreen} />
+      <Route exact path='/users/:id' component={UserScreen} />
       <Route exact path='/' component={HomeScreen} />
       <Route component={NotFoundScreen} />
     </Switch>

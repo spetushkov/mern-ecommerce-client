@@ -1,5 +1,5 @@
+import { User } from '../../user/type/User';
 import { AuthToken } from './AuthToken';
-import { User } from './User';
 
 export interface AuthData {
   user: User;

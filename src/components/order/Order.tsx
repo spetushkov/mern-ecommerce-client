@@ -7,11 +7,11 @@ import { State } from '../../store/Store';
 import { StoreError } from '../../store/StoreError';
 import { StoreLoader } from '../../store/StoreLoader';
 import { NumberUtils } from '../../utils/NumberUtils';
-import { User } from '../auth/type/User';
 import { useUserAuthenticator } from '../auth/useUserAuthenticator';
 import { CartActions } from '../cart/CartActions';
 import { PayPalPaymentResult } from '../payPal/PayPalPaymentResult';
 import { PayPalUtils } from '../payPal/PayPalUtils';
+import { User } from '../user/type/User';
 import { OrderActions } from './OrderActions';
 
 type Params = {

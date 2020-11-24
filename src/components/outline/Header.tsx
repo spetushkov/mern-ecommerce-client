@@ -57,7 +57,7 @@ export const Header = (): JSX.Element => {
                 </Nav.Link>
               </LinkContainer>
               {authData ? (
-                <NavDropdown title={authData.user.name} id='userName'>
+                <NavDropdown title={authData.user.name} id='user'>
                   <LinkContainer to={RouterEndpoint.orders()}>
                     <NavDropdown.Item>My Orders</NavDropdown.Item>
                   </LinkContainer>
@@ -70,6 +70,13 @@ export const Header = (): JSX.Element => {
                     Sign In
                   </Nav.Link>
                 </LinkContainer>
+              )}
+              {authData && (
+                <NavDropdown title='Admin' id='admin'>
+                  <LinkContainer to={RouterEndpoint.users()}>
+                    <NavDropdown.Item>Users</NavDropdown.Item>
+                  </LinkContainer>
+                </NavDropdown>
               )}
             </Nav>
           </Navbar.Collapse>

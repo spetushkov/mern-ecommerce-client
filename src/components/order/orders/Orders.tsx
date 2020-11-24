@@ -10,10 +10,6 @@ import { StoreLoader } from '../../../store/StoreLoader';
 import { useUserAuthenticator } from '../../auth/useUserAuthenticator';
 import { OrderActions } from '../OrderActions';
 
-type Params = {
-  id: string;
-};
-
 export const Orders = (): JSX.Element => {
   useUserAuthenticator();
 

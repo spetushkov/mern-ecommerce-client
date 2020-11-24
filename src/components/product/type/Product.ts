@@ -1,5 +1,5 @@
 import { BaseDomain } from '../../../type/BaseDomain';
-import { User } from '../../auth/type/User';
+import { User } from '../../user/type/User';
 import { Review } from './Review';
 
 export interface Product extends BaseDomain {

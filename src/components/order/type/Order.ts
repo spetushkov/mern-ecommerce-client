@@ -1,9 +1,9 @@
 import { BaseDomain } from '../../../type/BaseDomain';
-import { User } from '../../auth/type/User';
 import { OrderItem } from '../../cart/orderItem/type/OrderItem';
 import { PaymentMethod } from '../../cart/paymentMethod/type/PaymentMethod';
 import { ShippingAddress } from '../../cart/shippingAddress/type/ShippingAddress';
 import { PayPalPaymentResult } from '../../payPal/PayPalPaymentResult';
+import { User } from '../../user/type/User';
 
 export interface Order extends BaseDomain {
   user?: User | string; // reference: Order MANY_TO_ONE User

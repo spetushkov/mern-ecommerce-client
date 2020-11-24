@@ -32,8 +32,8 @@ export const StoreError = (props: Props): JSX.Element => {
         <div>
           <details>
             <summary>Click for error details</summary>
-            {details && details}
-            {stack && stack}
+            {details && <div>{details}</div>}
+            {stack && <div>{stack}</div>}
           </details>
         </div>
       )}
