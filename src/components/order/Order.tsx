@@ -3,14 +3,15 @@ import { Alert, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
 import { PayPalButton } from 'react-paypal-button-v2';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { State } from '../../../store/Store';
-import { StoreError } from '../../../store/StoreError';
-import { StoreLoader } from '../../../store/StoreLoader';
-import { NumberUtils } from '../../../utils/NumberUtils';
-import { User } from '../../auth/type/User';
-import { PayPalPaymentResult } from '../../payPal/PayPalPaymentResult';
-import { PayPalUtils } from '../../payPal/PayPalUtils';
-import { CartActions } from '../CartActions';
+import { State } from '../../store/Store';
+import { StoreError } from '../../store/StoreError';
+import { StoreLoader } from '../../store/StoreLoader';
+import { NumberUtils } from '../../utils/NumberUtils';
+import { User } from '../auth/type/User';
+import { useUserAuthenticator } from '../auth/useUserAuthenticator';
+import { CartActions } from '../cart/CartActions';
+import { PayPalPaymentResult } from '../payPal/PayPalPaymentResult';
+import { PayPalUtils } from '../payPal/PayPalUtils';
 import { OrderActions } from './OrderActions';
 
 type Params = {
@@ -18,6 +19,8 @@ type Params = {
 };
 
 export const Order = (): JSX.Element => {
+  useUserAuthenticator();
+
   const dispatch = useDispatch();
   const { id } = useParams<Params>();
 

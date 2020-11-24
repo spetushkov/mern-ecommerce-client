@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { RouterEndpoint } from '../../router/RouterEndpoint';
 import { State } from '../../store/Store';
 
-export const useUserAuthorizer = (redirect?: string): void => {
+export const useUserAuthenticator = (redirect?: string): void => {
   const history = useHistory();
 
   const authState = useSelector((state: State) => state.auth);

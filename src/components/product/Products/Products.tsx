@@ -10,17 +10,15 @@ import { ProductsSkeleton } from './skeletons/ProductsSkeleton';
 
 export const Products = (): JSX.Element => {
   const dispatch = useDispatch();
+  const { t } = useTranslation('Products');
+
+  const productState = useSelector((state: State) => state.product);
+  const { loading, data, error } = productState;
+  const products = data.products ? data.products.data : null;
 
   useEffect(() => {
     dispatch(ProductActions.findAll());
   }, [dispatch]);
-
-  const productState = useSelector((state: State) => state.product);
-  const { loading, data, error } = productState;
-
-  const { t } = useTranslation('Products');
-
-  const products = data.products ? data.products.data : null;
 
   if (loading) {
     return <ProductsSkeleton />;

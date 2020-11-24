@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { Alert, Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { RouterEndpoint } from '../../../router/RouterEndpoint';
-import { State } from '../../../store/Store';
-import { StoreError } from '../../../store/StoreError';
-import { StoreLoader } from '../../../store/StoreLoader';
-import { NumberUtils } from '../../../utils/NumberUtils';
-import { CheckoutSteps } from '../checkoutSteps/CheckoutSteps';
+import { RouterEndpoint } from '../../router/RouterEndpoint';
+import { State } from '../../store/Store';
+import { StoreError } from '../../store/StoreError';
+import { StoreLoader } from '../../store/StoreLoader';
+import { NumberUtils } from '../../utils/NumberUtils';
+import { CheckoutSteps } from '../cart/checkoutSteps/CheckoutSteps';
 import { OrderActions } from './OrderActions';
 import { Order as OrderType } from './type/Order';
 

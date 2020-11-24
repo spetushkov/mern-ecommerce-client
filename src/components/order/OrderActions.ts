@@ -1,9 +1,9 @@
 import { Dispatch } from 'redux';
-import { State } from '../../../store/Store';
-import { AuthUtils } from '../../auth/AuthUtils';
-import { ConfigApi } from '../../config/ConfigApi';
-import { Config } from '../../config/type/Config';
-import { PayPalPaymentResult } from '../../payPal/PayPalPaymentResult';
+import { State } from '../../store/Store';
+import { AuthUtils } from '../auth/AuthUtils';
+import { ConfigApi } from '../config/ConfigApi';
+import { Config } from '../config/type/Config';
+import { PayPalPaymentResult } from '../payPal/PayPalPaymentResult';
 import { OrderApi } from './OrderApi';
 import { OrderStore } from './OrderStore';
 import { Order } from './type/Order';
@@ -124,10 +124,19 @@ const pay = (id: string, paymentResult: { paymentResult: PayPalPaymentResult }) 
   }
 };
 
+const reset = () => async (dispatch: Dispatch): Promise<void> => {
+  try {
+    dispatch(OrderStore.action('ORDER_RESET'));
+  } catch (error) {
+    dispatch(OrderStore.action('ORDER_ERROR', error));
+  }
+};
+
 export const OrderActions = {
   findAll,
   findById,
   save,
   configFindById,
   pay,
+  reset,
 };

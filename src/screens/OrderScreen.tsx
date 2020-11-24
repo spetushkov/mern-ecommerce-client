@@ -1,5 +1,5 @@
 import React from 'react';
-import { Order } from '../components/cart/order/Order';
+import { Order } from '../components/order/Order';
 
 export const OrderScreen = (): JSX.Element => {
   return <Order />;

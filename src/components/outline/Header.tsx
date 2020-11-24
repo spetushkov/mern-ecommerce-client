@@ -7,7 +7,9 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { RouterEndpoint } from '../../router/RouterEndpoint';
 import { State } from '../../store/Store';
 import { AuthActions } from '../auth/AuthActions';
+import { CartActions } from '../cart/CartActions';
 import { CartUtils } from '../cart/CartUtils';
+import { OrderActions } from '../order/OrderActions';
 
 export const Header = (): JSX.Element => {
   const { i18n } = useTranslation();
@@ -25,6 +27,8 @@ export const Header = (): JSX.Element => {
 
   const signOutHandler = () => {
     dispatch(AuthActions.signOut());
+    dispatch(CartActions.reset());
+    dispatch(OrderActions.reset());
   };
 
   const changeLanguage = (lng: string) => {
@@ -54,6 +58,9 @@ export const Header = (): JSX.Element => {
               </LinkContainer>
               {authData ? (
                 <NavDropdown title={authData.user.name} id='userName'>
+                  <LinkContainer to={RouterEndpoint.orders()}>
+                    <NavDropdown.Item>My Orders</NavDropdown.Item>
+                  </LinkContainer>
                   <NavDropdown.Item onClick={signOutHandler}>Sign Out</NavDropdown.Item>
                 </NavDropdown>
               ) : (

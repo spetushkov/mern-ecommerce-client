@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { RouterEndpoint } from '../../../router/RouterEndpoint';
 import { State } from '../../../store/Store';
-import { useUserAuthorizer } from '../../auth/useUserAuthorizer';
+import { useUserAuthenticator } from '../../auth/useUserAuthenticator';
 import { JustifyCenter } from '../../content/JustifyCenter';
 import { CartActions } from '../CartActions';
 import { CheckoutSteps } from '../checkoutSteps/CheckoutSteps';
 import { ShippingAddress as ShippingAddressType } from './type/ShippingAddress';
 
 export const ShippingAddress = (): JSX.Element => {
-  useUserAuthorizer();
+  useUserAuthenticator();
 
   const dispatch = useDispatch();
   const history = useHistory();

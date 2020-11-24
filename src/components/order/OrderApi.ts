@@ -1,8 +1,8 @@
 import { AxiosRequestConfig } from 'axios';
-import { AppApi } from '../../../app/AppApi';
-import { PageableResult } from '../../../type/PageableResult';
-import { Result } from '../../../type/Result';
-import { PayPalPaymentResult } from '../../payPal/PayPalPaymentResult';
+import { AppApi } from '../../app/AppApi';
+import { PageableResult } from '../../type/PageableResult';
+import { Result } from '../../type/Result';
+import { PayPalPaymentResult } from '../payPal/PayPalPaymentResult';
 import { Order } from './type/Order';
 
 export type OrderApiPageResponse = PageableResult<Order, Error>;

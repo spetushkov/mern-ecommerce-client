@@ -3,13 +3,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { AuthStore } from '../components/auth/AuthStore';
 import { CartStore } from '../components/cart/CartStore';
-import { OrderStore } from '../components/cart/order/OrderStore';
+import { OrderStore } from '../components/order/OrderStore';
 import { ProductStore } from '../components/product/ProductStore';
 
 const combinedReducer = combineReducers({
+  auth: AuthStore.reducer,
   product: ProductStore.reducer,
   cart: CartStore.reducer,
-  auth: AuthStore.reducer,
   order: OrderStore.reducer,
 });
 

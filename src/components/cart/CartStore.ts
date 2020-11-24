@@ -72,7 +72,7 @@ const reducer = (state = initialState, action: Action): CartState => {
     case 'CART_SAVE_PAYMENT_METHOD':
       return savePaymentMethod(state, payload as PaymentMethod);
     case 'CART_RESET':
-      return reset(state);
+      return reset();
     case 'CART_ERROR':
       return fail(state, payload as Error);
     default:
@@ -161,17 +161,8 @@ const savePaymentMethod = (state: CartState, paymentMethod: PaymentMethod): Cart
   };
 };
 
-const reset = (state: CartState): CartState => {
-  return {
-    ...state,
-    data: {
-      orderItems: null,
-      shippingAddress: null,
-      paymentMethod: null,
-    },
-    loading: false,
-    error: null,
-  };
+const reset = (): CartState => {
+  return initialState;
 };
 
 const fail = (state: CartState, error: Error): CartState => {

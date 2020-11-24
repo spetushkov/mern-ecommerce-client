@@ -1,6 +1,6 @@
-import { ReducerAction } from '../../../store/reducer/ReducerAction';
-import { ReducerActionCreator } from '../../../store/reducer/ReducerActionCreator';
-import { Config } from '../../config/type/Config';
+import { ReducerAction } from '../../store/reducer/ReducerAction';
+import { ReducerActionCreator } from '../../store/reducer/ReducerActionCreator';
+import { Config } from '../config/type/Config';
 import { OrderApiPageResponse } from './OrderApi';
 import { Order } from './type/Order';
 
@@ -17,6 +17,7 @@ type ActionType =
   | 'ORDER_SAVE'
   | 'ORDER_PAY'
   | 'ORDER_CONFIG_FIND_BY_ID'
+  | 'ORDER_RESET'
   | 'ORDER_ERROR';
 
 export type OrderState = {
@@ -77,6 +78,8 @@ const reducer = (state = initialState, action: Action): OrderState => {
           config: payload as Config,
         },
       };
+    case 'ORDER_RESET':
+      return initialState;
     case 'ORDER_ERROR':
       return { ...state, loading: false, error: payload as Error };
     default:
