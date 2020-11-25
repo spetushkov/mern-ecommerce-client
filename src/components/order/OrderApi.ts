@@ -9,12 +9,18 @@ export type OrderApiPageResponse = PageableResult<Order, Error>;
 export type OrderApiResponse = Result<Order, Error>;
 const baseUrl = '/orders';
 
-const findAll = async (token: string | null): Promise<OrderApiPageResponse> => {
+const findAll = async (
+  token: string | null,
+  queryByUserId: boolean,
+): Promise<OrderApiPageResponse> => {
   try {
     const endpoint = `${baseUrl}`;
     const config: AxiosRequestConfig = {
       headers: {
         ...AppApi.getAuthorizationHeader(token),
+      },
+      params: {
+        byUserId: queryByUserId,
       },
     };
 
@@ -25,12 +31,19 @@ const findAll = async (token: string | null): Promise<OrderApiPageResponse> => {
   }
 };
 
-const findById = async (token: string | null, id: string): Promise<OrderApiResponse> => {
+const findById = async (
+  token: string | null,
+  id: string,
+  queryByUserId: boolean,
+): Promise<OrderApiResponse> => {
   try {
     const endpoint = `${baseUrl}/${id}`;
     const config: AxiosRequestConfig = {
       headers: {
         ...AppApi.getAuthorizationHeader(token),
+      },
+      params: {
+        byUserId: queryByUserId,
       },
     };
 

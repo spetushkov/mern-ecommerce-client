@@ -70,7 +70,7 @@ export const PlaceOrder = (): JSX.Element => {
       return;
     }
 
-    history.push(RouterEndpoint.orders(order.id));
+    history.push(RouterEndpoint.userOrders(order.id));
   }, [loading, error, order, history]);
 
   return (

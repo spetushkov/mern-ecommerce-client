@@ -6,8 +6,9 @@ export const RouterEndpoint = {
   shipping: (): string => `/shipping`,
   payment: (): string => `/payment`,
   placeOrder: (): string => `/placeorder`,
-  orders: (id?: string): string => (id ? `/orders/${id}` : `/orders`),
-  users: (id?: string): string => (id ? `/users/${id}` : `/users`),
+  userOrders: (id?: string): string => (id ? `/user/orders/${id}` : `/user/orders`),
+  adminUsers: (id?: string): string => (id ? `/admin/users/${id}` : `/admin/users`),
+  adminOrders: (id?: string): string => (id ? `/admin/orders/${id}` : `/admin/orders`),
   products: (id: string): string => `/products/${id}`,
   home: (): string => `/`,
 };

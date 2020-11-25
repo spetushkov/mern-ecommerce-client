@@ -10,24 +10,29 @@ import { StoreLoader } from '../../../store/StoreLoader';
 import { useUserAuthenticator } from '../../auth/useUserAuthenticator';
 import { OrderActions } from '../OrderActions';
 
-export const Orders = (): JSX.Element => {
+type Props = {
+  queryByUserId: boolean;
+};
+
+export const Orders = (props: Props): JSX.Element => {
   useUserAuthenticator();
 
   const dispatch = useDispatch();
+  const { queryByUserId } = props;
 
   const orderState = useSelector((state: State) => state.order);
   const { loading, data, error } = orderState;
   const orders = (data.orders && data.orders.data) ?? null;
 
   useEffect(() => {
-    dispatch(OrderActions.findAll());
-  }, [dispatch]);
+    dispatch(OrderActions.findAll(queryByUserId));
+  }, [dispatch, queryByUserId]);
 
   return (
     <>
       {loading && <StoreLoader />}
       {error && <StoreError error={error} />}
-      <h4>My Orders</h4>
+      <h4>{queryByUserId ? 'My Orders' : 'All Orders'}</h4>
       <Row>
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
@@ -62,7 +67,7 @@ export const Orders = (): JSX.Element => {
                     )}
                   </td>
                   <td>
-                    <LinkContainer to={RouterEndpoint.orders(order.id)}>
+                    <LinkContainer to={RouterEndpoint.userOrders(order.id)}>
                       <Button variant='light' className='btn-sm'>
                         Details
                       </Button>

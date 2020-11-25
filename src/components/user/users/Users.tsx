@@ -25,7 +25,7 @@ export const Users = (): JSX.Element => {
   }, [dispatch]);
 
   const editUserHandler = (id: string) => {
-    history.push(RouterEndpoint.users(id) + '?edit=true');
+    history.push(RouterEndpoint.adminUsers(id) + '?edit=true');
   };
 
   const removeUserHandler = (id: string) => {
@@ -36,7 +36,7 @@ export const Users = (): JSX.Element => {
     <>
       {loading && <StoreLoader />}
       {error && <StoreError error={error} />}
-      <h4>Users</h4>
+      <h4>All Users</h4>
       <Row>
         <Table striped bordered hover responsive className='table-sm'>
           <thead>

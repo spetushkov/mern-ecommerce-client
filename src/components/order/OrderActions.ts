@@ -8,13 +8,16 @@ import { OrderApi } from './OrderApi';
 import { OrderStore } from './OrderStore';
 import { Order } from './type/Order';
 
-const findAll = () => async (dispatch: Dispatch, getState: () => State): Promise<void> => {
+const findAll = (queryByUserId: boolean) => async (
+  dispatch: Dispatch,
+  getState: () => State,
+): Promise<void> => {
   try {
     dispatch(OrderStore.action('ORDER_REQUEST'));
 
     const token = AuthUtils.getToken(getState().auth);
 
-    const response = await OrderApi.findAll(token);
+    const response = await OrderApi.findAll(token, queryByUserId);
     if (response.error) {
       dispatch(OrderStore.action('ORDER_ERROR', response.error));
       return;
@@ -32,7 +35,7 @@ const findAll = () => async (dispatch: Dispatch, getState: () => State): Promise
   }
 };
 
-const findById = (id: string) => async (
+const findById = (id: string, queryByUserId: boolean) => async (
   dispatch: Dispatch,
   getState: () => State,
 ): Promise<void> => {
@@ -41,7 +44,7 @@ const findById = (id: string) => async (
 
     const token = AuthUtils.getToken(getState().auth);
 
-    const response = await OrderApi.findById(token, id);
+    const response = await OrderApi.findById(token, id, queryByUserId);
     if (response.error) {
       dispatch(OrderStore.action('ORDER_ERROR', response.error));
       return;

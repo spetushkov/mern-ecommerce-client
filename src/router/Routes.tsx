@@ -26,10 +26,12 @@ export const Routes = (): JSX.Element => {
       <Route path='/shipping' component={ShippingScreen} />
       <Route path='/payment' component={PaymentScreen} />
       <Route path='/placeorder' component={PlaceOrderScreen} />
-      <Route exact path='/orders' component={OrdersScreen} />
-      <Route exact path='/orders/:id' component={OrderScreen} />
-      <Route exact path='/users' component={UsersScreen} />
-      <Route exact path='/users/:id' component={UserScreen} />
+      <Route exact path='/user/orders' render={() => <OrdersScreen queryByUserId={true} />} />
+      <Route exact path='/user/orders/:id' render={() => <OrderScreen queryByUserId={true} />} />
+      <Route exact path='/admin/users' component={UsersScreen} />
+      <Route exact path='/admin/users/:id' component={UserScreen} />
+      <Route exact path='/admin/orders' render={() => <OrdersScreen queryByUserId={false} />} />
+      <Route exact path='/admin/orders/:id' render={() => <OrderScreen queryByUserId={false} />} />
       <Route exact path='/' component={HomeScreen} />
       <Route component={NotFoundScreen} />
     </Switch>

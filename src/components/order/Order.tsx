@@ -18,11 +18,16 @@ type Params = {
   id: string;
 };
 
-export const Order = (): JSX.Element => {
+type Props = {
+  queryByUserId: boolean;
+};
+
+export const Order = (props: Props): JSX.Element => {
   useUserAuthenticator();
 
   const dispatch = useDispatch();
   const { id } = useParams<Params>();
+  const { queryByUserId } = props;
 
   const orderState = useSelector((state: State) => state.order);
   const { loading, data, error } = orderState;
@@ -33,8 +38,8 @@ export const Order = (): JSX.Element => {
   const [payPalSdkReady, setPayPalSdkReady] = useState(false);
 
   useEffect(() => {
-    dispatch(OrderActions.findById(id));
-  }, [dispatch, id]);
+    dispatch(OrderActions.findById(id, queryByUserId));
+  }, [dispatch, id, queryByUserId]);
 
   useEffect(() => {
     dispatch(OrderActions.configFindById('payPalClientId'));
