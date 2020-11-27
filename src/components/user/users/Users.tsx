@@ -25,11 +25,13 @@ export const Users = (): JSX.Element => {
   }, [dispatch]);
 
   const editUserHandler = (id: string) => {
-    history.push(RouterEndpoint.adminUsers(id) + '?edit=true');
+    history.push(RouterEndpoint.adminUsers(id));
   };
 
-  const removeUserHandler = (id: string) => {
-    console.log('remove...');
+  const deleteUserHandler = (id: string) => {
+    if (window.confirm('Are you sure?')) {
+      dispatch(UserActions.deleteById(id));
+    }
   };
 
   return (
@@ -71,7 +73,7 @@ export const Users = (): JSX.Element => {
                     <Button
                       variant='danger'
                       className='btn-sm'
-                      onClick={() => removeUserHandler(user.id)}
+                      onClick={() => deleteUserHandler(user.id)}
                     >
                       <FontAwesomeIcon icon={['fas', 'trash']} />
                     </Button>

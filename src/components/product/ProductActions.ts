@@ -3,6 +3,7 @@ import { State } from '../../store/Store';
 import { AuthUtils } from '../auth/AuthUtils';
 import { ProductApi } from './ProductApi';
 import { ProductStore } from './ProductStore';
+import { Product } from './type/Product';
 
 const findAll = () => async (dispatch: Dispatch, getState: () => State): Promise<void> => {
   try {
@@ -48,7 +49,86 @@ const findById = (id: string) => async (dispatch: Dispatch): Promise<void> => {
   }
 };
 
+const save = (product: Product) => async (
+  dispatch: Dispatch,
+  getState: () => State,
+): Promise<void> => {
+  try {
+    dispatch(ProductStore.action('PRODUCT_REQUEST'));
+
+    const token = AuthUtils.getToken(getState().auth);
+
+    const response = await ProductApi.save(token, product);
+    if (response.error) {
+      dispatch(ProductStore.action('PRODUCT_ERROR', response.error));
+      return;
+    }
+
+    if (!response.data) {
+      return;
+    }
+
+    dispatch(ProductStore.action('PRODUCT_SAVE', response.data));
+  } catch (error) {
+    dispatch(ProductStore.action('PRODUCT_ERROR', error));
+  }
+};
+
+const updateById = (id: string, query: Partial<Product>) => async (
+  dispatch: Dispatch,
+  getState: () => State,
+): Promise<void> => {
+  try {
+    dispatch(ProductStore.action('PRODUCT_REQUEST'));
+
+    const token = AuthUtils.getToken(getState().auth);
+
+    const response = await ProductApi.updateById(token, id, query);
+    if (response.error) {
+      dispatch(ProductStore.action('PRODUCT_ERROR', response.error));
+      return;
+    }
+
+    if (!response.data) {
+      return;
+    }
+
+    dispatch(ProductStore.action('PRODUCT_UPDATE_BY_ID', response.data));
+  } catch (error) {
+    dispatch(ProductStore.action('PRODUCT_ERROR', error));
+  }
+};
+
+const deleteById = (id: string) => async (
+  dispatch: Dispatch,
+  getState: () => State,
+): Promise<void> => {
+  try {
+    dispatch(ProductStore.action('PRODUCT_REQUEST'));
+
+    const token = AuthUtils.getToken(getState().auth);
+
+    await ProductApi.deleteById(token, id);
+
+    dispatch(ProductStore.action('PRODUCT_DELETE_BY_ID', { id }));
+  } catch (error) {
+    dispatch(ProductStore.action('PRODUCT_ERROR', error));
+  }
+};
+
+const resetProduct = () => async (dispatch: Dispatch): Promise<void> => {
+  try {
+    dispatch(ProductStore.action('PRODUCT_RESET_PRODUCT'));
+  } catch (error) {
+    dispatch(ProductStore.action('PRODUCT_ERROR', error));
+  }
+};
+
 export const ProductActions = {
   findAll,
   findById,
+  save,
+  updateById,
+  deleteById,
+  resetProduct,
 };

@@ -41,35 +41,52 @@ const findById = async (token: string | null, id: string): Promise<UserApiRespon
 };
 
 // not used, example
-const save = async (entity: User): Promise<UserApiResponse> => {
+const save = async (token: string | null, entity: User): Promise<UserApiResponse> => {
   try {
     const endpoint = `${baseUrl}`;
+    const config: AxiosRequestConfig = {
+      headers: {
+        ...AppApi.getAuthorizationHeader(token),
+      },
+    };
 
-    const response = await AppApi.baseApi.post<UserApiResponse>(endpoint, entity);
+    const response = await AppApi.baseApi.post<UserApiResponse>(endpoint, entity, config);
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error);
   }
 };
 
-// not used, example
-const updateById = async (id: string, query: User): Promise<UserApiResponse> => {
+const updateById = async (
+  token: string | null,
+  id: string,
+  query: Partial<User>,
+): Promise<UserApiResponse> => {
   try {
     const endpoint = `${baseUrl}/${id}`;
+    const config: AxiosRequestConfig = {
+      headers: {
+        ...AppApi.getAuthorizationHeader(token),
+      },
+    };
 
-    const response = await AppApi.baseApi.patch<UserApiResponse>(endpoint, query);
+    const response = await AppApi.baseApi.patch<UserApiResponse>(endpoint, query, config);
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error);
   }
 };
 
-// not used, example
-const deleteById = async (id: string): Promise<void> => {
+const deleteById = async (token: string | null, id: string): Promise<void> => {
   try {
     const endpoint = `${baseUrl}/${id}`;
+    const config: AxiosRequestConfig = {
+      headers: {
+        ...AppApi.getAuthorizationHeader(token),
+      },
+    };
 
-    await AppApi.baseApi.delete<UserApiResponse>(endpoint);
+    await AppApi.baseApi.delete<UserApiResponse>(endpoint, config);
   } catch (error) {
     return Promise.reject(error);
   }

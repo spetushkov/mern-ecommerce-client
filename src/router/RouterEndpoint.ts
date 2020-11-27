@@ -9,6 +9,9 @@ export const RouterEndpoint = {
   userOrders: (id?: string): string => (id ? `/user/orders/${id}` : `/user/orders`),
   adminUsers: (id?: string): string => (id ? `/admin/users/${id}` : `/admin/users`),
   adminOrders: (id?: string): string => (id ? `/admin/orders/${id}` : `/admin/orders`),
+  adminProducts: (id?: string): string => (id ? `/admin/products/${id}` : `/admin/products`),
+  adminCreateProduct: (): string => `/admin/products/create`,
   products: (id: string): string => `/products/${id}`,
+  unauthorized: (): string => `/unauthorized`,
   home: (): string => `/`,
 };

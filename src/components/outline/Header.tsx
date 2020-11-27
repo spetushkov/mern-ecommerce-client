@@ -10,6 +10,7 @@ import { AuthActions } from '../auth/AuthActions';
 import { CartActions } from '../cart/CartActions';
 import { CartUtils } from '../cart/CartUtils';
 import { OrderActions } from '../order/OrderActions';
+import { UserActions } from '../user/UserActions';
 
 export const Header = (): JSX.Element => {
   const { i18n } = useTranslation();
@@ -29,6 +30,7 @@ export const Header = (): JSX.Element => {
     dispatch(AuthActions.signOut());
     dispatch(CartActions.reset());
     dispatch(OrderActions.reset());
+    dispatch(UserActions.reset());
   };
 
   const changeLanguage = (lng: string) => {
@@ -78,6 +80,9 @@ export const Header = (): JSX.Element => {
                   </LinkContainer>
                   <LinkContainer to={RouterEndpoint.adminOrders()}>
                     <NavDropdown.Item>All Orders</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to={RouterEndpoint.adminProducts()}>
+                    <NavDropdown.Item>All Products</NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>
               )}

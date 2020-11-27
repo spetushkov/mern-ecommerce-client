@@ -1,5 +1,12 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { AdminOrderScreen } from '../screens/AdminOrderScreen';
+import { AdminOrdersScreen } from '../screens/AdminOrdersScreen';
+import { AdminProductCreateScreen } from '../screens/AdminProductCreateScreen';
+import { AdminProductScreen } from '../screens/AdminProductScreen';
+import { AdminProductsScreen } from '../screens/AdminProductsScreen';
+import { AdminUserScreen } from '../screens/AdminUserScreen';
+import { AdminUsersScreen } from '../screens/AdminUsersScreen';
 import { CartScreen } from '../screens/CartScreen';
 import { HomeScreen } from '../screens/HomeScreen';
 import { NotFoundScreen } from '../screens/NotFoundScreen';
@@ -12,12 +19,12 @@ import { ProductsScreen } from '../screens/ProductsScreen';
 import { ShippingScreen } from '../screens/ShippingScreen';
 import { SignInScreen } from '../screens/SignInScreen';
 import { SignUpScreen } from '../screens/SignUpScreen';
-import { UserScreen } from '../screens/UserScreen';
-import { UsersScreen } from '../screens/UsersScreen';
+import { UnauthorizedScreen } from '../screens/UnauthorizedScreen';
 
 export const Routes = (): JSX.Element => {
   return (
     <Switch>
+      <Route exact path='/unauthorized' component={UnauthorizedScreen} />
       <Route exact path='/signup' component={SignUpScreen} />
       <Route exact path='/signin' component={SignInScreen} />
       <Route exact path='/products' component={ProductsScreen} />
@@ -26,12 +33,15 @@ export const Routes = (): JSX.Element => {
       <Route path='/shipping' component={ShippingScreen} />
       <Route path='/payment' component={PaymentScreen} />
       <Route path='/placeorder' component={PlaceOrderScreen} />
-      <Route exact path='/user/orders' render={() => <OrdersScreen queryByUserId={true} />} />
-      <Route exact path='/user/orders/:id' render={() => <OrderScreen queryByUserId={true} />} />
-      <Route exact path='/admin/users' component={UsersScreen} />
-      <Route exact path='/admin/users/:id' component={UserScreen} />
-      <Route exact path='/admin/orders' render={() => <OrdersScreen queryByUserId={false} />} />
-      <Route exact path='/admin/orders/:id' render={() => <OrderScreen queryByUserId={false} />} />
+      <Route exact path='/user/orders' component={OrdersScreen} />
+      <Route exact path='/user/orders/:id' component={OrderScreen} />
+      <Route exact path='/admin/users' component={AdminUsersScreen} />
+      <Route exact path='/admin/users/:id' component={AdminUserScreen} />
+      <Route exact path='/admin/orders' component={AdminOrdersScreen} />
+      <Route exact path='/admin/orders/:id' component={AdminOrderScreen} />
+      <Route exact path='/admin/products' component={AdminProductsScreen} />
+      <Route exact path='/admin/products/create' component={AdminProductCreateScreen} />
+      <Route exact path='/admin/products/:id' component={AdminProductScreen} />
       <Route exact path='/' component={HomeScreen} />
       <Route component={NotFoundScreen} />
     </Switch>
