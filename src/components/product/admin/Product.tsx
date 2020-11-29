@@ -1,5 +1,6 @@
+import axios from 'axios';
 import { Formik, FormikErrors, FormikHelpers, FormikProps } from 'formik';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
@@ -36,6 +37,9 @@ export const Product = (): JSX.Element => {
   const authState = useSelector((state: State) => state.auth);
   const { data: authData } = authState;
   const userId = authData ? authData.user.id : '';
+
+  const [fileUploading, setFileUploading] = useState(false);
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     if (!isCreate) {
@@ -97,6 +101,40 @@ export const Product = (): JSX.Element => {
     }
   };
 
+  const uploadFileHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileList = e.target.files;
+    if (!fileList) {
+      return;
+    }
+    const file = fileList[0];
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    setFileUploading(true);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+
+      const response = await axios.post(
+        'http://127.0.0.1:8080/v1/api/fileuploads',
+        formData,
+        config,
+      );
+      console.log('response', response);
+
+      // setImage(response.data!);
+      setFileUploading(false);
+    } catch (error) {
+      setFileUploading(false);
+      console.log('error', error);
+      Promise.reject(error);
+    }
+  };
+
   return (
     <>
       {loading && <StoreLoader />}
@@ -129,6 +167,8 @@ export const Product = (): JSX.Element => {
                   label='Image'
                   placeholder='Image'
                 />
+                <Form.File id='file' label='Choose an image' custom onChange={uploadFileHandler} />
+                {fileUploading && <div>Uploading an image...</div>}
                 <FormControl
                   schema={form.values}
                   id='description'
