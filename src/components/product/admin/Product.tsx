@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Formik, FormikErrors, FormikHelpers, FormikProps } from 'formik';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
@@ -14,6 +13,7 @@ import { JustifyCenter } from '../../content/JustifyCenter';
 import { FormControl } from '../../form/FormControl';
 import { FormUtils } from '../../form/FormUtils';
 import { ProductActions } from '../ProductActions';
+import { ProductApi } from '../ProductApi';
 import { Product as ProductType } from '../type/Product';
 import { ProductForm } from './ProductForm';
 
@@ -101,36 +101,27 @@ export const Product = (): JSX.Element => {
     }
   };
 
-  const uploadFileHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const uploadFileHandler = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    form: FormikProps<ProductForm>,
+  ) => {
     const fileList = e.target.files;
     if (!fileList) {
       return;
     }
     const file = fileList[0];
 
+    const fieldName = 'image';
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append(fieldName, file);
 
-    setFileUploading(true);
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      };
-
-      const response = await axios.post(
-        'http://127.0.0.1:8080/v1/api/fileuploads',
-        formData,
-        config,
-      );
-      console.log('response', response);
-
-      // setImage(response.data!);
+      setFileUploading(true);
+      const response = await ProductApi.uploadFile(fieldName, formData);
+      form.setFieldValue('image', response.data ?? '');
       setFileUploading(false);
     } catch (error) {
       setFileUploading(false);
-      console.log('error', error);
       Promise.reject(error);
     }
   };
@@ -167,7 +158,12 @@ export const Product = (): JSX.Element => {
                   label='Image'
                   placeholder='Image'
                 />
-                <Form.File id='file' label='Choose an image' custom onChange={uploadFileHandler} />
+                <Form.File
+                  id='file'
+                  label='Choose an image'
+                  custom
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => uploadFileHandler(e, form)}
+                />
                 {fileUploading && <div>Uploading an image...</div>}
                 <FormControl
                   schema={form.values}

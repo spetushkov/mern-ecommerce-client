@@ -6,6 +6,7 @@ import { Product } from './type/Product';
 
 export type ProductApiPageResponse = PageableResult<Product, Error>;
 export type ProductApiResponse = Result<Product, Error>;
+export type FileUploadApiResponse = Result<string, Error>;
 const baseUrl = '/products';
 
 const findAll = async (token: string | null): Promise<ProductApiPageResponse> => {
@@ -86,10 +87,30 @@ const deleteById = async (token: string | null, id: string): Promise<void> => {
   }
 };
 
+const uploadFile = async (
+  fieldName: string,
+  formData: FormData,
+): Promise<FileUploadApiResponse> => {
+  try {
+    const endpoint = `${baseUrl}/upload/${fieldName}`;
+    const config: AxiosRequestConfig = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+
+    const response = await AppApi.baseApi.post<FileUploadApiResponse>(endpoint, formData, config);
+    return Promise.resolve(response.data);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
 export const ProductApi = {
   findAll,
   findById,
   save,
   updateById,
   deleteById,
+  uploadFile,
 };
