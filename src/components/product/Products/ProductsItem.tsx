@@ -2,6 +2,7 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { RouterEndpoint } from '../../../router/RouterEndpoint';
+import { ProductUtils } from '../ProductUtils';
 import { ProductRating } from '../rating/ProductRating';
 import { Product } from '../type/Product';
 
@@ -15,7 +16,7 @@ export const ProductsItem = (props: Props): JSX.Element => {
   return (
     <Card className='my-3 p-3 rounded'>
       <Link to={RouterEndpoint.products(product.id)}>
-        <Card.Img src={product.image} variant='top' />
+        <Card.Img src={ProductUtils.getProductImageUrl(product.image)} variant='top' />
       </Link>
 
       <Card.Body>

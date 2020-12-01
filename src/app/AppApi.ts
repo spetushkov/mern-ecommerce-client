@@ -1,9 +1,10 @@
 import axios, { AxiosError } from 'axios';
 
 export type ApiError = AxiosError;
+export const BASE_URL = process.env.REACT_APP_APP_API_URL;
 
 const baseApi = axios.create({
-  baseURL: process.env.REACT_APP_APP_API_URL,
+  baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },

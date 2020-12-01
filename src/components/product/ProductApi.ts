@@ -2,11 +2,12 @@ import { AxiosRequestConfig } from 'axios';
 import { AppApi } from '../../app/AppApi';
 import { PageableResult } from '../../type/PageableResult';
 import { Result } from '../../type/Result';
+import { FileInfo } from '../file/FileInfo';
 import { Product } from './type/Product';
 
 export type ProductApiPageResponse = PageableResult<Product, Error>;
 export type ProductApiResponse = Result<Product, Error>;
-export type FileUploadApiResponse = Result<string, Error>;
+export type FileApiResponse = Result<FileInfo, Error>;
 const baseUrl = '/products';
 
 const findAll = async (token: string | null): Promise<ProductApiPageResponse> => {
@@ -87,19 +88,16 @@ const deleteById = async (token: string | null, id: string): Promise<void> => {
   }
 };
 
-const uploadFile = async (
-  fieldName: string,
-  formData: FormData,
-): Promise<FileUploadApiResponse> => {
+const uploadImage = async (fieldName: string, formData: FormData): Promise<FileApiResponse> => {
   try {
-    const endpoint = `${baseUrl}/upload/${fieldName}`;
+    const endpoint = `${baseUrl}/upload?field=${fieldName}&imageFileType=true`;
     const config: AxiosRequestConfig = {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     };
 
-    const response = await AppApi.baseApi.post<FileUploadApiResponse>(endpoint, formData, config);
+    const response = await AppApi.baseApi.post<FileApiResponse>(endpoint, formData, config);
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error);
@@ -112,5 +110,5 @@ export const ProductApi = {
   save,
   updateById,
   deleteById,
-  uploadFile,
+  uploadImage,
 };

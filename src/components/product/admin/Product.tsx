@@ -39,7 +39,6 @@ export const Product = (): JSX.Element => {
   const userId = authData ? authData.user.id : '';
 
   const [fileUploading, setFileUploading] = useState(false);
-  const [image, setImage] = useState(null);
 
   useEffect(() => {
     if (!isCreate) {
@@ -110,6 +109,9 @@ export const Product = (): JSX.Element => {
       return;
     }
     const file = fileList[0];
+    if (!file) {
+      return;
+    }
 
     const fieldName = 'image';
     const formData = new FormData();
@@ -117,8 +119,20 @@ export const Product = (): JSX.Element => {
 
     try {
       setFileUploading(true);
-      const response = await ProductApi.uploadFile(fieldName, formData);
-      form.setFieldValue('image', response.data ?? '');
+
+      const response = await ProductApi.uploadImage(fieldName, formData);
+
+      if (response.error) {
+        setFileUploading(false);
+        throw response.error;
+      }
+
+      if (!response.data) {
+        setFileUploading(false);
+        return;
+      }
+
+      form.setFieldValue('image', response.data.name);
       setFileUploading(false);
     } catch (error) {
       setFileUploading(false);

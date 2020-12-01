@@ -8,6 +8,7 @@ import { StoreError } from '../../store/StoreError';
 import { StoreLoader } from '../../store/StoreLoader';
 import { CartActions } from '../cart/CartActions';
 import { ProductActions } from './ProductActions';
+import { ProductUtils } from './ProductUtils';
 import { ProductRating } from './rating/ProductRating';
 
 type Params = {
@@ -70,7 +71,7 @@ export const Product = (): JSX.Element => {
       {product && (
         <Row>
           <Col md={6}>
-            <Image src={product.image} alt={product.name} fluid />
+            <Image src={ProductUtils.getProductImageUrl(product.image)} alt={product.name} fluid />
           </Col>
           <Col md={3}>
             <ListGroup variant='flush'>
