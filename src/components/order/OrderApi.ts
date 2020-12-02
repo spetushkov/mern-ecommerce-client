@@ -70,6 +70,26 @@ const save = async (token: string | null, entity: Order): Promise<OrderApiRespon
   }
 };
 
+const updateById = async (
+  token: string | null,
+  id: string,
+  query: Partial<Order>,
+): Promise<OrderApiResponse> => {
+  try {
+    const endpoint = `${baseUrl}/${id}`;
+    const config: AxiosRequestConfig = {
+      headers: {
+        ...AppApi.getAuthorizationHeader(token),
+      },
+    };
+
+    const response = await AppApi.baseApi.patch<OrderApiResponse>(endpoint, query, config);
+    return Promise.resolve(response.data);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
 const pay = async (
   token: string | null,
   id: string,
@@ -97,5 +117,6 @@ export const OrderApi = {
   findAll,
   findById,
   save,
+  updateById,
   pay,
 };

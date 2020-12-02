@@ -82,6 +82,31 @@ const save = (order: Order) => async (dispatch: Dispatch, getState: () => State)
   }
 };
 
+const updateById = (id: string, query: Partial<Order>) => async (
+  dispatch: Dispatch,
+  getState: () => State,
+): Promise<void> => {
+  try {
+    dispatch(OrderStore.action('ORDER_REQUEST'));
+
+    const token = AuthUtils.getToken(getState().auth);
+
+    const response = await OrderApi.updateById(token, id, query);
+    if (response.error) {
+      dispatch(OrderStore.action('ORDER_ERROR', response.error));
+      return;
+    }
+
+    if (!response.data) {
+      return;
+    }
+
+    dispatch(OrderStore.action('ORDER_UPDATE_BY_ID', response.data));
+  } catch (error) {
+    dispatch(OrderStore.action('ORDER_ERROR', error));
+  }
+};
+
 const configFindById = (id: keyof Config) => async (dispatch: Dispatch): Promise<void> => {
   try {
     dispatch(OrderStore.action('ORDER_REQUEST'));
@@ -139,6 +164,7 @@ export const OrderActions = {
   findAll,
   findById,
   save,
+  updateById,
   configFindById,
   pay,
   reset,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
+import { Alert, Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
 import { PayPalButton } from 'react-paypal-button-v2';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -11,8 +11,10 @@ import { useUserAuthenticator } from '../auth/useUserAuthenticator';
 import { CartActions } from '../cart/CartActions';
 import { PayPalPaymentResult } from '../payPal/PayPalPaymentResult';
 import { PayPalUtils } from '../payPal/PayPalUtils';
+import { ProductUtils } from '../product/ProductUtils';
 import { User } from '../user/type/User';
 import { OrderActions } from './OrderActions';
+import { Order as OrderType } from './type/Order';
 
 type Params = {
   id: string;
@@ -37,6 +39,9 @@ export const Order = (props: Props): JSX.Element => {
 
   const [payPalSdkReady, setPayPalSdkReady] = useState(false);
 
+  const authState = useSelector((state: State) => state.auth);
+  const { data: authData } = authState;
+
   useEffect(() => {
     dispatch(OrderActions.findById(id, queryByUserId));
   }, [dispatch, id, queryByUserId]);
@@ -58,6 +63,18 @@ export const Order = (props: Props): JSX.Element => {
 
   const isPayOrderWithPayPal = (): boolean => {
     return !loading && !error && payPalSdkReady && !!order && !order.isPaid && order.totalPrice > 0;
+  };
+
+  const orderDeliveredHandler = () => {
+    const query: Partial<OrderType> = {
+      isDelivered: true,
+      deliveredAt: new Date(),
+    };
+    dispatch(OrderActions.updateById(id, query));
+  };
+
+  const orderDeliveredHandlerEnabled = (): boolean => {
+    return !!(order && !order.isDelivered && order.isPaid);
   };
 
   return (
@@ -114,7 +131,12 @@ export const Order = (props: Props): JSX.Element => {
                     <ListGroup.Item key={index}>
                       <Row>
                         <Col md={2}>
-                          <Image src={item.image} alt={item.name} fluid rounded />
+                          <Image
+                            src={ProductUtils.getProductImageUrl(item.image)}
+                            alt={item.name}
+                            fluid
+                            rounded
+                          />
                         </Col>
                         <Col md={6}>{item.name}</Col>
                         <Col md={4}>
@@ -164,6 +186,18 @@ export const Order = (props: Props): JSX.Element => {
                     amount={(order && order.totalPrice) ?? 0}
                     onSuccess={payOrderWithPayPalHandler}
                   />
+                </ListGroup.Item>
+              )}
+              {authData && authData.user.isAdmin && (
+                <ListGroup.Item>
+                  <Button
+                    type='button'
+                    className='btn btn-block'
+                    disabled={!orderDeliveredHandlerEnabled()}
+                    onClick={orderDeliveredHandler}
+                  >
+                    Mark As Delivered
+                  </Button>
                 </ListGroup.Item>
               )}
             </ListGroup>

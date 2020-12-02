@@ -15,6 +15,7 @@ type ActionType =
   | 'ORDER_FIND_ALL'
   | 'ORDER_FIND_BY_ID'
   | 'ORDER_SAVE'
+  | 'ORDER_UPDATE_BY_ID'
   | 'ORDER_PAY'
   | 'ORDER_CONFIG_FIND_BY_ID'
   | 'ORDER_RESET'
@@ -58,6 +59,7 @@ const reducer = (state = initialState, action: Action): OrderState => {
       };
     case 'ORDER_FIND_BY_ID':
     case 'ORDER_SAVE':
+    case 'ORDER_UPDATE_BY_ID':
     case 'ORDER_PAY':
       return {
         ...state,
