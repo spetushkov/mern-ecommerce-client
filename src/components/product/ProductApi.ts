@@ -2,7 +2,7 @@ import { AxiosRequestConfig } from 'axios';
 import { AppApi } from '../../app/AppApi';
 import { PageableResult } from '../../type/PageableResult';
 import { Result } from '../../type/Result';
-import { FileInfo } from '../file/FileInfo';
+import { FileInfo } from '../file/type/FileInfo';
 import { Product } from './type/Product';
 
 export type ProductApiPageResponse = PageableResult<Product, Error>;

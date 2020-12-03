@@ -1,6 +1,8 @@
 import { Dispatch } from 'redux';
 import { State } from '../../store/Store';
 import { AuthUtils } from '../auth/AuthUtils';
+import { ReviewApi } from '../review/ReviewApi';
+import { Review } from '../review/type/Review';
 import { ProductApi } from './ProductApi';
 import { ProductStore } from './ProductStore';
 import { Product } from './type/Product';
@@ -124,11 +126,37 @@ const resetProduct = () => async (dispatch: Dispatch): Promise<void> => {
   }
 };
 
+const saveReview = (review: Review) => async (
+  dispatch: Dispatch,
+  getState: () => State,
+): Promise<void> => {
+  try {
+    dispatch(ProductStore.action('PRODUCT_REQUEST'));
+
+    const token = AuthUtils.getToken(getState().auth);
+
+    const response = await ReviewApi.save(token, review);
+    if (response.error) {
+      dispatch(ProductStore.action('PRODUCT_ERROR', response.error));
+      return;
+    }
+
+    if (!response.data) {
+      return;
+    }
+
+    dispatch(ProductStore.action('PRODUCT_SAVE_REVIEW'));
+  } catch (error) {
+    dispatch(ProductStore.action('PRODUCT_ERROR', error));
+  }
+};
+
 export const ProductActions = {
   findAll,
   findById,
   save,
   updateById,
   deleteById,
+  saveReview,
   resetProduct,
 };

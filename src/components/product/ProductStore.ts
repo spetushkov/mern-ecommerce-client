@@ -17,6 +17,7 @@ type ActionType =
   | 'PRODUCT_SAVE'
   | 'PRODUCT_UPDATE_BY_ID'
   | 'PRODUCT_DELETE_BY_ID'
+  | 'PRODUCT_SAVE_REVIEW'
   | 'PRODUCT_RESET_PRODUCT'
   | 'PRODUCT_ERROR';
 
@@ -25,6 +26,7 @@ export type ProductState = {
   data: {
     product: Product | null;
     products: Products | null;
+    review: boolean;
   };
   error: Error | null;
 };
@@ -34,6 +36,7 @@ const initialState: ProductState = {
   data: {
     product: null,
     products: null,
+    review: false,
   },
   error: null,
 };
@@ -68,6 +71,17 @@ const reducer = (state = initialState, action: Action): ProductState => {
       };
     case 'PRODUCT_DELETE_BY_ID':
       return deleteById(state, payload as ProductId);
+
+    case 'PRODUCT_SAVE_REVIEW':
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        data: {
+          ...state.data,
+          review: true,
+        },
+      };
     case 'PRODUCT_RESET_PRODUCT':
       return {
         ...state,
@@ -76,6 +90,7 @@ const reducer = (state = initialState, action: Action): ProductState => {
         data: {
           ...state.data,
           product: null,
+          review: false,
         },
       };
     case 'PRODUCT_ERROR':
