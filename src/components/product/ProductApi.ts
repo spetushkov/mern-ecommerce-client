@@ -10,12 +10,15 @@ export type ProductApiResponse = Result<Product, Error>;
 export type FileApiResponse = Result<FileInfo, Error>;
 const baseUrl = '/products';
 
-const findAll = async (token: string | null): Promise<ProductApiPageResponse> => {
+const findAll = async (token: string | null, keyword?: string): Promise<ProductApiPageResponse> => {
   try {
     const endpoint = `${baseUrl}`;
     const config: AxiosRequestConfig = {
       headers: {
         ...AppApi.getAuthorizationHeader(token),
+      },
+      params: {
+        keyword: keyword ?? null,
       },
     };
 

@@ -2,14 +2,20 @@ import React, { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { State } from '../../../store/Store';
 import { StoreError } from '../../../store/StoreError';
 import { ProductActions } from '../ProductActions';
 import { ProductsItem } from './ProductsItem';
 import { ProductsSkeleton } from './skeletons/ProductsSkeleton';
 
+type Params = {
+  keyword: string;
+};
+
 export const Products = (): JSX.Element => {
   const dispatch = useDispatch();
+  const { keyword } = useParams<Params>();
   const { t } = useTranslation('Products');
 
   const productState = useSelector((state: State) => state.product);
@@ -17,8 +23,8 @@ export const Products = (): JSX.Element => {
   const products = data.products ? data.products.data : null;
 
   useEffect(() => {
-    dispatch(ProductActions.findAll());
-  }, [dispatch]);
+    dispatch(ProductActions.findAll(keyword));
+  }, [dispatch, keyword]);
 
   if (loading) {
     return <ProductsSkeleton />;

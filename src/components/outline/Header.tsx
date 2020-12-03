@@ -10,6 +10,7 @@ import { AuthActions } from '../auth/AuthActions';
 import { CartActions } from '../cart/CartActions';
 import { CartUtils } from '../cart/CartUtils';
 import { OrderActions } from '../order/OrderActions';
+import { SearchBox } from '../search/SearchBox';
 import { UserActions } from '../user/UserActions';
 
 export const Header = (): JSX.Element => {
@@ -45,6 +46,7 @@ export const Header = (): JSX.Element => {
             <Navbar.Brand>ProShop</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
+          <SearchBox />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ml-auto'>
               <NavDropdown title='Language' id='language'>

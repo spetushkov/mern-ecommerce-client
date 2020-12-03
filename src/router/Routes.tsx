@@ -42,6 +42,7 @@ export const Routes = (): JSX.Element => {
       <Route exact path='/admin/products' component={AdminProductsScreen} />
       <Route exact path='/admin/products/create' component={AdminProductCreateScreen} />
       <Route exact path='/admin/products/:id' component={AdminProductScreen} />
+      <Route exact path='/search/:keyword' component={HomeScreen} />
       <Route exact path='/' component={HomeScreen} />
       <Route component={NotFoundScreen} />
     </Switch>

@@ -7,13 +7,16 @@ import { ProductApi } from './ProductApi';
 import { ProductStore } from './ProductStore';
 import { Product } from './type/Product';
 
-const findAll = () => async (dispatch: Dispatch, getState: () => State): Promise<void> => {
+const findAll = (keyword?: string) => async (
+  dispatch: Dispatch,
+  getState: () => State,
+): Promise<void> => {
   try {
     dispatch(ProductStore.action('PRODUCT_REQUEST'));
 
     const token = AuthUtils.getToken(getState().auth);
 
-    const response = await ProductApi.findAll(token);
+    const response = await ProductApi.findAll(token, keyword);
     if (response.error) {
       dispatch(ProductStore.action('PRODUCT_ERROR', response.error));
       return;

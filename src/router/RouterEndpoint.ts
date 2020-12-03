@@ -13,5 +13,6 @@ export const RouterEndpoint = {
   adminCreateProduct: (): string => `/admin/products/create`,
   products: (id: string): string => `/products/${id}`,
   unauthorized: (): string => `/unauthorized`,
+  search: (keyword: string): string => `/search/${keyword}`,
   home: (): string => `/`,
 };
