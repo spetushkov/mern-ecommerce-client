@@ -7,16 +7,13 @@ import { ProductApi } from './ProductApi';
 import { ProductStore } from './ProductStore';
 import { Product } from './type/Product';
 
-const findAll = (keyword?: string) => async (
+const findAll = (keyword?: string, page?: string, pageLimit?: string, sort?: string) => async (
   dispatch: Dispatch,
-  getState: () => State,
 ): Promise<void> => {
   try {
     dispatch(ProductStore.action('PRODUCT_REQUEST'));
 
-    const token = AuthUtils.getToken(getState().auth);
-
-    const response = await ProductApi.findAll(token, keyword);
+    const response = await ProductApi.findAll(keyword, page, pageLimit, sort);
     if (response.error) {
       dispatch(ProductStore.action('PRODUCT_ERROR', response.error));
       return;
@@ -29,6 +26,30 @@ const findAll = (keyword?: string) => async (
     const { data, paginator } = response;
 
     dispatch(ProductStore.action('PRODUCT_FIND_ALL', { data, paginator }));
+  } catch (error) {
+    dispatch(ProductStore.action('PRODUCT_ERROR', error));
+  }
+};
+
+const findTopRated = () => async (dispatch: Dispatch): Promise<void> => {
+  try {
+    dispatch(ProductStore.action('PRODUCT_REQUEST'));
+
+    const keyword = undefined;
+    const page = undefined;
+    const response = await ProductApi.findAll(keyword, page, '3', '-rating');
+    if (response.error) {
+      dispatch(ProductStore.action('PRODUCT_ERROR', response.error));
+      return;
+    }
+
+    if (!response.data || !response.paginator) {
+      return;
+    }
+
+    const { data, paginator } = response;
+
+    dispatch(ProductStore.action('PRODUCT_FIND_TOP_RATAED', { data, paginator }));
   } catch (error) {
     dispatch(ProductStore.action('PRODUCT_ERROR', error));
   }
@@ -156,6 +177,7 @@ const saveReview = (review: Review) => async (
 
 export const ProductActions = {
   findAll,
+  findTopRated,
   findById,
   save,
   updateById,

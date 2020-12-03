@@ -13,6 +13,7 @@ type Payload = Product | Products | ProductId;
 type ActionType =
   | 'PRODUCT_REQUEST'
   | 'PRODUCT_FIND_ALL'
+  | 'PRODUCT_FIND_TOP_RATAED'
   | 'PRODUCT_FIND_BY_ID'
   | 'PRODUCT_SAVE'
   | 'PRODUCT_UPDATE_BY_ID'
@@ -26,6 +27,7 @@ export type ProductState = {
   data: {
     product: Product | null;
     products: Products | null;
+    productsTopRated: Products | null;
     review: boolean;
   };
   error: Error | null;
@@ -36,6 +38,7 @@ const initialState: ProductState = {
   data: {
     product: null,
     products: null,
+    productsTopRated: null,
     review: false,
   },
   error: null,
@@ -55,6 +58,16 @@ const reducer = (state = initialState, action: Action): ProductState => {
         data: {
           ...state.data,
           products: payload as Products,
+        },
+      };
+    case 'PRODUCT_FIND_TOP_RATAED':
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        data: {
+          ...state.data,
+          productsTopRated: payload as Products,
         },
       };
     case 'PRODUCT_FIND_BY_ID':
@@ -90,6 +103,7 @@ const reducer = (state = initialState, action: Action): ProductState => {
         data: {
           ...state.data,
           product: null,
+          productsTopRated: null,
           review: false,
         },
       };

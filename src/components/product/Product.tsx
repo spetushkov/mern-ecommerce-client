@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Alert, Button, Card, Col, Form, Image, ListGroup, Row } from 'react-bootstrap';
+import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { RouterEndpoint } from '../../router/RouterEndpoint';
@@ -90,6 +91,9 @@ export const Product = (): JSX.Element => {
 
   return (
     <>
+      <Helmet>
+        <title>{product && product.name}</title>
+      </Helmet>
       {loading && <StoreLoader />}
       {productError && <StoreError error={productError} />}
       {cartError && <StoreError error={cartError} />}

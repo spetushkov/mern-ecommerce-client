@@ -7,7 +7,7 @@ module.exports = {
     'stylelint-config-prettier',
   ],
   rules: {
-    'color-named': 'always-where-possible',
-    'selector-class-pattern': '^[a-z]*-?[a-zA-Z0-9]*$',
+    // 'color-named': 'always-where-possible',
+    // 'selector-class-pattern': '^[a-z]*-?[a-zA-Z0-9]*$',
   },
 };
