@@ -31,10 +31,12 @@ yarn-error.log*
 
 *.snap
 *.png
+*.jpg
+*.jpeg
 *.http
 *.ico
 *.txt
-.env*.local
+.env*.*
 .gitignore
 .prettierignore
 .eslintignore
@@ -46,3 +48,4 @@ LICENSE
 TODO
 public/
 src/assets/
+client/build/
