@@ -26,3 +26,4 @@ yarn-error.log*
 # CUSTOM
 
 .env*.local
+README.local.md

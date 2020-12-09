@@ -1,4 +1,0 @@
-custom AppError
-ErrorMessage component => ErrorHandler and state error
-NoContent component
-auto signout with a dialog notification
