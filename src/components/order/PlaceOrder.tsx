@@ -8,6 +8,7 @@ import { StoreError } from '../../store/StoreError';
 import { StoreLoader } from '../../store/StoreLoader';
 import { NumberUtils } from '../../utils/NumberUtils';
 import { CheckoutSteps } from '../cart/checkoutSteps/CheckoutSteps';
+import { ProductUtils } from '../product/ProductUtils';
 import { OrderActions } from './OrderActions';
 import { Order as OrderType } from './type/Order';
 
@@ -111,7 +112,12 @@ export const PlaceOrder = (): JSX.Element => {
                       <ListGroup.Item key={index}>
                         <Row>
                           <Col md={2}>
-                            <Image src={item.image} alt={item.name} fluid rounded />
+                            <Image
+                              src={ProductUtils.getProductImageUrl(item.image)}
+                              alt={item.name}
+                              fluid
+                              rounded
+                            />
                           </Col>
                           <Col md={6}>{item.name}</Col>
                           <Col md={4}>

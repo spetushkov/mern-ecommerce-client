@@ -8,6 +8,7 @@ const baseApi = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 });
 
 type AuthorizationHeader = {

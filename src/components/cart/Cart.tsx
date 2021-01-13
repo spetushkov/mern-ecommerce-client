@@ -6,6 +6,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { RouterEndpoint } from '../../router/RouterEndpoint';
 import { State } from '../../store/Store';
 import { NumberUtils } from '../../utils/NumberUtils';
+import { ProductUtils } from '../product/ProductUtils';
 import { CartActions } from './CartActions';
 import { CartUtils } from './CartUtils';
 
@@ -74,7 +75,12 @@ export const Cart = (): JSX.Element => {
             <ListGroup.Item key={orderItem.product}>
               <Row>
                 <Col md={2}>
-                  <Image src={orderItem.image} alt={orderItem.name} fluid rounded />
+                  <Image
+                    src={ProductUtils.getProductImageUrl(orderItem.image)}
+                    alt={orderItem.name}
+                    fluid
+                    rounded
+                  />
                 </Col>
                 <Col md={3}>{orderItem.name}</Col>
                 <Col md={2}>${orderItem.price}</Col>
