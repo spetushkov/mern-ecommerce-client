@@ -3,16 +3,16 @@ import React, { useMemo, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { RouterEndpoint } from '../../../router/RouterEndpoint';
+import { Route } from '../../../router/Route';
 import { State } from '../../../store/Store';
 import { StoreError } from '../../../store/StoreError';
 import { StoreLoader } from '../../../store/StoreLoader';
-import { JustifyCenter } from '../../content/JustifyCenter';
-import { FormControl } from '../../form/FormControl';
-import { FormError } from '../../form/FormError';
-import { FormUtils } from '../../form/FormUtils';
+import { JustifyCenter } from '../../utility/content/JustifyCenter';
+import { FormControl } from '../../utility/form/FormControl';
+import { FormError } from '../../utility/form/FormError';
+import { FormUtils } from '../../utility/form/FormUtils';
 import { AuthActions } from '../AuthActions';
-import { useAuthRedirect } from '../useAuthRedirect';
+import { useAfterAuthenticateRedirect } from '../useAfterAuthenticateRedirect';
 import { SignUpForm } from './SignUpForm';
 import { SignUpFormUtils } from './SignUpFormUtils';
 
@@ -22,7 +22,7 @@ export const SignUp = (): JSX.Element => {
   const authState = useSelector((state: State) => state.auth);
   const { loading, data: authData, error } = authState;
 
-  const redirect = useAuthRedirect(authData);
+  const redirect = useAfterAuthenticateRedirect(authData);
 
   const [formErrors, setFormErrors] = useState<string[]>([]);
 
@@ -114,9 +114,7 @@ export const SignUp = (): JSX.Element => {
         <Row className='py-3'>
           <Col>
             Have an Account?{' '}
-            <Link to={redirect ? `${RouterEndpoint.signIn(redirect)}` : RouterEndpoint.signIn()}>
-              Sign In
-            </Link>
+            <Link to={redirect ? `${Route.signIn(redirect)}` : Route.signIn()}>Sign In</Link>
           </Col>
         </Row>
       </JustifyCenter>

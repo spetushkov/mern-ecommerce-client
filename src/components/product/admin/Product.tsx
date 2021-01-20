@@ -4,14 +4,14 @@ import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { ClassTransformer } from '../../../class/ClassTransformer';
-import { RouterEndpoint } from '../../../router/RouterEndpoint';
+import { Route } from '../../../router/Route';
 import { State } from '../../../store/Store';
 import { StoreError } from '../../../store/StoreError';
 import { StoreLoader } from '../../../store/StoreLoader';
-import { useUserAdminAuthenticator } from '../../auth/useUserAdminAuthenticator';
-import { JustifyCenter } from '../../content/JustifyCenter';
-import { FormControl } from '../../form/FormControl';
-import { FormUtils } from '../../form/FormUtils';
+import { useAuthorizeAdmin } from '../../auth/useAuthorizeAdmin';
+import { JustifyCenter } from '../../utility/content/JustifyCenter';
+import { FormControl } from '../../utility/form/FormControl';
+import { FormUtils } from '../../utility/form/FormUtils';
 import { ProductActions } from '../ProductActions';
 import { ProductApi } from '../ProductApi';
 import { Product as ProductType } from '../type/Product';
@@ -22,7 +22,7 @@ type Params = {
 };
 
 export const Product = (): JSX.Element => {
-  useUserAdminAuthenticator();
+  useAuthorizeAdmin();
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -48,7 +48,7 @@ export const Product = (): JSX.Element => {
 
   useEffect(() => {
     if (isCreate && product) {
-      history.push(RouterEndpoint.adminProducts(product.id));
+      history.push(Route.adminProducts(product.id));
     }
   }, [isCreate, product, history]);
 

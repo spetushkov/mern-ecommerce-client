@@ -1,6 +1,6 @@
 import React from 'react';
 import { Nav } from 'react-bootstrap';
-import { RouterEndpoint } from '../../../router/RouterEndpoint';
+import { Route } from '../../../router/Route';
 import { CheckoutStepsItem } from './CheckoutStepsItem';
 
 type Props = {
@@ -17,16 +17,20 @@ export const CheckoutSteps = (props: Props): JSX.Element => {
     <Nav className='justify-content-center mb-4'>
       <CheckoutStepsItem
         step={step1}
-        linkUrl={RouterEndpoint.signIn(RouterEndpoint.shipping())}
+        linkUrl={Route.signIn(Route.orderShippingAddress())}
         linkName='Sign In'
       />
-      <CheckoutStepsItem step={step2} linkUrl={RouterEndpoint.shipping()} linkName='Shipping' />
-      <CheckoutStepsItem step={step3} linkUrl={RouterEndpoint.payment()} linkName='Payment' />
       <CheckoutStepsItem
-        step={step4}
-        linkUrl={RouterEndpoint.placeOrder()}
-        linkName='Place Order'
+        step={step2}
+        linkUrl={Route.orderShippingAddress()}
+        linkName='Shipping Address'
       />
+      <CheckoutStepsItem
+        step={step3}
+        linkUrl={Route.orderPaymentMethod()}
+        linkName='Payment Method'
+      />
+      <CheckoutStepsItem step={step4} linkUrl={Route.orderConfirm()} linkName='Confirmation' />
     </Nav>
   );
 };

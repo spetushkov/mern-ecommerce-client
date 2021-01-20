@@ -1,8 +1,8 @@
 import { AxiosRequestConfig } from 'axios';
-import { AppApi } from '../../app/AppApi';
-import { PageableResult } from '../../type/PageableResult';
-import { Result } from '../../type/Result';
-import { PayPalPaymentResult } from '../payPal/PayPalPaymentResult';
+import { BaseApi } from '../../api/BaseApi';
+import { PageableResult } from '../../api/type/PageableResult';
+import { Result } from '../../api/type/Result';
+import { PayPalPaymentResult } from '../../payPal/PayPalPaymentResult';
 import { Order } from './type/Order';
 
 export type OrderApiPageResponse = PageableResult<Order, Error>;
@@ -17,14 +17,14 @@ const findAll = async (
     const endpoint = `${baseUrl}`;
     const config: AxiosRequestConfig = {
       headers: {
-        ...AppApi.getAuthorizationHeader(token),
+        ...BaseApi.getAuthorizationHeader(token),
       },
       params: {
         byUserId: queryByUserId,
       },
     };
 
-    const response = await AppApi.baseApi.get<OrderApiPageResponse>(endpoint, config);
+    const response = await BaseApi.instance.get<OrderApiPageResponse>(endpoint, config);
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error);
@@ -40,14 +40,14 @@ const findById = async (
     const endpoint = `${baseUrl}/${id}`;
     const config: AxiosRequestConfig = {
       headers: {
-        ...AppApi.getAuthorizationHeader(token),
+        ...BaseApi.getAuthorizationHeader(token),
       },
       params: {
         byUserId: queryByUserId,
       },
     };
 
-    const response = await AppApi.baseApi.get<OrderApiResponse>(endpoint, config);
+    const response = await BaseApi.instance.get<OrderApiResponse>(endpoint, config);
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error);
@@ -59,11 +59,11 @@ const save = async (token: string | null, entity: Order): Promise<OrderApiRespon
     const endpoint = `${baseUrl}`;
     const config: AxiosRequestConfig = {
       headers: {
-        ...AppApi.getAuthorizationHeader(token),
+        ...BaseApi.getAuthorizationHeader(token),
       },
     };
 
-    const response = await AppApi.baseApi.post<OrderApiResponse>(endpoint, entity, config);
+    const response = await BaseApi.instance.post<OrderApiResponse>(endpoint, entity, config);
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error);
@@ -79,11 +79,11 @@ const updateById = async (
     const endpoint = `${baseUrl}/${id}`;
     const config: AxiosRequestConfig = {
       headers: {
-        ...AppApi.getAuthorizationHeader(token),
+        ...BaseApi.getAuthorizationHeader(token),
       },
     };
 
-    const response = await AppApi.baseApi.patch<OrderApiResponse>(endpoint, query, config);
+    const response = await BaseApi.instance.patch<OrderApiResponse>(endpoint, query, config);
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error);
@@ -99,14 +99,14 @@ const pay = async (
     const endpoint = `${baseUrl}/${id}`;
     const config: AxiosRequestConfig = {
       headers: {
-        ...AppApi.getAuthorizationHeader(token),
+        ...BaseApi.getAuthorizationHeader(token),
       },
       params: {
         payOrder: true,
       },
     };
 
-    const response = await AppApi.baseApi.patch<OrderApiResponse>(endpoint, query, config);
+    const response = await BaseApi.instance.patch<OrderApiResponse>(endpoint, query, config);
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error);

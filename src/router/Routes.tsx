@@ -1,50 +1,50 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { AdminOrderScreen } from '../screens/AdminOrderScreen';
-import { AdminOrdersScreen } from '../screens/AdminOrdersScreen';
-import { AdminProductCreateScreen } from '../screens/AdminProductCreateScreen';
-import { AdminProductScreen } from '../screens/AdminProductScreen';
-import { AdminProductsScreen } from '../screens/AdminProductsScreen';
-import { AdminUserScreen } from '../screens/AdminUserScreen';
-import { AdminUsersScreen } from '../screens/AdminUsersScreen';
-import { CartScreen } from '../screens/CartScreen';
-import { HomeScreen } from '../screens/HomeScreen';
-import { NotFoundScreen } from '../screens/NotFoundScreen';
-import { OrderScreen } from '../screens/OrderScreen';
-import { OrdersScreen } from '../screens/OrdersScreen';
-import { PaymentScreen } from '../screens/PaymentScreen';
-import { PlaceOrderScreen } from '../screens/PlaceOrderScreen';
-import { ProductScreen } from '../screens/ProductScreen';
-import { ProductsScreen } from '../screens/ProductsScreen';
-import { ShippingScreen } from '../screens/ShippingScreen';
-import { SignInScreen } from '../screens/SignInScreen';
-import { SignUpScreen } from '../screens/SignUpScreen';
-import { UnauthorizedScreen } from '../screens/UnauthorizedScreen';
+import { Index } from '../pages';
+import { AdminOrder } from '../pages/admin/AdminOrder';
+import { AdminOrders } from '../pages/admin/AdminOrders';
+import { AdminProduct } from '../pages/admin/AdminProduct';
+import { AdminProductCreate } from '../pages/admin/AdminProductCreate';
+import { AdminProducts } from '../pages/admin/AdminProducts';
+import { AdminUser } from '../pages/admin/AdminUser';
+import { AdminUsers } from '../pages/admin/AdminUsers';
+import { SignIn } from '../pages/auth/SignIn';
+import { SignUp } from '../pages/auth/SignUp';
+import { Cart } from '../pages/cart/Cart';
+import { OrderConfirm } from '../pages/cart/OrderConfirm';
+import { OrderPaymentMethod } from '../pages/cart/OrderPaymentMethod';
+import { OrderShippingAddress } from '../pages/cart/OrderShippingAddress';
+import { Order } from '../pages/order/Order';
+import { Orders } from '../pages/order/Orders';
+import { Product } from '../pages/product/Product';
+import { Products } from '../pages/product/Products';
+import { NotFound } from '../pages/utility/NotFound';
+import { Unauthorized } from '../pages/utility/Unauthorized';
 
 export const Routes = (): JSX.Element => {
   return (
     <Switch>
-      <Route exact path='/unauthorized' component={UnauthorizedScreen} />
-      <Route exact path='/signup' component={SignUpScreen} />
-      <Route exact path='/signin' component={SignInScreen} />
-      <Route exact path='/products' component={ProductsScreen} />
-      <Route exact path='/products/:id' component={ProductScreen} />
-      <Route path='/cart' component={CartScreen} />
-      <Route path='/shipping' component={ShippingScreen} />
-      <Route path='/payment' component={PaymentScreen} />
-      <Route path='/placeorder' component={PlaceOrderScreen} />
-      <Route exact path='/user/orders' component={OrdersScreen} />
-      <Route exact path='/user/orders/:id' component={OrderScreen} />
-      <Route exact path='/admin/users' component={AdminUsersScreen} />
-      <Route exact path='/admin/users/:id' component={AdminUserScreen} />
-      <Route exact path='/admin/orders' component={AdminOrdersScreen} />
-      <Route exact path='/admin/orders/:id' component={AdminOrderScreen} />
-      <Route exact path='/admin/products' component={AdminProductsScreen} />
-      <Route exact path='/admin/products/create' component={AdminProductCreateScreen} />
-      <Route exact path='/admin/products/:id' component={AdminProductScreen} />
-      <Route exact path='/search/:keyword' component={HomeScreen} />
-      <Route exact path='/' component={HomeScreen} />
-      <Route component={NotFoundScreen} />
+      <Route exact path='/unauthorized' component={Unauthorized} />
+      <Route exact path='/signup' component={SignUp} />
+      <Route exact path='/signin' component={SignIn} />
+      <Route exact path='/products' component={Products} />
+      <Route exact path='/products/:id' component={Product} />
+      <Route path='/cart' component={Cart} />
+      <Route path='/cart/orderShippingAddress' component={OrderShippingAddress} />
+      <Route path='/cart/orderPaymentMethod' component={OrderPaymentMethod} />
+      <Route path='/cart/orderConfirm' component={OrderConfirm} />
+      <Route exact path='/customer/orders' component={Orders} />
+      <Route exact path='/customer/orders/:id' component={Order} />
+      <Route exact path='/admin/users' component={AdminUsers} />
+      <Route exact path='/admin/users/:id' component={AdminUser} />
+      <Route exact path='/admin/orders' component={AdminOrders} />
+      <Route exact path='/admin/orders/:id' component={AdminOrder} />
+      <Route exact path='/admin/products' component={AdminProducts} />
+      <Route exact path='/admin/products/create' component={AdminProductCreate} />
+      <Route exact path='/admin/products/:id' component={AdminProduct} />
+      <Route exact path='/search/:keyword' component={Index} />
+      <Route exact path='/' component={Index} />
+      <Route component={NotFound} />
     </Switch>
   );
 };

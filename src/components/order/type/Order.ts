@@ -1,15 +1,15 @@
-import { BaseDomain } from '../../../type/BaseDomain';
+import { BaseEntity } from '../../../entity/BaseEntity';
+import { PayPalPaymentResult } from '../../../payPal/PayPalPaymentResult';
 import { OrderItem } from '../../cart/orderItem/type/OrderItem';
-import { PaymentMethod } from '../../cart/paymentMethod/type/PaymentMethod';
-import { ShippingAddress } from '../../cart/shippingAddress/type/ShippingAddress';
-import { PayPalPaymentResult } from '../../payPal/PayPalPaymentResult';
+import { OrderPaymentMethod } from '../../cart/orderPaymentMethod/type/OrderPaymentMethod';
+import { OrderShippingAddress } from '../../cart/orderShippingAddress/type/OrderShippingAddress';
 import { User } from '../../user/type/User';
 
-export interface Order extends BaseDomain {
+export interface Order extends BaseEntity {
   user?: User | string; // reference: Order MANY_TO_ONE User
   orderItems: OrderItem[]; // reference (embedded doc): Order ONE_TO_ONE OrderItem
-  shippingAddress: ShippingAddress | null;
-  paymentMethod: PaymentMethod | null;
+  shippingAddress: OrderShippingAddress | null;
+  paymentMethod: OrderPaymentMethod | null;
   orderItemsPrice: number;
   shippingPrice: number;
   taxPrice: number;

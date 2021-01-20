@@ -1,7 +1,7 @@
 import React from 'react';
 import { Carousel, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { RouterEndpoint } from '../../../../router/RouterEndpoint';
+import { Route } from '../../../../router/Route';
 import { ProductUtils } from '../../ProductUtils';
 import { Product } from '../../type/Product';
 
@@ -18,7 +18,7 @@ export const ProductsCarousel = (props: Props): JSX.Element => {
         {productsTopRated &&
           productsTopRated.map((product) => (
             <Carousel.Item key={product.id}>
-              <Link to={RouterEndpoint.products(product.id)}>
+              <Link to={Route.products(product.id)}>
                 <Image
                   src={ProductUtils.getProductImageUrl(product.image)}
                   alt={product.name}

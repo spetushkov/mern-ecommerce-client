@@ -3,11 +3,11 @@ import React, { useEffect } from 'react';
 import { Button, Row, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
-import { RouterEndpoint } from '../../../router/RouterEndpoint';
+import { Route } from '../../../router/Route';
 import { State } from '../../../store/Store';
 import { StoreError } from '../../../store/StoreError';
 import { StoreLoader } from '../../../store/StoreLoader';
-import { useUserAuthenticator } from '../../auth/useUserAuthenticator';
+import { useAuthenticate } from '../../auth/useAuthenticate';
 import { OrderActions } from '../OrderActions';
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
 };
 
 export const Orders = (props: Props): JSX.Element => {
-  useUserAuthenticator();
+  useAuthenticate();
 
   const dispatch = useDispatch();
   const { queryByUserId } = props;
@@ -67,7 +67,7 @@ export const Orders = (props: Props): JSX.Element => {
                     )}
                   </td>
                   <td>
-                    <LinkContainer to={RouterEndpoint.userOrders(order.id)}>
+                    <LinkContainer to={Route.customerOrders(order.id)}>
                       <Button variant='light' className='btn-sm'>
                         Details
                       </Button>

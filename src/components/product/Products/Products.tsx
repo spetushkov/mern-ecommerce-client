@@ -4,11 +4,11 @@ import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { useQueryParams } from '../../../http/useQueryParams';
-import { RouterEndpoint } from '../../../router/RouterEndpoint';
+import { Route } from '../../../router/Route';
+import { useQueryParams } from '../../../router/useQueryParams';
 import { State } from '../../../store/Store';
 import { StoreError } from '../../../store/StoreError';
-import { Paginator } from '../../paginator/Paginator';
+import { Paginator } from '../../utility/content/Paginator';
 import { ProductActions } from '../ProductActions';
 import { ProductsCarousel } from './carousel/ProductsCarousel';
 import { ProductsItem } from './ProductsItem';
@@ -64,7 +64,7 @@ export const Products = (): JSX.Element => {
           })}
       </Row>
       <Paginator
-        endpoint={RouterEndpoint.products()}
+        endpoint={Route.products()}
         pageLimit={Number(pageLimit)}
         totalPages={totalPages}
         currentPage={currentPage}

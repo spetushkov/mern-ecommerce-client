@@ -3,16 +3,16 @@ import { Alert, Button, Card, Col, Form, Image, ListGroup, Row } from 'react-boo
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { RouterEndpoint } from '../../router/RouterEndpoint';
+import { Route } from '../../router/Route';
 import { State } from '../../store/Store';
 import { StoreError } from '../../store/StoreError';
 import { StoreLoader } from '../../store/StoreLoader';
 import { CartActions } from '../cart/CartActions';
+import { ProductRating } from '../rating/ProductRating';
+import { Rating } from '../rating/Rating';
 import { Review } from '../review/type/Review';
 import { ProductActions } from './ProductActions';
 import { ProductUtils } from './ProductUtils';
-import { ProductRating } from './rating/ProductRating';
-import { Rating } from './rating/Rating';
 
 type Params = {
   id: string;
@@ -97,7 +97,7 @@ export const Product = (): JSX.Element => {
       {loading && <StoreLoader />}
       {productError && <StoreError error={productError} />}
       {cartError && <StoreError error={cartError} />}
-      <Link className='btn btn-light my-3' to={RouterEndpoint.home()}>
+      <Link className='btn btn-light my-3' to={Route.home()}>
         Go Back
       </Link>
       {product && (
@@ -188,9 +188,8 @@ export const Product = (): JSX.Element => {
                 <h3>Write a Customer Review</h3>
                 {(!authData || !authData.user) && (
                   <Alert variant='info'>
-                    Please{' '}
-                    <Link to={RouterEndpoint.signIn(RouterEndpoint.products(id))}>sign in</Link> to
-                    write a review
+                    Please <Link to={Route.signIn(Route.products(id))}>sign in</Link> to write a
+                    review
                   </Alert>
                 )}
                 {authData && authData.user && (

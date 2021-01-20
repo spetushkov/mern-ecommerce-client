@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { RouterEndpoint } from '../../../router/RouterEndpoint';
+import { Route } from '../../../router/Route';
 import { State } from '../../../store/Store';
 import { StoreError } from '../../../store/StoreError';
 import { StoreLoader } from '../../../store/StoreLoader';
-import { JustifyCenter } from '../../content/JustifyCenter';
+import { JustifyCenter } from '../../utility/content/JustifyCenter';
 import { AuthActions } from '../AuthActions';
-import { useAuthRedirect } from '../useAuthRedirect';
+import { useAfterAuthenticateRedirect } from '../useAfterAuthenticateRedirect';
 
 export const SignIn = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ export const SignIn = (): JSX.Element => {
   const authState = useSelector((state: State) => state.auth);
   const { loading, data: authData, error } = authState;
 
-  const redirect = useAuthRedirect(authData);
+  const redirect = useAfterAuthenticateRedirect(authData);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -59,9 +59,7 @@ export const SignIn = (): JSX.Element => {
         <Row className='py-3'>
           <Col>
             New Customer?{' '}
-            <Link to={redirect ? `${RouterEndpoint.signUp(redirect)}` : RouterEndpoint.signUp()}>
-              Sign Up
-            </Link>
+            <Link to={redirect ? `${Route.signUp(redirect)}` : Route.signUp()}>Sign Up</Link>
           </Col>
         </Row>
       </JustifyCenter>

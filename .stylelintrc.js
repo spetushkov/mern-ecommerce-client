@@ -7,7 +7,13 @@ module.exports = {
     'stylelint-config-prettier',
   ],
   rules: {
-    // 'color-named': 'always-where-possible',
     // 'selector-class-pattern': '^[a-z]*-?[a-zA-Z0-9]*$',
+    'scss/at-import-partial-extension-blacklist': null,
+    'max-nesting-depth': null,
+    'selector-max-compound-selectors': null,
+    'no-descending-specificity': null,
+    'declaration-block-no-duplicate-properties': null,
+    'unit-no-unknown': null,
+    'selector-no-qualifying-type': null,
   },
 };

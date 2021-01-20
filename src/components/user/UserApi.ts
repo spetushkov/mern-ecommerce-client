@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
-import { AppApi } from '../../app/AppApi';
-import { PageableResult } from '../../type/PageableResult';
-import { Result } from '../../type/Result';
+import { BaseApi } from '../../api/BaseApi';
+import { PageableResult } from '../../api/type/PageableResult';
+import { Result } from '../../api/type/Result';
 import { User } from './type/User';
 
 export type UserApiPageResponse = PageableResult<User, Error>;
@@ -13,11 +13,11 @@ const findAll = async (token: string | null): Promise<UserApiPageResponse> => {
     const endpoint = `${baseUrl}`;
     const config: AxiosRequestConfig = {
       headers: {
-        ...AppApi.getAuthorizationHeader(token),
+        ...BaseApi.getAuthorizationHeader(token),
       },
     };
 
-    const response = await AppApi.baseApi.get<UserApiPageResponse>(endpoint, config);
+    const response = await BaseApi.instance.get<UserApiPageResponse>(endpoint, config);
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error);
@@ -29,11 +29,11 @@ const findById = async (token: string | null, id: string): Promise<UserApiRespon
     const endpoint = `${baseUrl}/${id}`;
     const config: AxiosRequestConfig = {
       headers: {
-        ...AppApi.getAuthorizationHeader(token),
+        ...BaseApi.getAuthorizationHeader(token),
       },
     };
 
-    const response = await AppApi.baseApi.get<UserApiResponse>(endpoint, config);
+    const response = await BaseApi.instance.get<UserApiResponse>(endpoint, config);
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error);
@@ -46,11 +46,11 @@ const save = async (token: string | null, entity: User): Promise<UserApiResponse
     const endpoint = `${baseUrl}`;
     const config: AxiosRequestConfig = {
       headers: {
-        ...AppApi.getAuthorizationHeader(token),
+        ...BaseApi.getAuthorizationHeader(token),
       },
     };
 
-    const response = await AppApi.baseApi.post<UserApiResponse>(endpoint, entity, config);
+    const response = await BaseApi.instance.post<UserApiResponse>(endpoint, entity, config);
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error);
@@ -66,11 +66,11 @@ const updateById = async (
     const endpoint = `${baseUrl}/${id}`;
     const config: AxiosRequestConfig = {
       headers: {
-        ...AppApi.getAuthorizationHeader(token),
+        ...BaseApi.getAuthorizationHeader(token),
       },
     };
 
-    const response = await AppApi.baseApi.patch<UserApiResponse>(endpoint, query, config);
+    const response = await BaseApi.instance.patch<UserApiResponse>(endpoint, query, config);
     return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject(error);
@@ -82,11 +82,11 @@ const deleteById = async (token: string | null, id: string): Promise<void> => {
     const endpoint = `${baseUrl}/${id}`;
     const config: AxiosRequestConfig = {
       headers: {
-        ...AppApi.getAuthorizationHeader(token),
+        ...BaseApi.getAuthorizationHeader(token),
       },
     };
 
-    await AppApi.baseApi.delete<UserApiResponse>(endpoint, config);
+    await BaseApi.instance.delete<UserApiResponse>(endpoint, config);
   } catch (error) {
     return Promise.reject(error);
   }

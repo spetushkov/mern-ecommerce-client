@@ -1,8 +1,8 @@
-import { BaseDomain } from '../../../type/BaseDomain';
+import { BaseEntity } from '../../../entity/BaseEntity';
 import { Review } from '../../review/type/Review';
 import { User } from '../../user/type/User';
 
-export interface Product extends BaseDomain {
+export interface Product extends BaseEntity {
   name: string;
   image: string;
   description: string;

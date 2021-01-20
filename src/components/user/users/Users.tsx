@@ -3,15 +3,15 @@ import React, { useEffect } from 'react';
 import { Button, Row, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { RouterEndpoint } from '../../../router/RouterEndpoint';
+import { Route } from '../../../router/Route';
 import { State } from '../../../store/Store';
 import { StoreError } from '../../../store/StoreError';
 import { StoreLoader } from '../../../store/StoreLoader';
-import { useUserAuthenticator } from '../../auth/useUserAuthenticator';
+import { useAuthenticate } from '../../auth/useAuthenticate';
 import { UserActions } from '../UserActions';
 
 export const Users = (): JSX.Element => {
-  useUserAuthenticator();
+  useAuthenticate();
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -25,7 +25,7 @@ export const Users = (): JSX.Element => {
   }, [dispatch]);
 
   const editUserHandler = (id: string) => {
-    history.push(RouterEndpoint.adminUsers(id));
+    history.push(Route.adminUsers(id));
   };
 
   const deleteUserHandler = (id: string) => {

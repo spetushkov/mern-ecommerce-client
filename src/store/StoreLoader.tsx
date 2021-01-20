@@ -1,5 +1,5 @@
 import React from 'react';
-import { Loader } from '../components/loader/Loader';
+import { Loader } from '../components/utility/loader/Loader';
 
 export const StoreLoader = (): JSX.Element => {
   return <Loader />;

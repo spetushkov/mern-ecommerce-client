@@ -3,14 +3,14 @@ import { Alert, Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap
 import { PayPalButton } from 'react-paypal-button-v2';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { PayPalPaymentResult } from '../../payPal/PayPalPaymentResult';
+import { PayPalUtils } from '../../payPal/PayPalUtils';
 import { State } from '../../store/Store';
 import { StoreError } from '../../store/StoreError';
 import { StoreLoader } from '../../store/StoreLoader';
 import { NumberUtils } from '../../utils/NumberUtils';
-import { useUserAuthenticator } from '../auth/useUserAuthenticator';
+import { useAuthenticate } from '../auth/useAuthenticate';
 import { CartActions } from '../cart/CartActions';
-import { PayPalPaymentResult } from '../payPal/PayPalPaymentResult';
-import { PayPalUtils } from '../payPal/PayPalUtils';
 import { ProductUtils } from '../product/ProductUtils';
 import { User } from '../user/type/User';
 import { OrderActions } from './OrderActions';
@@ -25,7 +25,7 @@ type Props = {
 };
 
 export const Order = (props: Props): JSX.Element => {
-  useUserAuthenticator();
+  useAuthenticate();
 
   const dispatch = useDispatch();
   const { id } = useParams<Params>();

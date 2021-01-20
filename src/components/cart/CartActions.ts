@@ -2,24 +2,24 @@ import { Dispatch } from 'redux';
 import { State } from '../../store/Store';
 import { ProductApi } from '../product/ProductApi';
 import { Product } from '../product/type/Product';
-import { CartStore } from './CartStore';
+import { CartReducer } from './CartReducer';
 import { OrderItemStorage } from './orderItem/OrderItemStorage';
 import { OrderItem } from './orderItem/type/OrderItem';
-import { PaymentMethodStorage } from './paymentMethod/PaymentMethodStorage';
-import { PaymentMethod } from './paymentMethod/type/PaymentMethod';
-import { ShippingAddressStorage } from './shippingAddress/ShippingAddressStorage';
-import { ShippingAddress } from './shippingAddress/type/ShippingAddress';
+import { OrderPaymentMethodStorage } from './orderPaymentMethod/OrderPaymentMethodStorage';
+import { OrderPaymentMethod } from './orderPaymentMethod/type/OrderPaymentMethod';
+import { OrderShippingAddressStorage } from './orderShippingAddress/OrderShippingAddressStorage';
+import { OrderShippingAddress } from './orderShippingAddress/type/OrderShippingAddress';
 
 const addOrderItem = (id: string, quantity: number) => async (
   dispatch: Dispatch,
   getState: () => State,
 ): Promise<void> => {
   try {
-    dispatch(CartStore.action('CART_REQUEST'));
+    dispatch(CartReducer.action('CART_REQUEST'));
 
     const response = await ProductApi.findById(id);
     if (response.error) {
-      dispatch(CartStore.action('CART_ERROR', response.error));
+      dispatch(CartReducer.action('CART_ERROR', response.error));
       return;
     }
 
@@ -37,12 +37,12 @@ const addOrderItem = (id: string, quantity: number) => async (
       countInStock: product.countInStock,
     };
 
-    dispatch(CartStore.action('CART_ADD_ORDER_ITEM', orderItem));
+    dispatch(CartReducer.action('CART_ADD_ORDER_ITEM', orderItem));
 
     const cartStorage = new OrderItemStorage();
     cartStorage.save(getState().cart.data.orderItems);
   } catch (error) {
-    dispatch(CartStore.action('CART_ERROR', error));
+    dispatch(CartReducer.action('CART_ERROR', error));
   }
 };
 
@@ -52,51 +52,53 @@ const removeOrderItem = (id: string) => (dispatch: Dispatch, getState: () => Sta
       product: id,
     };
 
-    dispatch(CartStore.action('CART_REMOVE_ORDER_ITEM', orderItem));
+    dispatch(CartReducer.action('CART_REMOVE_ORDER_ITEM', orderItem));
 
     const cartStorage = new OrderItemStorage();
     cartStorage.save(getState().cart.data.orderItems);
   } catch (error) {
-    CartStore.action('CART_ERROR', error);
+    CartReducer.action('CART_ERROR', error);
   }
 };
 
-const saveShippingAddress = (shippingAddress: ShippingAddress) => (dispatch: Dispatch): void => {
+const saveShippingAddress = (shippingAddress: OrderShippingAddress) => (
+  dispatch: Dispatch,
+): void => {
   try {
-    dispatch(CartStore.action('CART_SAVE_SHIPPING_ADDRESS', shippingAddress));
+    dispatch(CartReducer.action('CART_SAVE_SHIPPING_ADDRESS', shippingAddress));
 
-    const shippingAddressStorage = new ShippingAddressStorage();
+    const shippingAddressStorage = new OrderShippingAddressStorage();
     shippingAddressStorage.save(shippingAddress);
   } catch (error) {
-    CartStore.action('CART_ERROR', error);
+    CartReducer.action('CART_ERROR', error);
   }
 };
 
-const savePaymentMethod = (paymentMethod: PaymentMethod) => (dispatch: Dispatch): void => {
+const savePaymentMethod = (paymentMethod: OrderPaymentMethod) => (dispatch: Dispatch): void => {
   try {
-    dispatch(CartStore.action('CART_SAVE_PAYMENT_METHOD', paymentMethod));
+    dispatch(CartReducer.action('CART_SAVE_PAYMENT_METHOD', paymentMethod));
 
-    const paymentMethodStorage = new PaymentMethodStorage();
+    const paymentMethodStorage = new OrderPaymentMethodStorage();
     paymentMethodStorage.save({ value: paymentMethod });
   } catch (error) {
-    CartStore.action('CART_ERROR', error);
+    CartReducer.action('CART_ERROR', error);
   }
 };
 
 const reset = () => (dispatch: Dispatch): void => {
   try {
-    dispatch(CartStore.action('CART_RESET'));
+    dispatch(CartReducer.action('CART_RESET'));
 
-    const paymentMethodStorage = new PaymentMethodStorage();
+    const paymentMethodStorage = new OrderPaymentMethodStorage();
     paymentMethodStorage.remove();
 
-    const shippingAddressStorage = new ShippingAddressStorage();
+    const shippingAddressStorage = new OrderShippingAddressStorage();
     shippingAddressStorage.remove();
 
     const cartStorage = new OrderItemStorage();
     cartStorage.remove();
   } catch (error) {
-    CartStore.action('CART_ERROR', error);
+    CartReducer.action('CART_ERROR', error);
   }
 };
 

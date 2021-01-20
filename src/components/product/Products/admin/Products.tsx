@@ -3,15 +3,15 @@ import React, { useEffect } from 'react';
 import { Button, Col, Row, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { RouterEndpoint } from '../../../../router/RouterEndpoint';
+import { Route } from '../../../../router/Route';
 import { State } from '../../../../store/Store';
 import { StoreError } from '../../../../store/StoreError';
 import { StoreLoader } from '../../../../store/StoreLoader';
-import { useUserAdminAuthenticator } from '../../../auth/useUserAdminAuthenticator';
+import { useAuthorizeAdmin } from '../../../auth/useAuthorizeAdmin';
 import { ProductActions } from '../../ProductActions';
 
 export const Products = (): JSX.Element => {
-  useUserAdminAuthenticator();
+  useAuthorizeAdmin();
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -26,11 +26,11 @@ export const Products = (): JSX.Element => {
 
   const createProductHandler = () => {
     dispatch(ProductActions.resetProduct());
-    history.push(RouterEndpoint.adminCreateProduct());
+    history.push(Route.adminCreateProduct());
   };
 
   const editProductHandler = (id: string) => {
-    history.push(RouterEndpoint.adminProducts(id));
+    history.push(Route.adminProducts(id));
   };
 
   const deleteProductHandler = (id: string) => {

@@ -50,3 +50,7 @@ Procfile
 public/
 src/assets/
 client/build/
+.next/
+out/
+.vercel
+next.env.js

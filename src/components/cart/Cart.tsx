@@ -3,7 +3,7 @@ import React, { useCallback, useMemo } from 'react';
 import { Alert, Button, Card, Col, Form, Image, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { RouterEndpoint } from '../../router/RouterEndpoint';
+import { Route } from '../../router/Route';
 import { State } from '../../store/Store';
 import { NumberUtils } from '../../utils/NumberUtils';
 import { ProductUtils } from '../product/ProductUtils';
@@ -44,13 +44,13 @@ export const Cart = (): JSX.Element => {
   );
 
   const checkoutHandler = () => {
-    history.push(`${RouterEndpoint.signIn('shipping')}`);
+    history.push(`${Route.signIn('shipping')}`);
   };
 
   const renderEmptyCart = () => {
     return (
       <Alert variant='info'>
-        Your cart is empty <Link to={RouterEndpoint.home()}>Go Back</Link>
+        Your cart is empty <Link to={Route.home()}>Go Back</Link>
       </Alert>
     );
   };

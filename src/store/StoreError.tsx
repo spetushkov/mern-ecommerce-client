@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-bootstrap';
-import { ApiError } from '../app/AppApi';
+import { ApiError } from '../api/BaseApi';
 
 type Props = {
   error: ApiError | Error;

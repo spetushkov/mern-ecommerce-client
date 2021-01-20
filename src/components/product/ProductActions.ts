@@ -4,18 +4,18 @@ import { AuthUtils } from '../auth/AuthUtils';
 import { ReviewApi } from '../review/ReviewApi';
 import { Review } from '../review/type/Review';
 import { ProductApi } from './ProductApi';
-import { ProductStore } from './ProductStore';
+import { ProductReducer } from './ProductReducer';
 import { Product } from './type/Product';
 
 const findAll = (keyword?: string, page?: string, pageLimit?: string, sort?: string) => async (
   dispatch: Dispatch,
 ): Promise<void> => {
   try {
-    dispatch(ProductStore.action('PRODUCT_REQUEST'));
+    dispatch(ProductReducer.action('PRODUCT_REQUEST'));
 
     const response = await ProductApi.findAll(keyword, page, pageLimit, sort);
     if (response.error) {
-      dispatch(ProductStore.action('PRODUCT_ERROR', response.error));
+      dispatch(ProductReducer.action('PRODUCT_ERROR', response.error));
       return;
     }
 
@@ -25,21 +25,21 @@ const findAll = (keyword?: string, page?: string, pageLimit?: string, sort?: str
 
     const { data, paginator } = response;
 
-    dispatch(ProductStore.action('PRODUCT_FIND_ALL', { data, paginator }));
+    dispatch(ProductReducer.action('PRODUCT_FIND_ALL', { data, paginator }));
   } catch (error) {
-    dispatch(ProductStore.action('PRODUCT_ERROR', error));
+    dispatch(ProductReducer.action('PRODUCT_ERROR', error));
   }
 };
 
 const findTopRated = () => async (dispatch: Dispatch): Promise<void> => {
   try {
-    dispatch(ProductStore.action('PRODUCT_REQUEST'));
+    dispatch(ProductReducer.action('PRODUCT_REQUEST'));
 
     const keyword = undefined;
     const page = undefined;
     const response = await ProductApi.findAll(keyword, page, '3', '-rating');
     if (response.error) {
-      dispatch(ProductStore.action('PRODUCT_ERROR', response.error));
+      dispatch(ProductReducer.action('PRODUCT_ERROR', response.error));
       return;
     }
 
@@ -49,19 +49,19 @@ const findTopRated = () => async (dispatch: Dispatch): Promise<void> => {
 
     const { data, paginator } = response;
 
-    dispatch(ProductStore.action('PRODUCT_FIND_TOP_RATAED', { data, paginator }));
+    dispatch(ProductReducer.action('PRODUCT_FIND_TOP_RATAED', { data, paginator }));
   } catch (error) {
-    dispatch(ProductStore.action('PRODUCT_ERROR', error));
+    dispatch(ProductReducer.action('PRODUCT_ERROR', error));
   }
 };
 
 const findById = (id: string) => async (dispatch: Dispatch): Promise<void> => {
   try {
-    dispatch(ProductStore.action('PRODUCT_REQUEST'));
+    dispatch(ProductReducer.action('PRODUCT_REQUEST'));
 
     const response = await ProductApi.findById(id);
     if (response.error) {
-      dispatch(ProductStore.action('PRODUCT_ERROR', response.error));
+      dispatch(ProductReducer.action('PRODUCT_ERROR', response.error));
       return;
     }
 
@@ -69,9 +69,9 @@ const findById = (id: string) => async (dispatch: Dispatch): Promise<void> => {
       return;
     }
 
-    dispatch(ProductStore.action('PRODUCT_FIND_BY_ID', response.data));
+    dispatch(ProductReducer.action('PRODUCT_FIND_BY_ID', response.data));
   } catch (error) {
-    dispatch(ProductStore.action('PRODUCT_ERROR', error));
+    dispatch(ProductReducer.action('PRODUCT_ERROR', error));
   }
 };
 
@@ -80,13 +80,13 @@ const save = (product: Product) => async (
   getState: () => State,
 ): Promise<void> => {
   try {
-    dispatch(ProductStore.action('PRODUCT_REQUEST'));
+    dispatch(ProductReducer.action('PRODUCT_REQUEST'));
 
     const token = AuthUtils.getToken(getState().auth);
 
     const response = await ProductApi.save(token, product);
     if (response.error) {
-      dispatch(ProductStore.action('PRODUCT_ERROR', response.error));
+      dispatch(ProductReducer.action('PRODUCT_ERROR', response.error));
       return;
     }
 
@@ -94,9 +94,9 @@ const save = (product: Product) => async (
       return;
     }
 
-    dispatch(ProductStore.action('PRODUCT_SAVE', response.data));
+    dispatch(ProductReducer.action('PRODUCT_SAVE', response.data));
   } catch (error) {
-    dispatch(ProductStore.action('PRODUCT_ERROR', error));
+    dispatch(ProductReducer.action('PRODUCT_ERROR', error));
   }
 };
 
@@ -105,13 +105,13 @@ const updateById = (id: string, query: Partial<Product>) => async (
   getState: () => State,
 ): Promise<void> => {
   try {
-    dispatch(ProductStore.action('PRODUCT_REQUEST'));
+    dispatch(ProductReducer.action('PRODUCT_REQUEST'));
 
     const token = AuthUtils.getToken(getState().auth);
 
     const response = await ProductApi.updateById(token, id, query);
     if (response.error) {
-      dispatch(ProductStore.action('PRODUCT_ERROR', response.error));
+      dispatch(ProductReducer.action('PRODUCT_ERROR', response.error));
       return;
     }
 
@@ -119,9 +119,9 @@ const updateById = (id: string, query: Partial<Product>) => async (
       return;
     }
 
-    dispatch(ProductStore.action('PRODUCT_UPDATE_BY_ID', response.data));
+    dispatch(ProductReducer.action('PRODUCT_UPDATE_BY_ID', response.data));
   } catch (error) {
-    dispatch(ProductStore.action('PRODUCT_ERROR', error));
+    dispatch(ProductReducer.action('PRODUCT_ERROR', error));
   }
 };
 
@@ -130,23 +130,23 @@ const deleteById = (id: string) => async (
   getState: () => State,
 ): Promise<void> => {
   try {
-    dispatch(ProductStore.action('PRODUCT_REQUEST'));
+    dispatch(ProductReducer.action('PRODUCT_REQUEST'));
 
     const token = AuthUtils.getToken(getState().auth);
 
     await ProductApi.deleteById(token, id);
 
-    dispatch(ProductStore.action('PRODUCT_DELETE_BY_ID', { id }));
+    dispatch(ProductReducer.action('PRODUCT_DELETE_BY_ID', { id }));
   } catch (error) {
-    dispatch(ProductStore.action('PRODUCT_ERROR', error));
+    dispatch(ProductReducer.action('PRODUCT_ERROR', error));
   }
 };
 
 const resetProduct = () => async (dispatch: Dispatch): Promise<void> => {
   try {
-    dispatch(ProductStore.action('PRODUCT_RESET_PRODUCT'));
+    dispatch(ProductReducer.action('PRODUCT_RESET_PRODUCT'));
   } catch (error) {
-    dispatch(ProductStore.action('PRODUCT_ERROR', error));
+    dispatch(ProductReducer.action('PRODUCT_ERROR', error));
   }
 };
 
@@ -155,13 +155,13 @@ const saveReview = (review: Review) => async (
   getState: () => State,
 ): Promise<void> => {
   try {
-    dispatch(ProductStore.action('PRODUCT_REQUEST'));
+    dispatch(ProductReducer.action('PRODUCT_REQUEST'));
 
     const token = AuthUtils.getToken(getState().auth);
 
     const response = await ReviewApi.save(token, review);
     if (response.error) {
-      dispatch(ProductStore.action('PRODUCT_ERROR', response.error));
+      dispatch(ProductReducer.action('PRODUCT_ERROR', response.error));
       return;
     }
 
@@ -169,9 +169,9 @@ const saveReview = (review: Review) => async (
       return;
     }
 
-    dispatch(ProductStore.action('PRODUCT_SAVE_REVIEW'));
+    dispatch(ProductReducer.action('PRODUCT_SAVE_REVIEW'));
   } catch (error) {
-    dispatch(ProductStore.action('PRODUCT_ERROR', error));
+    dispatch(ProductReducer.action('PRODUCT_ERROR', error));
   }
 };
 

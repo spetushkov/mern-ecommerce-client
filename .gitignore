@@ -27,3 +27,7 @@ yarn-error.log*
 
 .env*.local
 README.local.md
+.next/
+out/
+.vercel
+next.env.js

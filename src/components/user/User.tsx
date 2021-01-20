@@ -7,10 +7,10 @@ import { ClassTransformer } from '../../class/ClassTransformer';
 import { State } from '../../store/Store';
 import { StoreError } from '../../store/StoreError';
 import { StoreLoader } from '../../store/StoreLoader';
-import { useUserAuthenticator } from '../auth/useUserAuthenticator';
-import { JustifyCenter } from '../content/JustifyCenter';
-import { FormControl } from '../form/FormControl';
-import { FormUtils } from '../form/FormUtils';
+import { useAuthenticate } from '../auth/useAuthenticate';
+import { JustifyCenter } from '../utility/content/JustifyCenter';
+import { FormControl } from '../utility/form/FormControl';
+import { FormUtils } from '../utility/form/FormUtils';
 import { UserActions } from './UserActions';
 import { UserForm } from './UserForm';
 
@@ -19,7 +19,7 @@ type Params = {
 };
 
 export const User = (): JSX.Element => {
-  useUserAuthenticator();
+  useAuthenticate();
 
   const dispatch = useDispatch();
   const { id } = useParams<Params>();

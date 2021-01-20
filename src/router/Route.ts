@@ -1,0 +1,18 @@
+export const Route = {
+  signUp: (redirect?: string): string => (redirect ? `/signup?redirect=${redirect}` : `/signup`),
+  signIn: (redirect?: string): string => (redirect ? `/signin?redirect=${redirect}` : `/signin`),
+  signOut: (): string => `/signout`,
+  cart: (): string => `/cart`,
+  orderShippingAddress: (): string => `/cart/orderShippingAddress`,
+  orderPaymentMethod: (): string => `/cart/orderPaymentMethod`,
+  orderConfirm: (): string => `/cart/orderConfirm`,
+  customerOrders: (id?: string): string => (id ? `/customer/orders/${id}` : `/customer/orders`),
+  adminUsers: (id?: string): string => (id ? `/admin/users/${id}` : `/admin/users`),
+  adminOrders: (id?: string): string => (id ? `/admin/orders/${id}` : `/admin/orders`),
+  adminProducts: (id?: string): string => (id ? `/admin/products/${id}` : `/admin/products`),
+  adminCreateProduct: (): string => `/admin/products/create`,
+  products: (id?: string): string => (id ? `/products/${id}` : `/products`),
+  unauthorized: (): string => `/unauthorized`,
+  search: (keyword: string): string => `/search/${keyword}`,
+  home: (): string => `/`,
+};

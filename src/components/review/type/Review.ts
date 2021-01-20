@@ -1,6 +1,6 @@
-import { BaseDomain } from '../../../type/BaseDomain';
+import { BaseEntity } from '../../../entity/BaseEntity';
 
-export interface Review extends BaseDomain {
+export interface Review extends BaseEntity {
   name?: string;
   rating: number;
   comment: string;

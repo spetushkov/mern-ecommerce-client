@@ -1,2 +1,8 @@
 /public/**/*.css
 /public/**/*.scss
+
+/out/**/*.css
+/out/**/*.scss
+
+/build/**/*.css
+/build/**/*.scss

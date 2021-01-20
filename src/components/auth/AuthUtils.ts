@@ -1,4 +1,4 @@
-import { AuthState } from './AuthStore';
+import { AuthState } from './AuthReducer';
 
 const getToken = (authState: AuthState): string | null => {
   return authState.data ? authState.data.authToken.token : null;

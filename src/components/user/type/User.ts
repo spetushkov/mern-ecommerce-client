@@ -1,6 +1,6 @@
-import { BaseDomain } from '../../../type/BaseDomain';
+import { BaseEntity } from '../../../entity/BaseEntity';
 
-export interface User extends BaseDomain {
+export interface User extends BaseEntity {
   name: string;
   email: string;
   password: string;

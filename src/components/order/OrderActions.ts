@@ -1,11 +1,11 @@
 import { Dispatch } from 'redux';
+import { ConfigApi } from '../../config/ConfigApi';
+import { Config } from '../../config/type/Config';
+import { PayPalPaymentResult } from '../../payPal/PayPalPaymentResult';
 import { State } from '../../store/Store';
 import { AuthUtils } from '../auth/AuthUtils';
-import { ConfigApi } from '../config/ConfigApi';
-import { Config } from '../config/type/Config';
-import { PayPalPaymentResult } from '../payPal/PayPalPaymentResult';
 import { OrderApi } from './OrderApi';
-import { OrderStore } from './OrderStore';
+import { OrderReducer } from './OrderReducer';
 import { Order } from './type/Order';
 
 const findAll = (queryByUserId: boolean) => async (
@@ -13,13 +13,13 @@ const findAll = (queryByUserId: boolean) => async (
   getState: () => State,
 ): Promise<void> => {
   try {
-    dispatch(OrderStore.action('ORDER_REQUEST'));
+    dispatch(OrderReducer.action('ORDER_REQUEST'));
 
     const token = AuthUtils.getToken(getState().auth);
 
     const response = await OrderApi.findAll(token, queryByUserId);
     if (response.error) {
-      dispatch(OrderStore.action('ORDER_ERROR', response.error));
+      dispatch(OrderReducer.action('ORDER_ERROR', response.error));
       return;
     }
 
@@ -29,9 +29,9 @@ const findAll = (queryByUserId: boolean) => async (
 
     const { data, paginator } = response;
 
-    dispatch(OrderStore.action('ORDER_FIND_ALL', { data, paginator }));
+    dispatch(OrderReducer.action('ORDER_FIND_ALL', { data, paginator }));
   } catch (error) {
-    dispatch(OrderStore.action('ORDER_ERROR', error));
+    dispatch(OrderReducer.action('ORDER_ERROR', error));
   }
 };
 
@@ -40,13 +40,13 @@ const findById = (id: string, queryByUserId: boolean) => async (
   getState: () => State,
 ): Promise<void> => {
   try {
-    dispatch(OrderStore.action('ORDER_REQUEST'));
+    dispatch(OrderReducer.action('ORDER_REQUEST'));
 
     const token = AuthUtils.getToken(getState().auth);
 
     const response = await OrderApi.findById(token, id, queryByUserId);
     if (response.error) {
-      dispatch(OrderStore.action('ORDER_ERROR', response.error));
+      dispatch(OrderReducer.action('ORDER_ERROR', response.error));
       return;
     }
 
@@ -54,21 +54,21 @@ const findById = (id: string, queryByUserId: boolean) => async (
       return;
     }
 
-    dispatch(OrderStore.action('ORDER_FIND_BY_ID', response.data));
+    dispatch(OrderReducer.action('ORDER_FIND_BY_ID', response.data));
   } catch (error) {
-    dispatch(OrderStore.action('ORDER_ERROR', error));
+    dispatch(OrderReducer.action('ORDER_ERROR', error));
   }
 };
 
 const save = (order: Order) => async (dispatch: Dispatch, getState: () => State): Promise<void> => {
   try {
-    dispatch(OrderStore.action('ORDER_REQUEST'));
+    dispatch(OrderReducer.action('ORDER_REQUEST'));
 
     const token = AuthUtils.getToken(getState().auth);
 
     const response = await OrderApi.save(token, order);
     if (response.error) {
-      dispatch(OrderStore.action('ORDER_ERROR', response.error));
+      dispatch(OrderReducer.action('ORDER_ERROR', response.error));
       return;
     }
 
@@ -76,9 +76,9 @@ const save = (order: Order) => async (dispatch: Dispatch, getState: () => State)
       return;
     }
 
-    dispatch(OrderStore.action('ORDER_SAVE', response.data));
+    dispatch(OrderReducer.action('ORDER_SAVE', response.data));
   } catch (error) {
-    dispatch(OrderStore.action('ORDER_ERROR', error));
+    dispatch(OrderReducer.action('ORDER_ERROR', error));
   }
 };
 
@@ -87,13 +87,13 @@ const updateById = (id: string, query: Partial<Order>) => async (
   getState: () => State,
 ): Promise<void> => {
   try {
-    dispatch(OrderStore.action('ORDER_REQUEST'));
+    dispatch(OrderReducer.action('ORDER_REQUEST'));
 
     const token = AuthUtils.getToken(getState().auth);
 
     const response = await OrderApi.updateById(token, id, query);
     if (response.error) {
-      dispatch(OrderStore.action('ORDER_ERROR', response.error));
+      dispatch(OrderReducer.action('ORDER_ERROR', response.error));
       return;
     }
 
@@ -101,19 +101,19 @@ const updateById = (id: string, query: Partial<Order>) => async (
       return;
     }
 
-    dispatch(OrderStore.action('ORDER_UPDATE_BY_ID', response.data));
+    dispatch(OrderReducer.action('ORDER_UPDATE_BY_ID', response.data));
   } catch (error) {
-    dispatch(OrderStore.action('ORDER_ERROR', error));
+    dispatch(OrderReducer.action('ORDER_ERROR', error));
   }
 };
 
 const configFindById = (id: keyof Config) => async (dispatch: Dispatch): Promise<void> => {
   try {
-    dispatch(OrderStore.action('ORDER_REQUEST'));
+    dispatch(OrderReducer.action('ORDER_REQUEST'));
 
     const response = await ConfigApi.findById(id);
     if (response.error) {
-      dispatch(OrderStore.action('ORDER_ERROR', response.error));
+      dispatch(OrderReducer.action('ORDER_ERROR', response.error));
       return;
     }
 
@@ -121,9 +121,9 @@ const configFindById = (id: keyof Config) => async (dispatch: Dispatch): Promise
       return;
     }
 
-    dispatch(OrderStore.action('ORDER_CONFIG_FIND_BY_ID', response.data));
+    dispatch(OrderReducer.action('ORDER_CONFIG_FIND_BY_ID', response.data));
   } catch (error) {
-    dispatch(OrderStore.action('ORDER_ERROR', error));
+    dispatch(OrderReducer.action('ORDER_ERROR', error));
   }
 };
 
@@ -132,13 +132,13 @@ const pay = (id: string, paymentResult: { paymentResult: PayPalPaymentResult }) 
   getState: () => State,
 ): Promise<void> => {
   try {
-    dispatch(OrderStore.action('ORDER_REQUEST'));
+    dispatch(OrderReducer.action('ORDER_REQUEST'));
 
     const token = AuthUtils.getToken(getState().auth);
 
     const response = await OrderApi.pay(token, id, paymentResult);
     if (response.error) {
-      dispatch(OrderStore.action('ORDER_ERROR', response.error));
+      dispatch(OrderReducer.action('ORDER_ERROR', response.error));
       return;
     }
 
@@ -146,17 +146,17 @@ const pay = (id: string, paymentResult: { paymentResult: PayPalPaymentResult }) 
       return;
     }
 
-    dispatch(OrderStore.action('ORDER_PAY', response.data));
+    dispatch(OrderReducer.action('ORDER_PAY', response.data));
   } catch (error) {
-    dispatch(OrderStore.action('ORDER_ERROR', error));
+    dispatch(OrderReducer.action('ORDER_ERROR', error));
   }
 };
 
 const reset = () => async (dispatch: Dispatch): Promise<void> => {
   try {
-    dispatch(OrderStore.action('ORDER_RESET'));
+    dispatch(OrderReducer.action('ORDER_RESET'));
   } catch (error) {
-    dispatch(OrderStore.action('ORDER_ERROR', error));
+    dispatch(OrderReducer.action('ORDER_ERROR', error));
   }
 };
 
