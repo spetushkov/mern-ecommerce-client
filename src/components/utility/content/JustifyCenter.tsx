@@ -5,9 +5,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const JustifyCenter = (props: Props): JSX.Element => {
-  const { children } = props;
-
+export const JustifyCenter = ({ children }: Props): JSX.Element => {
   return (
     <Container>
       <Row className='justify-content-md-center'>

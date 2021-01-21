@@ -38,7 +38,7 @@ const findById = (id: string) => async (
 
     const token = AuthUtils.getToken(getState().auth);
 
-    const response = await UserApi.findById(token, id);
+    const response = await UserApi.findById(id, token);
     if (response.error) {
       dispatch(UserReducer.action('USER_ERROR', response.error));
       return;
@@ -63,7 +63,7 @@ const updateById = (id: string, query: Partial<User>) => async (
 
     const token = AuthUtils.getToken(getState().auth);
 
-    const response = await UserApi.updateById(token, id, query);
+    const response = await UserApi.updateById(id, query, token);
     if (response.error) {
       dispatch(UserReducer.action('USER_ERROR', response.error));
       return;
@@ -88,7 +88,7 @@ const deleteById = (id: string) => async (
 
     const token = AuthUtils.getToken(getState().auth);
 
-    await UserApi.deleteById(token, id);
+    await UserApi.deleteById(id, token);
 
     dispatch(UserReducer.action('USER_DELETE_BY_ID', { id }));
   } catch (error) {

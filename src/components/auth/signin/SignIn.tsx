@@ -21,7 +21,7 @@ export const SignIn = (): JSX.Element => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const submitHandler = (e: React.FormEvent<HTMLElement>) => {
+  const submitHandler = (e: React.FormEvent<HTMLElement>): void => {
     e.preventDefault();
 
     dispatch(AuthActions.signIn({ email, password }));

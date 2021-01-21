@@ -27,14 +27,14 @@ export const Header = (): JSX.Element => {
     return CartUtils.getOrderItemsCount(orderItems);
   }, [orderItems]);
 
-  const signOutHandler = () => {
+  const signOutHandler = (): void => {
     dispatch(AuthActions.signOut());
     dispatch(CartActions.reset());
     dispatch(OrderActions.reset());
     dispatch(UserActions.reset());
   };
 
-  const changeLanguage = (lng: string) => {
+  const changeLanguage = (lng: string): void => {
     i18n.changeLanguage(lng);
   };
 

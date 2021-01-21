@@ -8,7 +8,7 @@ export type UserApiPageResponse = PageableResult<User, Error>;
 export type UserApiResponse = Result<User, Error>;
 const baseUrl = '/users';
 
-const findAll = async (token: string | null): Promise<UserApiPageResponse> => {
+const findAll = async (token?: string): Promise<UserApiPageResponse> => {
   try {
     const endpoint = `${baseUrl}`;
     const config: AxiosRequestConfig = {
@@ -24,7 +24,7 @@ const findAll = async (token: string | null): Promise<UserApiPageResponse> => {
   }
 };
 
-const findById = async (token: string | null, id: string): Promise<UserApiResponse> => {
+const findById = async (id: string, token?: string): Promise<UserApiResponse> => {
   try {
     const endpoint = `${baseUrl}/${id}`;
     const config: AxiosRequestConfig = {
@@ -41,7 +41,7 @@ const findById = async (token: string | null, id: string): Promise<UserApiRespon
 };
 
 // not used, example
-const save = async (token: string | null, entity: User): Promise<UserApiResponse> => {
+const save = async (entity: User, token?: string): Promise<UserApiResponse> => {
   try {
     const endpoint = `${baseUrl}`;
     const config: AxiosRequestConfig = {
@@ -58,9 +58,9 @@ const save = async (token: string | null, entity: User): Promise<UserApiResponse
 };
 
 const updateById = async (
-  token: string | null,
   id: string,
   query: Partial<User>,
+  token?: string,
 ): Promise<UserApiResponse> => {
   try {
     const endpoint = `${baseUrl}/${id}`;
@@ -77,7 +77,7 @@ const updateById = async (
   }
 };
 
-const deleteById = async (token: string | null, id: string): Promise<void> => {
+const deleteById = async (id: string, token?: string): Promise<void> => {
   try {
     const endpoint = `${baseUrl}/${id}`;
     const config: AxiosRequestConfig = {

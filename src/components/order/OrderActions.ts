@@ -17,7 +17,7 @@ const findAll = (queryByUserId: boolean) => async (
 
     const token = AuthUtils.getToken(getState().auth);
 
-    const response = await OrderApi.findAll(token, queryByUserId);
+    const response = await OrderApi.findAll(queryByUserId, token);
     if (response.error) {
       dispatch(OrderReducer.action('ORDER_ERROR', response.error));
       return;
@@ -44,7 +44,7 @@ const findById = (id: string, queryByUserId: boolean) => async (
 
     const token = AuthUtils.getToken(getState().auth);
 
-    const response = await OrderApi.findById(token, id, queryByUserId);
+    const response = await OrderApi.findById(id, queryByUserId, token);
     if (response.error) {
       dispatch(OrderReducer.action('ORDER_ERROR', response.error));
       return;
@@ -66,7 +66,7 @@ const save = (order: Order) => async (dispatch: Dispatch, getState: () => State)
 
     const token = AuthUtils.getToken(getState().auth);
 
-    const response = await OrderApi.save(token, order);
+    const response = await OrderApi.save(order, token);
     if (response.error) {
       dispatch(OrderReducer.action('ORDER_ERROR', response.error));
       return;
@@ -91,7 +91,7 @@ const updateById = (id: string, query: Partial<Order>) => async (
 
     const token = AuthUtils.getToken(getState().auth);
 
-    const response = await OrderApi.updateById(token, id, query);
+    const response = await OrderApi.updateById(id, query, token);
     if (response.error) {
       dispatch(OrderReducer.action('ORDER_ERROR', response.error));
       return;
@@ -136,7 +136,7 @@ const pay = (id: string, paymentResult: { paymentResult: PayPalPaymentResult }) 
 
     const token = AuthUtils.getToken(getState().auth);
 
-    const response = await OrderApi.pay(token, id, paymentResult);
+    const response = await OrderApi.pay(id, paymentResult, token);
     if (response.error) {
       dispatch(OrderReducer.action('ORDER_ERROR', response.error));
       return;

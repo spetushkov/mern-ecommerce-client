@@ -1,4 +1,4 @@
-export interface BaseEntity {
+export interface ApiEntity {
   id: string;
   createdAt?: string;
   createdBy?: string;

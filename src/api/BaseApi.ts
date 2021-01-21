@@ -16,7 +16,7 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-const getAuthorizationHeader = (token: string | null): AuthorizationHeader | null => {
+const getAuthorizationHeader = (token?: string): AuthorizationHeader | null => {
   return token ? { Authorization: `Bearer ${token}` } : null;
 };
 

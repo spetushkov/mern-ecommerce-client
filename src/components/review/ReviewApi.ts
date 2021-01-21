@@ -6,7 +6,7 @@ import { Review } from './type/Review';
 export type ReviewApiResponse = Result<Review, Error>;
 const baseUrl = '/reviews';
 
-const save = async (token: string | null, entity: Review): Promise<ReviewApiResponse> => {
+const save = async (entity: Review, token?: string): Promise<ReviewApiResponse> => {
   try {
     const endpoint = `${baseUrl}`;
     const config: AxiosRequestConfig = {

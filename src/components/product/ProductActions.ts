@@ -84,7 +84,7 @@ const save = (product: Product) => async (
 
     const token = AuthUtils.getToken(getState().auth);
 
-    const response = await ProductApi.save(token, product);
+    const response = await ProductApi.save(product, token);
     if (response.error) {
       dispatch(ProductReducer.action('PRODUCT_ERROR', response.error));
       return;
@@ -109,7 +109,7 @@ const updateById = (id: string, query: Partial<Product>) => async (
 
     const token = AuthUtils.getToken(getState().auth);
 
-    const response = await ProductApi.updateById(token, id, query);
+    const response = await ProductApi.updateById(id, query, token);
     if (response.error) {
       dispatch(ProductReducer.action('PRODUCT_ERROR', response.error));
       return;
@@ -134,7 +134,7 @@ const deleteById = (id: string) => async (
 
     const token = AuthUtils.getToken(getState().auth);
 
-    await ProductApi.deleteById(token, id);
+    await ProductApi.deleteById(id, token);
 
     dispatch(ProductReducer.action('PRODUCT_DELETE_BY_ID', { id }));
   } catch (error) {
@@ -159,7 +159,7 @@ const saveReview = (review: Review) => async (
 
     const token = AuthUtils.getToken(getState().auth);
 
-    const response = await ReviewApi.save(token, review);
+    const response = await ReviewApi.save(review, token);
     if (response.error) {
       dispatch(ProductReducer.action('PRODUCT_ERROR', response.error));
       return;

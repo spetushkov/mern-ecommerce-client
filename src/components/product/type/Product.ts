@@ -1,8 +1,8 @@
-import { BaseEntity } from '../../../entity/BaseEntity';
+import { ApiEntity } from '../../../api/type/ApiEntity';
 import { Review } from '../../review/type/Review';
 import { User } from '../../user/type/User';
 
-export interface Product extends BaseEntity {
+export interface Product extends ApiEntity {
   name: string;
   image: string;
   description: string;

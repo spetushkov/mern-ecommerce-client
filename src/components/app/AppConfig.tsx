@@ -1,13 +1,13 @@
 import React from 'react';
 import 'reflect-metadata';
-import { FontAwesome } from '../font/FontAwesome';
-import { Env } from './Env';
+import { Env } from '../../env/Env';
+import { FontAwesome } from '../../font/FontAwesome';
 
 type Props = {
   children: React.ReactNode;
 };
 
-export const ConfigProvider = ({ children }: Props): JSX.Element => {
+export const AppConfig = ({ children }: Props): JSX.Element => {
   Env();
   FontAwesome();
 

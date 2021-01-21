@@ -5,6 +5,6 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const SkeletonThemeProvider = ({ children }: Props): JSX.Element => {
+export const LoadingSkeleton = ({ children }: Props): JSX.Element => {
   return <SkeletonTheme>{children}</SkeletonTheme>;
 };

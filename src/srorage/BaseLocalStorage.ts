@@ -24,10 +24,7 @@ export class BaseLocalStorage<T> implements Storage<T> {
   }
 
   protected parseKey(key: string): string {
-    let prefix = process.env.REACT_APP_STORAGE_KEY_PREFIX;
-    if (!prefix) {
-      prefix = '_';
-    }
+    const prefix = process.env.REACT_APP_STORAGE_KEY_PREFIX || '_';
     return prefix + key;
   }
 }

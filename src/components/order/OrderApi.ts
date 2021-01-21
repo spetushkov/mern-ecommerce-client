@@ -9,10 +9,7 @@ export type OrderApiPageResponse = PageableResult<Order, Error>;
 export type OrderApiResponse = Result<Order, Error>;
 const baseUrl = '/orders';
 
-const findAll = async (
-  token: string | null,
-  queryByUserId: boolean,
-): Promise<OrderApiPageResponse> => {
+const findAll = async (queryByUserId: boolean, token?: string): Promise<OrderApiPageResponse> => {
   try {
     const endpoint = `${baseUrl}`;
     const config: AxiosRequestConfig = {
@@ -32,9 +29,9 @@ const findAll = async (
 };
 
 const findById = async (
-  token: string | null,
   id: string,
   queryByUserId: boolean,
+  token?: string,
 ): Promise<OrderApiResponse> => {
   try {
     const endpoint = `${baseUrl}/${id}`;
@@ -54,7 +51,7 @@ const findById = async (
   }
 };
 
-const save = async (token: string | null, entity: Order): Promise<OrderApiResponse> => {
+const save = async (entity: Order, token?: string): Promise<OrderApiResponse> => {
   try {
     const endpoint = `${baseUrl}`;
     const config: AxiosRequestConfig = {
@@ -71,9 +68,9 @@ const save = async (token: string | null, entity: Order): Promise<OrderApiRespon
 };
 
 const updateById = async (
-  token: string | null,
   id: string,
   query: Partial<Order>,
+  token?: string,
 ): Promise<OrderApiResponse> => {
   try {
     const endpoint = `${baseUrl}/${id}`;
@@ -91,9 +88,9 @@ const updateById = async (
 };
 
 const pay = async (
-  token: string | null,
   id: string,
   query: { paymentResult: PayPalPaymentResult },
+  token?: string,
 ): Promise<OrderApiResponse> => {
   try {
     const endpoint = `${baseUrl}/${id}`;

@@ -45,7 +45,7 @@ const findById = async (id: string): Promise<ProductApiResponse> => {
   }
 };
 
-const save = async (token: string | null, entity: Product): Promise<ProductApiResponse> => {
+const save = async (entity: Product, token?: string): Promise<ProductApiResponse> => {
   try {
     const endpoint = `${baseUrl}`;
     const config: AxiosRequestConfig = {
@@ -62,9 +62,9 @@ const save = async (token: string | null, entity: Product): Promise<ProductApiRe
 };
 
 const updateById = async (
-  token: string | null,
   id: string,
   query: Partial<Product>,
+  token?: string,
 ): Promise<ProductApiResponse> => {
   try {
     const endpoint = `${baseUrl}/${id}`;
@@ -81,7 +81,7 @@ const updateById = async (
   }
 };
 
-const deleteById = async (token: string | null, id: string): Promise<void> => {
+const deleteById = async (id: string, token?: string): Promise<void> => {
   try {
     const endpoint = `${baseUrl}/${id}`;
     const config: AxiosRequestConfig = {
