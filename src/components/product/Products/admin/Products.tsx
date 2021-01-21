@@ -7,11 +7,11 @@ import { Route } from '../../../../router/Route';
 import { State } from '../../../../store/Store';
 import { StoreError } from '../../../../store/StoreError';
 import { StoreLoader } from '../../../../store/StoreLoader';
-import { useAuthorizeAdmin } from '../../../auth/useAuthorizeAdmin';
+import { useRequireAuthorize } from '../../../auth/useRequireAuthorize';
 import { ProductActions } from '../../ProductActions';
 
 export const Products = (): JSX.Element => {
-  useAuthorizeAdmin();
+  useRequireAuthorize('ADMIN');
 
   const dispatch = useDispatch();
   const history = useHistory();

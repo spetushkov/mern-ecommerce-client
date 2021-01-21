@@ -7,11 +7,11 @@ import { Route } from '../../../router/Route';
 import { State } from '../../../store/Store';
 import { StoreError } from '../../../store/StoreError';
 import { StoreLoader } from '../../../store/StoreLoader';
-import { useAuthenticate } from '../../auth/useAuthenticate';
+import { useRequireAuthenticate } from '../../auth/useRequireAuthenticate';
 import { UserActions } from '../UserActions';
 
 export const Users = (): JSX.Element => {
-  useAuthenticate();
+  useRequireAuthenticate();
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -24,11 +24,11 @@ export const Users = (): JSX.Element => {
     dispatch(UserActions.findAll());
   }, [dispatch]);
 
-  const editUserHandler = (id: string) => {
+  const editUserHandler = (id: string): void => {
     history.push(Route.adminUsers(id));
   };
 
-  const deleteUserHandler = (id: string) => {
+  const deleteUserHandler = (id: string): void => {
     if (window.confirm('Are you sure?')) {
       dispatch(UserActions.deleteById(id));
     }
@@ -56,7 +56,7 @@ export const Users = (): JSX.Element => {
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>
-                    {user.isAdmin ? (
+                    {user.roles?.includes('ADMIN') ? (
                       <FontAwesomeIcon icon={['fas', 'check']} color='green' />
                     ) : (
                       <FontAwesomeIcon icon={['fas', 'times']} color='red' />

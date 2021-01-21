@@ -1,8 +1,5 @@
-import { ApiEntity } from '../../../api/type/ApiEntity';
+import { AuthUser } from '../../auth/type/AuthUser';
 
-export interface User extends ApiEntity {
+export interface User extends AuthUser {
   name: string;
-  email: string;
-  password: string;
-  isAdmin?: boolean;
 }

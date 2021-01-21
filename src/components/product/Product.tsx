@@ -7,6 +7,7 @@ import { Route } from '../../router/Route';
 import { State } from '../../store/Store';
 import { StoreError } from '../../store/StoreError';
 import { StoreLoader } from '../../store/StoreLoader';
+import { useAuthenticate } from '../auth/useAuthenticate';
 import { CartActions } from '../cart/CartActions';
 import { ProductRating } from '../rating/ProductRating';
 import { Rating } from '../rating/Rating';
@@ -30,8 +31,8 @@ export const Product = (): JSX.Element => {
   const cartState = useSelector((state: State) => state.cart);
   const { error: cartError } = cartState;
 
-  const authState = useSelector((state: State) => state.auth);
-  const { data: authData } = authState;
+  const { getUser } = useAuthenticate();
+  const user = getUser();
 
   const [quantity, setQuantity] = useState(1);
   const [rating, setRating] = useState(0);
@@ -82,7 +83,7 @@ export const Product = (): JSX.Element => {
       id: '',
       rating,
       comment,
-      user: authData?.user.id ?? '',
+      user: user?.id ?? '',
       product: id,
     };
 
@@ -186,13 +187,13 @@ export const Product = (): JSX.Element => {
               )}
               <ListGroup variant='flush'>
                 <h3>Write a Customer Review</h3>
-                {(!authData || !authData.user) && (
+                {!user && (
                   <Alert variant='info'>
                     Please <Link to={Route.signIn(Route.products(id))}>sign in</Link> to write a
                     review
                   </Alert>
                 )}
-                {authData && authData.user && (
+                {user && (
                   <Form onSubmit={submitReviewHandler}>
                     <Form.Group>
                       <Form.Label>Rating</Form.Label>

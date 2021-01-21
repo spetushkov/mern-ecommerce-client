@@ -2,19 +2,20 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Route } from '../../router/Route';
 import { useQueryParams } from '../../router/useQueryParams';
-import { AuthData } from './type/AuthData';
+import { useAuthenticate } from './useAuthenticate';
 
-export const useAfterAuthenticateRedirect = (authData: AuthData | null): string | null => {
+export const useAfterAuthenticate = (): string | null => {
   const queryParams = useQueryParams();
   const history = useHistory();
+  const { isAuthenticated } = useAuthenticate();
 
   const redirect = queryParams.get('redirect');
 
   useEffect(() => {
-    if (authData) {
+    if (isAuthenticated()) {
       history.push(redirect ? redirect : Route.home());
     }
-  }, [authData, history, redirect]);
+  }, [isAuthenticated, history, redirect]);
 
   return redirect;
 };

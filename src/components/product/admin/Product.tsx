@@ -8,7 +8,8 @@ import { Route } from '../../../router/Route';
 import { State } from '../../../store/Store';
 import { StoreError } from '../../../store/StoreError';
 import { StoreLoader } from '../../../store/StoreLoader';
-import { useAuthorizeAdmin } from '../../auth/useAuthorizeAdmin';
+import { useAuthenticate } from '../../auth/useAuthenticate';
+import { useRequireAuthorize } from '../../auth/useRequireAuthorize';
 import { JustifyCenter } from '../../utility/content/JustifyCenter';
 import { FormControl } from '../../utility/form/FormControl';
 import { FormUtils } from '../../utility/form/FormUtils';
@@ -22,7 +23,7 @@ type Params = {
 };
 
 export const Product = (): JSX.Element => {
-  useAuthorizeAdmin();
+  useRequireAuthorize('ADMIN');
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -34,9 +35,9 @@ export const Product = (): JSX.Element => {
   const { loading, data, error } = productState;
   const product = data.product;
 
-  const authState = useSelector((state: State) => state.auth);
-  const { data: authData } = authState;
-  const userId = authData ? authData.user.id : '';
+  const { getUser } = useAuthenticate();
+  const user = getUser();
+  const userId = user ? user.id : '';
 
   const [fileUploading, setFileUploading] = useState(false);
 
@@ -65,7 +66,7 @@ export const Product = (): JSX.Element => {
     }
   };
 
-  const isFormSubmittable = (form: FormikProps<ProductForm>) => {
+  const isFormSubmittable = (form: FormikProps<ProductForm>): boolean => {
     return FormUtils.isSubmittable(form);
   };
 
@@ -91,7 +92,7 @@ export const Product = (): JSX.Element => {
     FormActions.setSubmitting(false);
   };
 
-  const getSubmitTitle = (form: FormikProps<ProductForm>) => {
+  const getSubmitTitle = (form: FormikProps<ProductForm>): string => {
     switch (isCreate) {
       case true:
         return form.isSubmitting ? 'Saving...' : 'Save';
@@ -103,7 +104,7 @@ export const Product = (): JSX.Element => {
   const uploadFileHandler = async (
     e: React.ChangeEvent<HTMLInputElement>,
     form: FormikProps<ProductForm>,
-  ) => {
+  ): Promise<void> => {
     const fileList = e.target.files;
     if (!fileList) {
       return;

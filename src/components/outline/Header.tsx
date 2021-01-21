@@ -7,6 +7,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Route } from '../../router/Route';
 import { State } from '../../store/Store';
 import { AuthActions } from '../auth/AuthActions';
+import { useAuthenticate } from '../auth/useAuthenticate';
 import { CartActions } from '../cart/CartActions';
 import { CartUtils } from '../cart/CartUtils';
 import { OrderActions } from '../order/OrderActions';
@@ -17,8 +18,9 @@ export const Header = (): JSX.Element => {
   const { i18n } = useTranslation();
   const dispatch = useDispatch();
 
-  const authState = useSelector((state: State) => state.auth);
-  const { data: authData } = authState;
+  const { getUser, includesRole } = useAuthenticate();
+  const userName = getUser()?.name;
+  const isAdmin = includesRole('ADMIN');
 
   const cartState = useSelector((state: State) => state.cart);
   const { orderItems } = cartState.data;
@@ -60,8 +62,8 @@ export const Header = (): JSX.Element => {
                   Cart
                 </Nav.Link>
               </LinkContainer>
-              {authData ? (
-                <NavDropdown title={authData.user.name} id='user'>
+              {userName ? (
+                <NavDropdown title={userName} id='user'>
                   <LinkContainer to={Route.customerOrders()}>
                     <NavDropdown.Item>My Orders</NavDropdown.Item>
                   </LinkContainer>
@@ -75,7 +77,7 @@ export const Header = (): JSX.Element => {
                   </Nav.Link>
                 </LinkContainer>
               )}
-              {authData && authData.user.isAdmin && (
+              {isAdmin && (
                 <NavDropdown title='Admin' id='admin'>
                   <LinkContainer to={Route.adminUsers()}>
                     <NavDropdown.Item>All Users</NavDropdown.Item>

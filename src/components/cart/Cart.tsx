@@ -43,8 +43,8 @@ export const Cart = (): JSX.Element => {
     [dispatch],
   );
 
-  const checkoutHandler = () => {
-    history.push(`${Route.signIn('shipping')}`);
+  const checkoutHandler = (): void => {
+    history.push(`${Route.signIn(Route.orderShippingAddress())}`);
   };
 
   const renderEmptyCart = () => {

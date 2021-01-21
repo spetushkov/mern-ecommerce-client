@@ -10,6 +10,7 @@ import { StoreError } from '../../store/StoreError';
 import { StoreLoader } from '../../store/StoreLoader';
 import { NumberUtils } from '../../utils/NumberUtils';
 import { useAuthenticate } from '../auth/useAuthenticate';
+import { useRequireAuthenticate } from '../auth/useRequireAuthenticate';
 import { CartActions } from '../cart/CartActions';
 import { ProductUtils } from '../product/ProductUtils';
 import { User } from '../user/type/User';
@@ -25,7 +26,7 @@ type Props = {
 };
 
 export const Order = (props: Props): JSX.Element => {
-  useAuthenticate();
+  useRequireAuthenticate();
 
   const dispatch = useDispatch();
   const { id } = useParams<Params>();
@@ -39,8 +40,8 @@ export const Order = (props: Props): JSX.Element => {
 
   const [payPalSdkReady, setPayPalSdkReady] = useState(false);
 
-  const authState = useSelector((state: State) => state.auth);
-  const { data: authData } = authState;
+  const { includesRole } = useAuthenticate();
+  const isAdmin = includesRole('ADMIN');
 
   useEffect(() => {
     dispatch(OrderActions.findById(id, queryByUserId));
@@ -56,7 +57,7 @@ export const Order = (props: Props): JSX.Element => {
     }
   }, [payPalClientId]);
 
-  const payOrderWithPayPalHandler = (paymentResult: PayPalPaymentResult) => {
+  const payOrderWithPayPalHandler = (paymentResult: PayPalPaymentResult): void => {
     dispatch(OrderActions.pay(id, { paymentResult }));
     dispatch(CartActions.reset());
   };
@@ -65,7 +66,7 @@ export const Order = (props: Props): JSX.Element => {
     return !loading && !error && payPalSdkReady && !!order && !order.isPaid && order.totalPrice > 0;
   };
 
-  const orderDeliveredHandler = () => {
+  const orderDeliveredHandler = (): void => {
     const query: Partial<OrderType> = {
       isDelivered: true,
       deliveredAt: new Date(),
@@ -188,7 +189,7 @@ export const Order = (props: Props): JSX.Element => {
                   />
                 </ListGroup.Item>
               )}
-              {authData && authData.user.isAdmin && (
+              {isAdmin && (
                 <ListGroup.Item>
                   <Button
                     type='button'

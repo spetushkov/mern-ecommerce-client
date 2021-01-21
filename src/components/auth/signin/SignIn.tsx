@@ -1,23 +1,15 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Route } from '../../../router/Route';
-import { State } from '../../../store/Store';
-import { StoreError } from '../../../store/StoreError';
-import { StoreLoader } from '../../../store/StoreLoader';
 import { JustifyCenter } from '../../utility/content/JustifyCenter';
 import { AuthActions } from '../AuthActions';
-import { useAfterAuthenticateRedirect } from '../useAfterAuthenticateRedirect';
+import { useAfterAuthenticate } from '../useAfterAuthenticate';
 
 export const SignIn = (): JSX.Element => {
   const dispatch = useDispatch();
-
-  const authState = useSelector((state: State) => state.auth);
-  const { loading, data: authData, error } = authState;
-
-  const redirect = useAfterAuthenticateRedirect(authData);
-
+  const redirect = useAfterAuthenticate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -29,8 +21,6 @@ export const SignIn = (): JSX.Element => {
 
   return (
     <>
-      {loading && <StoreLoader />}
-      {error && <StoreError error={error} />}
       <JustifyCenter>
         <h1>Sign In</h1>
         <Form onSubmit={submitHandler}>

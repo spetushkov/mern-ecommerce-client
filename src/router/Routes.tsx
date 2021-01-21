@@ -29,10 +29,10 @@ export const Routes = (): JSX.Element => {
       <Route exact path='/signin' component={SignIn} />
       <Route exact path='/products' component={Products} />
       <Route exact path='/products/:id' component={Product} />
-      <Route path='/cart' component={Cart} />
-      <Route path='/cart/orderShippingAddress' component={OrderShippingAddress} />
-      <Route path='/cart/orderPaymentMethod' component={OrderPaymentMethod} />
-      <Route path='/cart/orderConfirm' component={OrderConfirm} />
+      <Route exact path='/cart' component={Cart} />
+      <Route exact path='/cart/orderShippingAddress' component={OrderShippingAddress} />
+      <Route exact path='/cart/orderPaymentMethod' component={OrderPaymentMethod} />
+      <Route exact path='/cart/orderConfirm' component={OrderConfirm} />
       <Route exact path='/customer/orders' component={Orders} />
       <Route exact path='/customer/orders/:id' component={Order} />
       <Route exact path='/admin/users' component={AdminUsers} />

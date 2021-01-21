@@ -7,7 +7,7 @@ import { Route } from '../../../router/Route';
 import { State } from '../../../store/Store';
 import { StoreError } from '../../../store/StoreError';
 import { StoreLoader } from '../../../store/StoreLoader';
-import { useAuthenticate } from '../../auth/useAuthenticate';
+import { useRequireAuthenticate } from '../../auth/useRequireAuthenticate';
 import { OrderActions } from '../OrderActions';
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
 };
 
 export const Orders = (props: Props): JSX.Element => {
-  useAuthenticate();
+  useRequireAuthenticate();
 
   const dispatch = useDispatch();
   const { queryByUserId } = props;

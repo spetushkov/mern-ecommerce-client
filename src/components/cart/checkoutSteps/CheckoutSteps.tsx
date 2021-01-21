@@ -30,7 +30,7 @@ export const CheckoutSteps = (props: Props): JSX.Element => {
         linkUrl={Route.orderPaymentMethod()}
         linkName='Payment Method'
       />
-      <CheckoutStepsItem step={step4} linkUrl={Route.orderConfirm()} linkName='Confirmation' />
+      <CheckoutStepsItem step={step4} linkUrl={Route.orderConfirm()} linkName='Confirm' />
     </Nav>
   );
 };
