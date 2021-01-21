@@ -43,7 +43,7 @@ export const User = (): JSX.Element => {
     }
   };
 
-  const isFormSubmittable = (form: FormikProps<UserForm>) => {
+  const isFormSubmittable = (form: FormikProps<UserForm>): boolean => {
     return FormUtils.isSubmittable(form);
   };
 

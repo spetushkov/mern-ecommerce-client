@@ -49,65 +49,63 @@ export const SignUp = (): JSX.Element => {
   };
 
   return (
-    <>
-      <JustifyCenter>
-        <h1>Sign Up</h1>
-        <Formik
-          initialValues={initialFormState}
-          validate={validateFormHandler}
-          onSubmit={submitFormHandler}
-        >
-          {(form) => (
-            <>
-              {<FormError errors={formErrors} />}
-              <Form
-                onSubmit={(e: React.FormEvent<HTMLFormElement>) => form.handleSubmit(e)}
-                noValidate
-              >
-                <FormControl
-                  schema={form.values}
-                  id='name'
-                  type='text'
-                  label='User Name'
-                  placeholder='User name'
-                />
-                <FormControl
-                  schema={form.values}
-                  id='email'
-                  type='email'
-                  label='Email Address'
-                  placeholder='Email address'
-                />
-                <FormControl
-                  schema={form.values}
-                  id='password'
-                  type='password'
-                  label='Password'
-                  placeholder='Password'
-                  helpText={SignUpFormUtils.passwordMinLength('6')}
-                  instantFeedback={true}
-                />
-                <FormControl
-                  schema={form.values}
-                  id='confirmPassword'
-                  type='password'
-                  label='Confirm Password'
-                  placeholder='Confirm password'
-                />
-                <Button type='submit' variant='primary' disabled={!isFormSubmittable(form)}>
-                  {form.isSubmitting ? 'Sign Up...' : 'Sign Up'}
-                </Button>
-              </Form>
-            </>
-          )}
-        </Formik>
-        <Row className='py-3'>
-          <Col>
-            Have an Account?{' '}
-            <Link to={redirect ? `${Route.signIn(redirect)}` : Route.signIn()}>Sign In</Link>
-          </Col>
-        </Row>
-      </JustifyCenter>
-    </>
+    <JustifyCenter>
+      <h1>Sign Up</h1>
+      <Formik
+        initialValues={initialFormState}
+        validate={validateFormHandler}
+        onSubmit={submitFormHandler}
+      >
+        {(form) => (
+          <>
+            {<FormError errors={formErrors} />}
+            <Form
+              onSubmit={(e: React.FormEvent<HTMLFormElement>) => form.handleSubmit(e)}
+              noValidate
+            >
+              <FormControl
+                schema={form.values}
+                id='name'
+                type='text'
+                label='User Name'
+                placeholder='User name'
+              />
+              <FormControl
+                schema={form.values}
+                id='email'
+                type='email'
+                label='Email Address'
+                placeholder='Email address'
+              />
+              <FormControl
+                schema={form.values}
+                id='password'
+                type='password'
+                label='Password'
+                placeholder='Password'
+                helpText={SignUpFormUtils.passwordMinLength('6')}
+                instantFeedback={true}
+              />
+              <FormControl
+                schema={form.values}
+                id='confirmPassword'
+                type='password'
+                label='Confirm Password'
+                placeholder='Confirm password'
+              />
+              <Button type='submit' variant='primary' disabled={!isFormSubmittable(form)}>
+                {form.isSubmitting ? 'Sign Up...' : 'Sign Up'}
+              </Button>
+            </Form>
+          </>
+        )}
+      </Formik>
+      <Row className='py-3'>
+        <Col>
+          Already Have an Account?{' '}
+          <Link to={redirect ? `${Route.signIn(redirect)}` : Route.signIn()}>Sign In</Link>
+        </Col>
+      </Row>
+    </JustifyCenter>
   );
 };

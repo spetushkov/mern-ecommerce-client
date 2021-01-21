@@ -47,7 +47,7 @@ export const Cart = (): JSX.Element => {
     history.push(`${Route.signIn(Route.orderShippingAddress())}`);
   };
 
-  const renderEmptyCart = () => {
+  const EmptyCart = (): JSX.Element => {
     return (
       <Alert variant='info'>
         Your cart is empty <Link to={Route.home()}>Go Back</Link>
@@ -67,7 +67,7 @@ export const Cart = (): JSX.Element => {
     });
   }, []);
 
-  const renderCartItems = () => {
+  const CartItems = (): JSX.Element => {
     return (
       <ListGroup variant='flush'>
         {orderItems &&
@@ -119,7 +119,7 @@ export const Cart = (): JSX.Element => {
     <Row>
       <Col md={8}>
         <h1>Shopping Cart</h1>
-        {!isCheckoutable() ? renderEmptyCart() : renderCartItems()}
+        {!isCheckoutable() ? <EmptyCart /> : <CartItems />}
       </Col>
       <Col md={4}>
         <Card>

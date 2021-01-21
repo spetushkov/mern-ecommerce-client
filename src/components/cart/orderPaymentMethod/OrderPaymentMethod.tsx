@@ -24,7 +24,7 @@ export const OrderPaymentMethod = (): JSX.Element => {
     paymentMethodSaved ? paymentMethodSaved : PaymentMethodType.PAYPAL,
   );
 
-  const submitHandler = (e: React.FormEvent<HTMLElement>) => {
+  const submitHandler = (e: React.FormEvent<HTMLElement>): void => {
     e.preventDefault();
 
     dispatch(CartActions.savePaymentMethod(paymentMethod));

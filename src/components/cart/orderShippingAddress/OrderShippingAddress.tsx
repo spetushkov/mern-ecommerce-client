@@ -24,7 +24,7 @@ export const OrderShippingAddress = (): JSX.Element => {
   const [postalCode, setPostalCode] = useState(shippingAddress ? shippingAddress.postalCode : '');
   const [country, setCountry] = useState(shippingAddress ? shippingAddress.country : '');
 
-  const submitHandler = (e: React.FormEvent<HTMLElement>) => {
+  const submitHandler = (e: React.FormEvent<HTMLElement>): void => {
     e.preventDefault();
 
     const shippingAddress: ShippingAddressType = {

@@ -43,7 +43,7 @@ export const OrderConfirm = (): JSX.Element => {
   const { loading, data, error } = orderState;
   const order = data.order;
 
-  const placeOrderHandler = () => {
+  const placeOrderHandler = (): void => {
     if (!orderItems) {
       return;
     }

@@ -7,7 +7,7 @@ export const SearchForm = (): JSX.Element => {
   const history = useHistory();
   const [keyword, setKeyword] = useState('');
 
-  const submitHandler = (e: React.FormEvent<HTMLElement>) => {
+  const submitHandler = (e: React.FormEvent<HTMLElement>): void => {
     e.preventDefault();
 
     if (keyword.trim()) {

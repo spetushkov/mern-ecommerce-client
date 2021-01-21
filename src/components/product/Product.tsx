@@ -48,11 +48,11 @@ export const Product = (): JSX.Element => {
     dispatch(ProductActions.findById(id));
   }, [dispatch, id, review]);
 
-  const changeQuantityHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const changeQuantityHandler = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     setQuantity(Number(e.target.value));
   };
 
-  const addToCartHandler = () => {
+  const addToCartHandler = (): void => {
     if (!product) {
       return;
     }
@@ -76,7 +76,7 @@ export const Product = (): JSX.Element => {
     });
   }, [product]);
 
-  const submitReviewHandler = (e: React.FormEvent<HTMLElement>) => {
+  const submitReviewHandler = (e: React.FormEvent<HTMLElement>): void => {
     e.preventDefault();
 
     const review: Review = {

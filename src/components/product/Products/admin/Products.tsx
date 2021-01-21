@@ -24,16 +24,16 @@ export const Products = (): JSX.Element => {
     dispatch(ProductActions.findAll());
   }, [dispatch]);
 
-  const createProductHandler = () => {
+  const createProductHandler = (): void => {
     dispatch(ProductActions.resetProduct());
     history.push(Route.adminCreateProduct());
   };
 
-  const editProductHandler = (id: string) => {
+  const editProductHandler = (id: string): void => {
     history.push(Route.adminProducts(id));
   };
 
-  const deleteProductHandler = (id: string) => {
+  const deleteProductHandler = (id: string): void => {
     if (window.confirm('Are you sure?')) {
       dispatch(ProductActions.deleteById(id));
     }
