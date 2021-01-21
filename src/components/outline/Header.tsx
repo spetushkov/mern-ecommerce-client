@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,9 +18,22 @@ export const Header = (): JSX.Element => {
   const { i18n } = useTranslation();
   const dispatch = useDispatch();
 
-  const { getUser, includesRole } = useAuthenticate();
+  const { getUser, includesRole, isAuthenticated } = useAuthenticate();
   const userName = getUser()?.name;
   const isAdmin = includesRole('ADMIN');
+
+  const signOutHandler = useCallback((): void => {
+    dispatch(AuthActions.signOut());
+    dispatch(UserActions.reset());
+    dispatch(CartActions.reset());
+    dispatch(OrderActions.reset());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!isAuthenticated() && userName) {
+      signOutHandler();
+    }
+  }, [isAuthenticated, signOutHandler, userName]);
 
   const cartState = useSelector((state: State) => state.cart);
   const { orderItems } = cartState.data;
@@ -28,13 +41,6 @@ export const Header = (): JSX.Element => {
   const orderItemsCount = useMemo(() => {
     return CartUtils.getOrderItemsCount(orderItems);
   }, [orderItems]);
-
-  const signOutHandler = (): void => {
-    dispatch(AuthActions.signOut());
-    dispatch(CartActions.reset());
-    dispatch(OrderActions.reset());
-    dispatch(UserActions.reset());
-  };
 
   const changeLanguage = (lng: string): void => {
     i18n.changeLanguage(lng);
