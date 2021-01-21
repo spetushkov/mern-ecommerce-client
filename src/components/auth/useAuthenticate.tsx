@@ -6,7 +6,8 @@ import { ApplicationRole } from './type/ApplicationRole';
 
 type ReturnProps = {
   getToken: () => string | undefined;
-  getExpiresIn: () => number | undefined;
+  isTokenExpired: () => boolean;
+  getExpiresAtTimeout: () => number | undefined;
   isAuthenticated: () => boolean;
   getUser: () => User | undefined;
   includesRole: (role: ApplicationRole) => boolean;
@@ -29,8 +30,31 @@ export const useAuthenticate = (): ReturnProps => {
     return token;
   };
 
-  const getExpiresIn = (): number | undefined => {
-    return data?.authToken.expiresIn;
+  const getExpiresAtTimeout = (): number | undefined => {
+    if (!data) {
+      return undefined;
+    }
+
+    const { expiresAt } = data.authToken;
+    if (!expiresAt) {
+      return undefined;
+    }
+
+    const dif = new Date(expiresAt).getTime() - new Date().getTime();
+    return dif > 0 ? dif : undefined;
+  };
+
+  const isTokenExpired = (): boolean => {
+    if (!data) {
+      return true;
+    }
+
+    const { expiresAt } = data.authToken;
+    if (!expiresAt) {
+      return false;
+    }
+
+    return new Date().getTime() >= new Date(expiresAt).getTime();
   };
 
   const isAuthenticated = (): boolean => {
@@ -50,7 +74,8 @@ export const useAuthenticate = (): ReturnProps => {
 
   return {
     getToken,
-    getExpiresIn,
+    isTokenExpired,
+    getExpiresAtTimeout,
     isAuthenticated,
     getUser,
     includesRole,

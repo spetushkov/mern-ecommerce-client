@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +8,7 @@ import { Route } from '../../router/Route';
 import { State } from '../../store/Store';
 import { AuthActions } from '../auth/AuthActions';
 import { useAuthenticate } from '../auth/useAuthenticate';
+import { useSignOut } from '../auth/useSignOut';
 import { CartActions } from '../cart/CartActions';
 import { CartUtils } from '../cart/CartUtils';
 import { OrderActions } from '../order/OrderActions';
@@ -18,8 +19,8 @@ export const Header = (): JSX.Element => {
   const { i18n } = useTranslation();
   const dispatch = useDispatch();
 
-  const { getUser, includesRole, isAuthenticated } = useAuthenticate();
-  const userName = getUser()?.name;
+  const { getUser, includesRole } = useAuthenticate();
+  const user = getUser();
   const isAdmin = includesRole('ADMIN');
 
   const signOutHandler = useCallback((): void => {
@@ -29,11 +30,7 @@ export const Header = (): JSX.Element => {
     dispatch(OrderActions.reset());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (!isAuthenticated() && userName) {
-      signOutHandler();
-    }
-  }, [isAuthenticated, signOutHandler, userName]);
+  useSignOut(signOutHandler);
 
   const cartState = useSelector((state: State) => state.cart);
   const { orderItems } = cartState.data;
@@ -68,8 +65,8 @@ export const Header = (): JSX.Element => {
                   Cart
                 </Nav.Link>
               </LinkContainer>
-              {userName ? (
-                <NavDropdown title={userName} id='user'>
+              {user ? (
+                <NavDropdown title={user.name} id='user'>
                   <LinkContainer to={Route.customerOrders()}>
                     <NavDropdown.Item>My Orders</NavDropdown.Item>
                   </LinkContainer>

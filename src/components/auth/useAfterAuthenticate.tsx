@@ -7,15 +7,15 @@ import { useAuthenticate } from './useAuthenticate';
 export const useAfterAuthenticate = (): string | null => {
   const queryParams = useQueryParams();
   const history = useHistory();
-  const { isAuthenticated } = useAuthenticate();
+  const { isAuthenticated, getUser } = useAuthenticate();
 
   const redirect = queryParams.get('redirect');
 
   useEffect(() => {
-    if (isAuthenticated()) {
+    if (isAuthenticated() && getUser()) {
       history.push(redirect ? redirect : Route.home());
     }
-  }, [isAuthenticated, history, redirect]);
+  }, [isAuthenticated, getUser, history, redirect]);
 
   return redirect;
 };
