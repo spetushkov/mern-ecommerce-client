@@ -1,5 +1,5 @@
-import { BaseApi } from '../api/BaseApi';
-import { Result } from '../api/type/Result';
+import { BaseApi } from '../../api/BaseApi';
+import { Result } from '../../api/type/Result';
 import { Config } from './type/Config';
 
 export type ConfigApiResponse = Result<Config, Error>;

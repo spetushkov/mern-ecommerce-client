@@ -1,7 +1,7 @@
 import { User } from '../../user/type/User';
-import { AuthToken } from './AuthToken';
+import { AccessToken } from './AccessToken';
 
 export interface AuthData {
   user: User;
-  authToken: AuthToken;
+  accessToken: AccessToken;
 }

@@ -2,12 +2,12 @@ import { AxiosRequestConfig } from 'axios';
 import { BaseApi } from '../../api/BaseApi';
 import { PageableResult } from '../../api/type/PageableResult';
 import { Result } from '../../api/type/Result';
-import { FileInfo } from '../../fileInfo/FileInfo';
+import { File } from '../file/type/File';
 import { Product } from './type/Product';
 
 export type ProductApiPageResponse = PageableResult<Product, Error>;
 export type ProductApiResponse = Result<Product, Error>;
-export type FileApiResponse = Result<FileInfo, Error>;
+export type FileApiResponse = Result<File, Error>;
 const baseUrl = '/products';
 
 const findAll = async (

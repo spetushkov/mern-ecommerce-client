@@ -1,6 +1,6 @@
-import { Config } from '../../config/type/Config';
 import { ReducerAction } from '../../store/reducer/ReducerAction';
 import { ReducerActionCreator } from '../../store/reducer/ReducerActionCreator';
+import { Config } from '../config/type/Config';
 import { OrderApiPageResponse } from './OrderApi';
 import { Order } from './type/Order';
 

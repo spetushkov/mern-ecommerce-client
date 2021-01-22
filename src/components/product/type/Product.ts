@@ -13,6 +13,6 @@ export interface Product extends ApiEntity {
   rating: number;
   numReviews: number;
   user: User | string; // reference: Product MANY_TO_ONE User
-  reviews?: string[]; // reference (embedded doc): Product ONE_TO_ONE Review
+  reviews?: string[]; // reference: Product MANY_TO_ONE Review
   _reviews?: Review[] | string[];
 }

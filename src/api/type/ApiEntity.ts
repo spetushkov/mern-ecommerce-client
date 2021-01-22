@@ -1,4 +1,6 @@
-export interface ApiEntity {
+import { Entity } from './Entity';
+
+export interface ApiEntity extends Entity {
   id: string;
   createdAt?: string;
   createdBy?: string;

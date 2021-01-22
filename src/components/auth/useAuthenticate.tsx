@@ -23,7 +23,7 @@ export const useAuthenticate = (): ReturnProps => {
   const getToken = (): string | undefined => {
     let token: string | undefined;
 
-    token = data?.authToken.token;
+    token = data?.accessToken.token;
     if (!token) {
       token = cookies[authCookieName];
     }
@@ -35,7 +35,7 @@ export const useAuthenticate = (): ReturnProps => {
       return undefined;
     }
 
-    const { expiresAt } = data.authToken;
+    const { expiresAt } = data.accessToken;
     if (!expiresAt) {
       return undefined;
     }
@@ -49,7 +49,7 @@ export const useAuthenticate = (): ReturnProps => {
       return true;
     }
 
-    const { expiresAt } = data.authToken;
+    const { expiresAt } = data.accessToken;
     if (!expiresAt) {
       return false;
     }

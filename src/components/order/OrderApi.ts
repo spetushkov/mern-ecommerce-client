@@ -2,7 +2,7 @@ import { AxiosRequestConfig } from 'axios';
 import { BaseApi } from '../../api/BaseApi';
 import { PageableResult } from '../../api/type/PageableResult';
 import { Result } from '../../api/type/Result';
-import { PayPalPaymentResult } from '../../payPal/PayPalPaymentResult';
+import { PayPalPaymentResult } from '../payPal/type/PayPalPaymentResult';
 import { Order } from './type/Order';
 
 export type OrderApiPageResponse = PageableResult<Order, Error>;

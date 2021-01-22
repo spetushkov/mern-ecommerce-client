@@ -1,8 +1,7 @@
 import { BaseLocalStorage } from '../../../srorage/BaseLocalStorage';
-import { OrderPaymentMethod } from './type/OrderPaymentMethod';
 
 class PaymentMethodEntity {
-  value!: OrderPaymentMethod;
+  value = '';
 }
 
 export class OrderPaymentMethodStorage extends BaseLocalStorage<PaymentMethodEntity> {

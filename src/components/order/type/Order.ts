@@ -1,8 +1,8 @@
 import { ApiEntity } from '../../../api/type/ApiEntity';
-import { PayPalPaymentResult } from '../../../payPal/PayPalPaymentResult';
 import { OrderItem } from '../../cart/orderItem/type/OrderItem';
 import { OrderPaymentMethod } from '../../cart/orderPaymentMethod/type/OrderPaymentMethod';
 import { OrderShippingAddress } from '../../cart/orderShippingAddress/type/OrderShippingAddress';
+import { PayPalPaymentResult } from '../../payPal/type/PayPalPaymentResult';
 import { User } from '../../user/type/User';
 
 export interface Order extends ApiEntity {

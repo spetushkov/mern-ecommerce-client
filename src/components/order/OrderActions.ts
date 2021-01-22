@@ -1,9 +1,9 @@
 import { Dispatch } from 'redux';
-import { ConfigApi } from '../../config/ConfigApi';
-import { Config } from '../../config/type/Config';
-import { PayPalPaymentResult } from '../../payPal/PayPalPaymentResult';
 import { State } from '../../store/Store';
 import { AuthUtils } from '../auth/AuthUtils';
+import { ConfigApi } from '../config/ConfigApi';
+import { Config } from '../config/type/Config';
+import { PayPalPaymentResult } from '../payPal/type/PayPalPaymentResult';
 import { OrderApi } from './OrderApi';
 import { OrderReducer } from './OrderReducer';
 import { Order } from './type/Order';

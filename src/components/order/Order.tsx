@@ -3,8 +3,6 @@ import { Alert, Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap
 import { PayPalButton } from 'react-paypal-button-v2';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { PayPalPaymentResult } from '../../payPal/PayPalPaymentResult';
-import { PayPalUtils } from '../../payPal/PayPalUtils';
 import { State } from '../../store/Store';
 import { StoreError } from '../../store/StoreError';
 import { StoreLoader } from '../../store/StoreLoader';
@@ -12,6 +10,8 @@ import { NumberUtils } from '../../utils/NumberUtils';
 import { useAuthenticate } from '../auth/useAuthenticate';
 import { useRequireAuthenticate } from '../auth/useRequireAuthenticate';
 import { CartActions } from '../cart/CartActions';
+import { PayPalUtils } from '../payPal/PayPalUtils';
+import { PayPalPaymentResult } from '../payPal/type/PayPalPaymentResult';
 import { ProductUtils } from '../product/ProductUtils';
 import { User } from '../user/type/User';
 import { OrderActions } from './OrderActions';

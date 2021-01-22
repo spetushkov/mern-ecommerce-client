@@ -31,20 +31,20 @@ export type CartState = {
   error: Error | null;
 };
 
-const getOrderItemsFromStorage = () => {
+const getOrderItemsFromStorage = (): OrderItem[] | null => {
   const orderItemStorage = new OrderItemStorage();
   return orderItemStorage.findAll();
 };
 
-const getShippingAddressFromStorage = () => {
+const getShippingAddressFromStorage = (): OrderShippingAddress | null => {
   const shippingAddressStorage = new OrderShippingAddressStorage();
   return shippingAddressStorage.find();
 };
 
-const getPaymentMethodFromStorage = () => {
+const getPaymentMethodFromStorage = (): OrderPaymentMethod | null => {
   const paymentMethodStorage = new OrderPaymentMethodStorage();
   const paymentMethodEntity = paymentMethodStorage.find();
-  return paymentMethodEntity ? paymentMethodEntity.value : null;
+  return paymentMethodEntity ? (paymentMethodEntity.value as OrderPaymentMethod) : null;
 };
 
 const initialState: CartState = {

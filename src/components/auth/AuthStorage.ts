@@ -1,12 +1,10 @@
 import { BaseLocalStorage } from '../../srorage/BaseLocalStorage';
-import { User } from '../user/type/User';
 import { AuthUtils } from './AuthUtils';
 import { AuthData } from './type/AuthData';
-import { AuthToken } from './type/AuthToken';
 
 class AuthDataEntity implements AuthData {
-  user!: User;
-  authToken!: AuthToken;
+  user = { id: '', name: '', email: '', password: '' };
+  accessToken = { token: '', expiresIn: 0, expiresAt: '' };
 }
 
 export class AuthStorage extends BaseLocalStorage<AuthData> {
@@ -20,7 +18,7 @@ export class AuthStorage extends BaseLocalStorage<AuthData> {
       return;
     }
 
-    const dataUpdated = { ...data, authToken: { ...data.authToken, token: '' } };
+    const dataUpdated = { ...data, authToken: { ...data.accessToken, token: '' } };
     super.save(dataUpdated);
   }
 }
