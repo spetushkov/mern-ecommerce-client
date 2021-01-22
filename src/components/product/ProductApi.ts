@@ -98,7 +98,7 @@ const deleteById = async (id: string, token?: string): Promise<void> => {
 
 const uploadImage = async (fieldName: string, formData: FormData): Promise<FileApiResponse> => {
   try {
-    const endpoint = `${baseUrl}/upload?field=${fieldName}&imageFileType=true`;
+    const endpoint = `${baseUrl}/upload?field=${fieldName}`;
     const config: AxiosRequestConfig = {
       headers: {
         'Content-Type': 'multipart/form-data',

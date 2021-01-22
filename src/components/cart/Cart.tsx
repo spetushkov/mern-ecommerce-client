@@ -9,6 +9,7 @@ import { NumberUtils } from '../../utils/NumberUtils';
 import { ProductUtils } from '../product/ProductUtils';
 import { CartActions } from './CartActions';
 import { CartUtils } from './CartUtils';
+import { OrderItem } from './orderItem/type/OrderItem';
 
 export const Cart = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -47,70 +48,6 @@ export const Cart = (): JSX.Element => {
     history.push(`${Route.signIn(Route.orderShippingAddress())}`);
   };
 
-  const EmptyCart = (): JSX.Element => {
-    return (
-      <Alert variant='info'>
-        Your cart is empty <Link to={Route.home()}>Go Back</Link>
-      </Alert>
-    );
-  };
-
-  const renderOrderItemStockValues = useCallback((countInStock: number) => {
-    const keys = [...Array(countInStock).keys()];
-    return keys.map((key) => {
-      const optionValue = key + 1;
-      return (
-        <option key={optionValue} value={optionValue}>
-          {optionValue}
-        </option>
-      );
-    });
-  }, []);
-
-  const CartItems = (): JSX.Element => {
-    return (
-      <ListGroup variant='flush'>
-        {orderItems &&
-          orderItems.map((orderItem) => (
-            <ListGroup.Item key={orderItem.product}>
-              <Row>
-                <Col md={2}>
-                  <Image
-                    src={ProductUtils.getProductImageUrl(orderItem.image)}
-                    alt={orderItem.name}
-                    fluid
-                    rounded
-                  />
-                </Col>
-                <Col md={3}>{orderItem.name}</Col>
-                <Col md={2}>${orderItem.price}</Col>
-                <Col md={2}>
-                  <Form.Control
-                    as='select'
-                    value={orderItem.quantity}
-                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                      changeOrderItemQuantityHandler(e, orderItem.product)
-                    }
-                  >
-                    {renderOrderItemStockValues(orderItem.countInStock)}
-                  </Form.Control>
-                </Col>
-                <Col md={3}>
-                  <Button
-                    type='button'
-                    variant='light'
-                    onClick={() => removeOrderItemHandler(orderItem.product)}
-                  >
-                    <FontAwesomeIcon icon={['fas', 'trash']} />
-                  </Button>
-                </Col>
-              </Row>
-            </ListGroup.Item>
-          ))}
-      </ListGroup>
-    );
-  };
-
   const isCheckoutable = (): boolean => {
     return orderItems && orderItems.length > 0 ? true : false;
   };
@@ -119,7 +56,15 @@ export const Cart = (): JSX.Element => {
     <Row>
       <Col md={8}>
         <h1>Shopping Cart</h1>
-        {!isCheckoutable() ? <EmptyCart /> : <CartItems />}
+        {!isCheckoutable() ? (
+          <EmptyCart />
+        ) : (
+          <CartItems
+            orderItems={orderItems}
+            changeOrderItemQuantityHandler={changeOrderItemQuantityHandler}
+            removeOrderItemHandler={removeOrderItemHandler}
+          />
+        )}
       </Col>
       <Col md={4}>
         <Card>
@@ -141,5 +86,77 @@ export const Cart = (): JSX.Element => {
         </Card>
       </Col>
     </Row>
+  );
+};
+
+const EmptyCart = (): JSX.Element => {
+  return (
+    <Alert variant='info'>
+      Your cart is empty <Link to={Route.home()}>Go Back</Link>
+    </Alert>
+  );
+};
+
+type CartItemsProps = {
+  orderItems: OrderItem[] | null;
+  changeOrderItemQuantityHandler: (e: React.ChangeEvent<HTMLSelectElement>, id: string) => void;
+  removeOrderItemHandler: (id: string) => void;
+};
+
+const CartItems = (props: CartItemsProps): JSX.Element => {
+  const { orderItems, changeOrderItemQuantityHandler, removeOrderItemHandler } = props;
+
+  const renderOrderItemStockValues = useCallback((countInStock: number) => {
+    const keys = [...Array(countInStock).keys()];
+    return keys.map((key) => {
+      const optionValue = key + 1;
+      return (
+        <option key={optionValue} value={optionValue}>
+          {optionValue}
+        </option>
+      );
+    });
+  }, []);
+
+  return (
+    <ListGroup variant='flush'>
+      {orderItems &&
+        orderItems.map((orderItem) => (
+          <ListGroup.Item key={orderItem.product}>
+            <Row>
+              <Col md={2}>
+                <Image
+                  src={ProductUtils.getProductImageUrl(orderItem.image)}
+                  alt={orderItem.name}
+                  fluid
+                  rounded
+                />
+              </Col>
+              <Col md={3}>{orderItem.name}</Col>
+              <Col md={2}>${orderItem.price}</Col>
+              <Col md={2}>
+                <Form.Control
+                  as='select'
+                  value={orderItem.quantity}
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                    changeOrderItemQuantityHandler(e, orderItem.product)
+                  }
+                >
+                  {renderOrderItemStockValues(orderItem.countInStock)}
+                </Form.Control>
+              </Col>
+              <Col md={3}>
+                <Button
+                  type='button'
+                  variant='light'
+                  onClick={() => removeOrderItemHandler(orderItem.product)}
+                >
+                  <FontAwesomeIcon icon={['fas', 'trash']} />
+                </Button>
+              </Col>
+            </Row>
+          </ListGroup.Item>
+        ))}
+    </ListGroup>
   );
 };
