@@ -3,7 +3,7 @@ import { Alert, Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { Route } from '../../../router/Route';
-import { State } from '../../../store/Store';
+import { State } from '../../../store/StoreConfig';
 import { StoreError } from '../../../store/StoreError';
 import { StoreLoader } from '../../../store/StoreLoader';
 import { NumberUtils } from '../../../utils/NumberUtils';

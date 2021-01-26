@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Route } from '../../../router/Route';
-import { State } from '../../../store/Store';
+import { State } from '../../../store/StoreConfig';
 import { useRequireAuthenticate } from '../../auth/useRequireAuthenticate';
 import { JustifyCenter } from '../../utility/content/JustifyCenter';
 import { CartActions } from '../CartActions';

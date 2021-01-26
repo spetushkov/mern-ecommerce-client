@@ -3,7 +3,7 @@ import { Alert, Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap
 import { PayPalButton } from 'react-paypal-button-v2';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { State } from '../../store/Store';
+import { State } from '../../store/StoreConfig';
 import { StoreError } from '../../store/StoreError';
 import { StoreLoader } from '../../store/StoreLoader';
 import { NumberUtils } from '../../utils/NumberUtils';

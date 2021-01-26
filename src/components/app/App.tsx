@@ -1,6 +1,6 @@
 import React from 'react';
 import { Router } from '../../router/Router';
-import { Store } from '../../store/StoreProvider';
+import { Store } from '../../store/Store';
 import { Cookies } from '../cookies/Cookies';
 import { I18n } from '../i18n/I18n';
 import { Outline } from '../outline/Outline';

@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { Route } from '../../router/Route';
-import { State } from '../../store/Store';
+import { State } from '../../store/StoreConfig';
 import { StoreError } from '../../store/StoreError';
 import { StoreLoader } from '../../store/StoreLoader';
 import { useAuthenticate } from '../auth/useAuthenticate';

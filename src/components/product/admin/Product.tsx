@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { ClassTransformer } from '../../../class/ClassTransformer';
 import { Route } from '../../../router/Route';
-import { State } from '../../../store/Store';
+import { State } from '../../../store/StoreConfig';
 import { StoreError } from '../../../store/StoreError';
 import { StoreLoader } from '../../../store/StoreLoader';
 import { useAuthenticate } from '../../auth/useAuthenticate';

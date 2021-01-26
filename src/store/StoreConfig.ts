@@ -21,7 +21,7 @@ const inittialState = {};
 
 export type State = ReturnType<typeof combinedReducer>;
 
-export const Store = createStore(
+export const StoreConfig = createStore(
   combinedReducer,
   inittialState,
   composeWithDevTools(applyMiddleware(...middleware)),

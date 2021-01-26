@@ -1,6 +1,6 @@
 import { useCookies } from 'react-cookie';
 import { useSelector } from 'react-redux';
-import { State } from '../../store/Store';
+import { State } from '../../store/StoreConfig';
 import { User } from '../user/type/User';
 import { ApplicationRole } from './type/ApplicationRole';
 

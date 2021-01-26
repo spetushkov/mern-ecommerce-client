@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { State } from '../../store/Store';
+import { State } from '../../store/StoreConfig';
 import { ProductApi } from '../product/ProductApi';
 import { Product } from '../product/type/Product';
 import { CartReducer } from './CartReducer';

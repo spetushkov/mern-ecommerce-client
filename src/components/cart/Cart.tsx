@@ -4,7 +4,7 @@ import { Alert, Button, Card, Col, Form, Image, ListGroup, Row } from 'react-boo
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { Route } from '../../router/Route';
-import { State } from '../../store/Store';
+import { State } from '../../store/StoreConfig';
 import { NumberUtils } from '../../utils/NumberUtils';
 import { ProductUtils } from '../product/ProductUtils';
 import { CartActions } from './CartActions';

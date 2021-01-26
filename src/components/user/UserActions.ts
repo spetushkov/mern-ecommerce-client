@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { State } from '../../store/Store';
+import { State } from '../../store/StoreConfig';
 import { AuthUtils } from '../auth/AuthUtils';
 import { User } from './type/User';
 import { UserApi } from './UserApi';

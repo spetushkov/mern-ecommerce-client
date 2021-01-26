@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Route } from '../../../router/Route';
 import { useQueryParams } from '../../../router/useQueryParams';
-import { State } from '../../../store/Store';
+import { State } from '../../../store/StoreConfig';
 import { StoreError } from '../../../store/StoreError';
 import { Paginator } from '../../utility/content/Paginator';
 import { ProductActions } from '../ProductActions';

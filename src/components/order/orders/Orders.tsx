@@ -4,7 +4,7 @@ import { Button, Row, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Route } from '../../../router/Route';
-import { State } from '../../../store/Store';
+import { State } from '../../../store/StoreConfig';
 import { StoreError } from '../../../store/StoreError';
 import { StoreLoader } from '../../../store/StoreLoader';
 import { useRequireAuthenticate } from '../../auth/useRequireAuthenticate';

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Route } from '../../router/Route';
-import { State } from '../../store/Store';
+import { State } from '../../store/StoreConfig';
 import { AuthActions } from '../auth/AuthActions';
 import { useAuthenticate } from '../auth/useAuthenticate';
 import { useSignOut } from '../auth/useSignOut';
