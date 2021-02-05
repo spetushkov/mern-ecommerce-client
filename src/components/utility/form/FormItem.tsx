@@ -1,7 +1,7 @@
 import { GenericFieldHTMLAttributes, useField } from 'formik';
 import React, { useState } from 'react';
 import { Form, FormControlProps } from 'react-bootstrap';
-import { FormControlError } from './FormControlError';
+import { FormItemError } from './FormItemError';
 
 // controlRef example:
 // const controlRef = useRef<HTMLInputElement>(null);
@@ -25,7 +25,7 @@ type Props<T> = GenericFieldHTMLAttributes &
     callbackRef?: (inputElement: HTMLInputElement) => void;
   };
 
-export const FormControl = <T,>(props: React.PropsWithChildren<Props<T>>): JSX.Element => {
+export const FormItem = <T,>(props: React.PropsWithChildren<Props<T>>): JSX.Element => {
   const {
     id,
     label,
@@ -45,7 +45,6 @@ export const FormControl = <T,>(props: React.PropsWithChildren<Props<T>>): JSX.E
   const onFocusHandler = () => setDidFocus(true);
   const isValid =
     instantFeedback && ((didFocus && field.value.trim().length > 2) || meta.touched) && !meta.error;
-
   const isInvalid = !!(meta.touched && meta.error);
 
   return (
@@ -62,7 +61,7 @@ export const FormControl = <T,>(props: React.PropsWithChildren<Props<T>>): JSX.E
         onFocus={onFocusHandler}
       />
       {!isInvalid && helpText && <div className='text-muted'>{helpText}</div>}
-      {isInvalid && <FormControlError error={meta.error} />}
+      {isInvalid && <FormItemError error={meta.error} />}
     </Form.Group>
   );
 };

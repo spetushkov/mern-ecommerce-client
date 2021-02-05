@@ -3,7 +3,7 @@ import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 import { User } from '../../user/type/User';
 import { SignUpFormUtils } from './SignUpFormUtils';
 
-export class SignUpForm implements User {
+export class SignUpFormEntity implements User {
   @Exclude()
   id = '';
 

@@ -11,7 +11,7 @@ import { StoreLoader } from '../../../store/StoreLoader';
 import { useAuthenticate } from '../../auth/useAuthenticate';
 import { useRequireAuthorize } from '../../auth/useRequireAuthorize';
 import { JustifyCenter } from '../../utility/content/JustifyCenter';
-import { FormControl } from '../../utility/form/FormControl';
+import { FormItem } from '../../utility/form/FormItem';
 import { FormUtils } from '../../utility/form/FormUtils';
 import { ProductActions } from '../ProductActions';
 import { ProductApi } from '../ProductApi';
@@ -159,14 +159,14 @@ export const Product = (): JSX.Element => {
                 onSubmit={(e: React.FormEvent<HTMLFormElement>) => form.handleSubmit(e)}
                 noValidate
               >
-                <FormControl
+                <FormItem
                   schema={form.values}
                   id='name'
                   type='text'
                   label='Name'
                   placeholder='Name'
                 />
-                <FormControl
+                <FormItem
                   schema={form.values}
                   id='image'
                   type='text'
@@ -180,35 +180,35 @@ export const Product = (): JSX.Element => {
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => uploadFileHandler(e, form)}
                 />
                 {fileUploading && <div>Uploading an image...</div>}
-                <FormControl
+                <FormItem
                   schema={form.values}
                   id='description'
                   type='text'
                   label='Description'
                   placeholder='Description'
                 />
-                <FormControl
+                <FormItem
                   schema={form.values}
                   id='brand'
                   type='text'
                   label='Brand'
                   placeholder='Brand'
                 />
-                <FormControl
+                <FormItem
                   schema={form.values}
                   id='category'
                   type='text'
                   label='Category'
                   placeholder='Category'
                 />
-                <FormControl
+                <FormItem
                   schema={form.values}
                   id='price'
                   type='number'
                   label='Price'
                   placeholder='Price'
                 />
-                <FormControl
+                <FormItem
                   schema={form.values}
                   id='countInStock'
                   type='number'

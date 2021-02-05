@@ -9,7 +9,7 @@ import { StoreError } from '../../store/StoreError';
 import { StoreLoader } from '../../store/StoreLoader';
 import { useRequireAuthenticate } from '../auth/useRequireAuthenticate';
 import { JustifyCenter } from '../utility/content/JustifyCenter';
-import { FormControl } from '../utility/form/FormControl';
+import { FormItem } from '../utility/form/FormItem';
 import { FormUtils } from '../utility/form/FormUtils';
 import { UserActions } from './UserActions';
 import { UserForm } from './UserForm';
@@ -76,7 +76,7 @@ export const User = (): JSX.Element => {
                 onSubmit={(e: React.FormEvent<HTMLFormElement>) => form.handleSubmit(e)}
                 noValidate
               >
-                <FormControl
+                <FormItem
                   schema={form.values}
                   id='name'
                   type='text'

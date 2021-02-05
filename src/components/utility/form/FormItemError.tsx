@@ -4,7 +4,7 @@ type Props = {
   error?: string;
 };
 
-export const FormControlError = (props: Props): JSX.Element | null => {
+export const FormItemError = (props: Props): JSX.Element | null => {
   const { error } = props;
 
   if (!error) {

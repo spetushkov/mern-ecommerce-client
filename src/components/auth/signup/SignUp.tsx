@@ -5,12 +5,12 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Route } from '../../../router/Route';
 import { JustifyCenter } from '../../utility/content/JustifyCenter';
-import { FormControl } from '../../utility/form/FormControl';
 import { FormError } from '../../utility/form/FormError';
+import { FormItem } from '../../utility/form/FormItem';
 import { FormUtils } from '../../utility/form/FormUtils';
 import { AuthActions } from '../AuthActions';
 import { useAfterAuthenticate } from '../useAfterAuthenticate';
-import { SignUpForm } from './SignUpForm';
+import { SignUpFormEntity } from './SignUpFormEntity';
 import { SignUpFormUtils } from './SignUpFormUtils';
 
 export const SignUp = (): JSX.Element => {
@@ -18,26 +18,28 @@ export const SignUp = (): JSX.Element => {
   const redirect = useAfterAuthenticate();
   const [formErrors, setFormErrors] = useState<string[]>([]);
 
-  const initialFormState = useMemo(() => new SignUpForm(), []);
+  const initialFormState = useMemo(() => new SignUpFormEntity(), []);
 
-  const validateFormHandler = async (values: SignUpForm): Promise<FormikErrors<SignUpForm>> => {
+  const validateFormHandler = async (
+    values: SignUpFormEntity,
+  ): Promise<FormikErrors<SignUpFormEntity>> => {
     try {
-      const result = await FormUtils.validate(values, SignUpForm);
+      const result = await FormUtils.validate(values, SignUpFormEntity);
       return Promise.resolve(result);
     } catch (error) {
       return Promise.reject(error);
     }
   };
 
-  const isFormSubmittable = (form: FormikProps<SignUpForm>): boolean => {
+  const isFormSubmittable = (form: FormikProps<SignUpFormEntity>): boolean => {
     return FormUtils.isSubmittable(form);
   };
 
   const submitFormHandler = async (
-    values: SignUpForm,
-    FormActions: FormikHelpers<SignUpForm>,
+    values: SignUpFormEntity,
+    FormActions: FormikHelpers<SignUpFormEntity>,
   ): Promise<void> => {
-    const formState = FormUtils.getState(values, SignUpForm);
+    const formState = FormUtils.getState(values, SignUpFormEntity);
 
     if (formState.password !== formState.confirmPassword) {
       setFormErrors(['Passwords do not match']);
@@ -63,21 +65,21 @@ export const SignUp = (): JSX.Element => {
               onSubmit={(e: React.FormEvent<HTMLFormElement>) => form.handleSubmit(e)}
               noValidate
             >
-              <FormControl
+              <FormItem
                 schema={form.values}
                 id='name'
                 type='text'
                 label='User Name'
                 placeholder='User name'
               />
-              <FormControl
+              <FormItem
                 schema={form.values}
                 id='email'
                 type='email'
                 label='Email Address'
                 placeholder='Email address'
               />
-              <FormControl
+              <FormItem
                 schema={form.values}
                 id='password'
                 type='password'
@@ -86,7 +88,7 @@ export const SignUp = (): JSX.Element => {
                 helpText={SignUpFormUtils.passwordMinLength('6')}
                 instantFeedback={true}
               />
-              <FormControl
+              <FormItem
                 schema={form.values}
                 id='confirmPassword'
                 type='password'
